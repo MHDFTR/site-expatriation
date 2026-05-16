@@ -100,7 +100,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
         @media (max-width: 768px) {
             .sections-grid { grid-template-columns: 1fr; }
@@ -109,8 +109,10 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 1.5rem;
+            background-color: #fff;
         }
-        .card h3 { margin-top: 0; }
+        .card h3 { margin-top: 0; color: var(--text-color); }
+        .card p { color: var(--muted-text); font-size: 0.95rem; margin-bottom: 0; }
         footer {
             margin-top: 6rem;
             padding: 2rem 0;
@@ -153,16 +155,26 @@
             <a href="#" class="btn">Découvrir le guide (39€)</a>
         </section>
 
-        <section id="articles">
-            <h2>Analyses & Ressources</h2>
+        <section id="articles" style="margin-top: 4rem;">
+            <h2>Cadres de réflexion & Piliers méthodologiques</h2>
+            <p style="color: var(--muted-text); margin-bottom: 2rem;">Explorez nos quatre axes d'analyse pour anticiper au mieux vos démarches.</p>
+            
             <div class="sections-grid">
                 <div class="card">
-                    <h3>01. Stratégie & Timing</h3>
-                    <p>Articles et analyses sur la chronologie critique à respecter 24 mois avant de quitter la France.</p>
+                    <h3>01. Chronologie & Timing</h3>
+                    <p>Analyses détaillées sur les actions à mener de T-24 mois à T-6 mois avant le départ effectif.</p>
                 </div>
                 <div class="card">
                     <h3>02. Critères de Résidence</h3>
-                    <p>Décryptage des points de contrôle de l'administration fiscale française pour éviter les redressements.</p>
+                    <p>Comprendre la vision de l'administration fiscale française : foyer, centre d'intérêts et activité.</p>
+                </div>
+                <div class="card">
+                    <h3>03. Erreurs Fréquentes</h3>
+                    <p>Études de cas sur les pièges classiques, les mythes de YouTube et les décisions précipitées.</p>
+                </div>
+                <div class="card">
+                    <h3>04. Préparation & Experts</h3>
+                    <p>Comment lister ses actifs, préparer ses dossiers et optimiser ses futures consultations payantes.</p>
                 </div>
             </div>
         </section>
