@@ -2,10 +2,181 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Expatriation Framework</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expatriation Framework | Valider, Anticiper, Décider</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+            --muted-text: #718096;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            color: var(--text-color);
+        }
+        .hero {
+            padding: 5rem 0 3rem 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-text);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+        .cta-box {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            text-align: left;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .tag {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            background-color: var(--text-color);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #333;
+        }
+        .sections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        @media (max-width: 768px) {
+            .sections-grid { grid-template-columns: 1fr; }
+        }
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+        .card h3 { margin-top: 0; }
+        footer {
+            margin-top: 6rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--muted-text);
+            font-size: 0.85rem;
+        }
+        footer a {
+            color: var(--muted-text);
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding-top: 20%;">
-    <h1>Expatriation Framework</h1>
-    <p>Le site est actuellement en construction. Lancement imminent.</p>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">Expatriation Framework</a>
+                <div class="nav-links">
+                    <a href="#articles">Articles</a>
+                    <a href="#apropos">À Propos</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Sécurisez votre départ. Évitez l'irréversible.</h1>
+            <p class="subtitle">Un cadre méthodologique strict pour les entrepreneurs et indépendants français en réflexion avant une expatriation fiscale.</p>
+        </section>
+
+        <section class="cta-box">
+            <span class="tag">Bientôt disponible</span>
+            <h2>La Checklist Complète Avant Expatriation Fiscale</h2>
+            <p>30 pages de schémas, tableaux chronologiques et points de contrôle indispensables pour auditer votre situation avant qu'il ne soit trop tard.</p>
+            <a href="#" class="btn">Découvrir le guide (39€)</a>
+        </section>
+
+        <section id="articles">
+            <h2>Analyses & Ressources</h2>
+            <div class="sections-grid">
+                <div class="card">
+                    <h3>01. Stratégie & Timing</h3>
+                    <p>Articles et analyses sur la chronologie critique à respecter 24 mois avant de quitter la France.</p>
+                </div>
+                <div class="card">
+                    <h3>02. Critères de Résidence</h3>
+                    <p>Décryptage des points de contrôle de l'administration fiscale française pour éviter les redressements.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Expatriation Framework. Tous droits réservés.</p>
+            <p>
+                <a href="#">Mentions Légales</a> | 
+                <a href="#">Avertissement (Disclaimer)</a>
+            </p>
+        </div>
+    </footer>
+
 </body>
 </html>
