@@ -12,6 +12,9 @@
             --accent-color: #2b6cb0;
             --border-color: #e2e8f0;
             --muted-text: #718096;
+            --error-bg: #fff5f5;
+            --error-border: #e53e3e;
+            --error-text: #c53030;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -30,10 +33,23 @@
         .article-container { max-width: 700px; margin: 4rem auto; padding: 0 1.5rem; }
         .tag { background-color: #ebf8ff; color: #2b6cb0; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; display: inline-block; margin-bottom: 1rem; }
         h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.05em; line-height: 1.2; margin-bottom: 1.5rem; }
-        .intro { font-size: 1.25rem; color: var(--muted-text); margin-bottom: 3rem; }
-        h2 { font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1rem; color: var(--text-color); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+        .intro { font-size: 1.25rem; color: var(--muted-text); margin-bottom: 2rem; }
+        h2 { font-size: 1.5rem; margin-top: 3.5rem; margin-bottom: 1.5rem; color: var(--text-color); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
         p { font-size: 1.1rem; margin-bottom: 1.5rem; }
         
+        /* Nouveau bloc Mythe vs Réalité */
+        .myth-box { background-color: var(--error-bg); border-left: 4px solid var(--error-border); padding: 1.5rem; margin: 2rem 0; border-radius: 4px; }
+        .myth-box h4 { margin-top: 0; color: var(--error-text); font-size: 1.1rem; margin-bottom: 0.75rem; }
+        .myth-box p { margin-bottom: 0; font-size: 1.05rem; color: #4a5568; }
+
+        /* Nouvelle Timeline textuelle */
+        .timeline { border-left: 2px solid var(--accent-color); padding-left: 1.5rem; margin: 3rem 0; }
+        .timeline-item { position: relative; margin-bottom: 2.5rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -1.85rem; top: 0.25rem; width: 12px; height: 12px; background-color: var(--accent-color); border-radius: 50%; }
+        .timeline-date { font-weight: 700; color: var(--accent-color); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .timeline-content h4 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
+        .timeline-content p { margin: 0; font-size: 1rem; color: var(--muted-text); }
+
         .profile-card { background: #fff; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-color); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 4px; }
         .profile-card h3 { margin-top: 0; font-size: 1.2rem; margin-bottom: 0.5rem; }
         .profile-card p { margin-bottom: 0; font-size: 1rem; color: #4a5568; }
@@ -64,48 +80,72 @@
 
     <main class="article-container">
         <span class="tag">01. Chronologie & Timing</span>
-        <h1>Pourquoi votre expatriation fiscale se joue 24 mois avant votre vol (et ce qu'il faut faire maintenant)</h1>
+        <h1>Pourquoi votre expatriation fiscale se joue 24 mois avant votre vol</h1>
         
-        <p class="intro">C'est l'erreur la plus coûteuse de l'entrepreneur français : croire qu'une expatriation fiscale commence le jour où l'on pose ses valises à Dubaï, Lisbonne ou au Panama.</p>
+        <p class="intro">C'est l'erreur la plus coûteuse de l'entrepreneur français : croire qu'une expatriation fiscale commence le jour où l'on pose ses valises à l'étranger. L'administration ne regarde pas votre passeport, elle audite votre chronologie.</p>
 
-        <p>Sur YouTube, on vous vend le mythe des "183 jours". On vous explique que si vous passez plus de la moitié de l'année hors de France, vous ne payez plus d'impôts en France.</p>
-        <p><strong>C'est faux. Et c'est dangereux.</strong></p>
-        <p>L'administration fiscale française ne regarde pas (seulement) votre passeport ou votre billet d'avion. Elle regarde la chronologie de votre patrimoine et de votre activité économique sur les mois, voire les années qui précèdent votre départ.</p>
+        <div class="myth-box">
+            <h4>❌ Le Mythe de YouTube : La règle des "183 jours"</h4>
+            <p><strong>Ce qu'on vous vend :</strong> "Il suffit de passer plus de 6 mois hors de France pour ne plus payer d'impôts."<br><br>
+            <strong>La Réalité Fiscale :</strong> L'administration française se fiche du nombre de jours passés à l'étranger si votre centre d'intérêts économiques (vos clients, vos comptes, la gestion de votre société) est resté, même partiellement, attaché à la France lors de la transition.</p>
+        </div>
 
         <h2>La règle implacable de l'Article 4B du CGI</h2>
-        <p>Le Code Général des Impôts français est extrêmement clair. Vous êtes considéré comme résident fiscal français si vous remplissez <strong>un seul</strong> de ces critères :</p>
-        <ul>
-            <li>Votre foyer (ou lieu de séjour principal) est en France.</li>
-            <li>Vous exercez en France une activité professionnelle (salariée ou non).</li>
-            <li>Vous avez en France le centre de vos intérêts économiques.</li>
+        <p>Le Code Général des Impôts est binaire. Pour le fisc français, vous restez un résident fiscal (et donc imposable sur vos revenus mondiaux) si vous cochez <strong>un seul</strong> de ces critères lors de votre départ :</p>
+        <ul style="font-size: 1.1rem; margin-bottom: 2rem;">
+            <li>Votre foyer ou lieu de séjour principal est en France.</li>
+            <li>Vous exercez en France une activité professionnelle non accessoire.</li>
+            <li>Vous avez en France le <strong>centre de vos intérêts économiques</strong>.</li>
         </ul>
-        <p>C'est ce troisième point qui détruit les projets d'expatriation mal préparés. Le fisc analyse vos revenus et vos actifs <em>avant, pendant et après</em> votre changement d'adresse. Un départ brutal ou mal séquencé déclenche immédiatement un audit (et une potentielle requalification).</p>
+        <p>C'est ce dernier point qui provoque le plus de redressements. Une transition mal préparée déclenche immédiatement des signaux d'alerte. Un départ propre s'organise selon une chronologie stricte.</p>
 
-        <h2>Dans quel cas vous reconnaissez-vous ?</h2>
+        <h2>La Chronologie d'un départ sécurisé</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">T - 24 Mois</div>
+                <div class="timeline-content">
+                    <h4>L'Audit des actifs latents</h4>
+                    <p>C'est le moment de lister vos plus-values latentes (crypto, actions) et de décider du sort de votre société française. Attendre la dernière minute pour liquider ou transférer déclenche l'imposition immédiate en France (Flat Tax ou Exit Tax selon les montants).</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">T - 12 Mois</div>
+                <div class="timeline-content">
+                    <h4>La Restructuration Opérationnelle</h4>
+                    <p>Coupure progressive des liens contractuels français. Si vous êtes e-commerçant, c'est la transition de votre logistique. Si vous êtes freelance, c'est l'anticipation de la facturation avec vos clients historiques pour prouver que l'activité n'est plus "gérée" depuis la France.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">T - 6 Mois</div>
+                <div class="timeline-content">
+                    <h4>La Transition Bancaire & Administrative</h4>
+                    <p>Fermeture des comptes non essentiels, changement des adresses de facturation, résiliation des abonnements locaux. Ne laissez aucun "fil à la patte" qui pourrait justifier que votre centre économique est resté en France après votre départ physique.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Dans quel profil vous reconnaissez-vous ?</h2>
         
         <div class="profile-card">
-            <h3>Le Consultant / Freelance (Prestation de service)</h3>
-            <p>Vous louez un appartement à l'étranger et vous changez de résidence. Mais vous avez gardé votre SASU ouverte en France quelques mois "le temps de voir", ou 100% de vos clients et facturations sont restés sourcés en France. Le fisc considère que votre centre d'intérêt économique n'a jamais bougé. Redressement sur vos revenus mondiaux.</p>
+            <h3>Le Consultant / Freelance</h3>
+            <p>Vous louez un appartement à l'étranger. Mais vous avez gardé votre SASU ouverte en France quelques mois "le temps de voir", ou 100% de vos clients sont restés français. Le fisc considère que votre centre d'intérêt économique n'a jamais bougé.</p>
         </div>
 
         <div class="profile-card">
-            <h3>L'E-commerçant (Stocks et logistique)</h3>
-            <p>Vous créez une LLC à l'étranger pour gérer votre boutique. Mais vos prestataires, vos entrepôts de transit, ou votre compte Stripe sont restés attachés à votre ancienne adresse ou structure française jusqu'à la dernière minute. Aux yeux de l'administration, vous gérez une société étrangère depuis la France de manière occulte.</p>
+            <h3>L'E-commerçant</h3>
+            <p>Vous créez une LLC étrangère. Mais vos entrepôts, ou votre compte Stripe sont restés attachés à une adresse française jusqu'à la dernière minute. Aux yeux de l'administration, vous gérez une société étrangère depuis la France de manière occulte.</p>
         </div>
 
         <div class="profile-card">
-            <h3>L'Investisseur (Crypto, Bourse, Immo)</h3>
-            <p>Vous encaissez vos plus-values crypto ou vendez vos actions quelques semaines seulement après votre arrivée dans votre nouveau pays d'accueil. L'administration française appliquera la "Flat Tax" (30%) ou une taxation d'office, considérant que la création de la valeur s'est faite sur le sol français avant votre départ effectif.</p>
+            <h3>L'Investisseur (Crypto, Bourse)</h3>
+            <p>Vous encaissez vos plus-values quelques semaines seulement après votre arrivée dans le nouveau pays. L'administration considérera que la création de valeur s'est faite sur le sol français avant votre départ effectif.</p>
         </div>
-
-        <h2>L'irréversible se prépare en amont</h2>
-        <p>Un départ propre se planifie entre T-24 mois et T-6 mois. Fermer des structures, transférer des actifs, modifier des flux bancaires ou documenter la rupture de vos liens économiques avec la France prend du temps.</p>
-        <p>Une fois que vous êtes dans l'avion, les erreurs commises deviennent des faits documentés que vous ne pourrez plus effacer de votre dossier fiscal.</p>
 
         <div class="cta-article">
-            <h3>N'attendez pas un redressement pour auditer votre situation</h3>
-            <p>Découvrez les 30 pages de schémas, de chronologies et de points de contrôle indispensables à vérifier avant de prendre une décision irréversible.</p>
-            <a href="#" class="btn">Obtenir la Checklist Complète (39€)</a>
+            <h3>L'irréversible se prépare en amont</h3>
+            <p>Ne prenez pas l'avion avec des doutes. Découvrez notre checklist complète : 30 pages de schémas et de points de contrôle obligatoires pour auditer votre situation avant de consulter un avocat.</p>
+            <a href="#" class="btn">Obtenir le Framework Complet (39€)</a>
             <p style="margin-top: 10px; font-size: 0.85rem; color: #a0aec0;">Disponible prochainement</p>
         </div>
 
