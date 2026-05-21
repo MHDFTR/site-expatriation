@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic de Risque Fiscal - Expatriation Framework</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+            --muted-text: #718096;
+            --error-text: #c53030;
+            --warning-text: #dd6b20;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 0; }
+        header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; }
+        .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
+        
+        .container { max-width: 600px; margin: 4rem auto; padding: 0 1.5rem; }
+        
+        /* Progress Bar */
+        .progress-container { width: 100%; background-color: var(--border-color); border-radius: 99px; height: 8px; margin-bottom: 2rem; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: var(--accent-color); width: 25%; transition: width 0.3s ease; }
+
+        /* Quiz Steps */
+        .step { display: none; animation: fadeIn 0.4s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        
+        /* Custom Radio Buttons */
+        .options { display: flex; flex-direction: column; gap: 1rem; }
+        .option-label { display: block; padding: 1.25rem; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-weight: 600; background: #fff; }
+        .option-label:hover { border-color: #cbd5e0; background-color: #f7fafc; }
+        input[type="radio"] { display: none; }
+        input[type="radio"]:checked + .option-label { border-color: var(--accent-color); background-color: #ebf8ff; color: var(--accent-color); }
+
+        .btn-next { width: 100%; background-color: var(--text-color); color: #fff; padding: 1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; margin-top: 2rem; cursor: pointer; transition: background 0.2s; }
+        .btn-next:hover { background-color: #2d3748; }
+
+        /* Loading Screen */
+        .loading { display: none; text-align: center; padding: 3rem 0; }
+        .spinner { border: 4px solid var(--border-color); border-top: 4px solid var(--accent-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1.5rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Results Screen */
+        .result-screen { display: none; animation: fadeIn 0.5s ease; }
+        .risk-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 99px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; }
+        .risk-high { background-color: #fff5f5; color: var(--error-text); border: 1px solid #feb2b2; }
+        .risk-medium { background-color: #fffff0; color: var(--warning-text); border: 1px solid #fbd38d; }
+        
+        .result-content { background: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; margin-bottom: 2rem; font-size: 1.05rem; }
+        .result-content h3 { margin-top: 0; font-size: 1.3rem; }
+        
+        .cta-box { background-color: var(--text-color); color: #fff; padding: 2rem; border-radius: 8px; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { background-color: #fff; color: var(--text-color); padding: 1rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-block; margin-top: 1rem; font-size: 1.1rem; }
+        .cta-box .btn:hover { background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="logo">Expatriation Framework</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <form id="diagnostic-form">
+            <!-- Etape 1 -->
+            <div class="step active" id="step-1">
+                <h2>1. Quel est votre statut professionnel principal actuel ?</h2>
+                <div class="options">
+                    <input type="radio" name="statut" id="s_sasu" value="sasu">
+                    <label class="option-label" for="s_sasu">Gérant de société française (SASU, EURL, SAS...)</label>
+                    
+                    <input type="radio" name="statut" id="s_freelance" value="freelance">
+                    <label class="option-label" for="s_freelance">Indépendant / Auto-entrepreneur</label>
+                    
+                    <input type="radio" name="statut" id="s_invest" value="invest">
+                    <label class="option-label" for="s_invest">Investisseur (Crypto, Bourse, Immo)</label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(1)">Suivant</button>
+            </div>
+
+            <!-- Etape 2 -->
+            <div class="step" id="step-2">
+                <h2>2. Quelle est votre situation familiale ?</h2>
+                <div class="options">
+                    <input type="radio" name="famille" id="f_celib" value="celib">
+                    <label class="option-label" for="f_celib">Célibataire</label>
+                    
+                    <input type="radio" name="famille" id="f_couple" value="couple">
+                    <label class="option-label" for="f_couple">En couple (sans enfant à charge)</label>
+                    
+                    <input type="radio" name="famille" id="f_enfant" value="enfant">
+                    <label class="option-label" for="f_enfant">Famille avec enfant(s)</label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(2)">Suivant</button>
+            </div>
+
+            <!-- Etape 3 -->
+            <div class="step" id="step-3">
+                <h2>3. Quel est le délai prévu avant votre départ physique ?</h2>
+                <div class="options">
+                    <input type="radio" name="delai" id="d_urgent" value="urgent">
+                    <label class="option-label" for="d_urgent">Moins de 3 mois (ou déjà parti)</label>
+                    
+                    <input type="radio" name="delai" id="d_moyen" value="moyen">
+                    <label class="option-label" for="d_moyen">Entre 3 et 6 mois</label>
+                    
+                    <input type="radio" name="delai" id="d_long" value="long">
+                    <label class="option-label" for="d_long">Dans plus de 6 mois</label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(3)">Suivant</button>
+            </div>
+
+            <!-- Etape 4 -->
+            <div class="step" id="step-4">
+                <h2>4. Avez-vous des actifs immobilisés en France ?</h2>
+                <p style="color: var(--muted-text); font-size: 0.9rem; margin-top: -1rem; margin-bottom: 1.5rem;">(Immobilier locatif, SCPI, gros portefeuilles bancaires français)</p>
+                <div class="options">
+                    <input type="radio" name="actifs" id="a_oui" value="oui">
+                    <label class="option-label" for="a_oui">Oui, des montants significatifs</label>
+                    
+                    <input type="radio" name="actifs" id="a_non" value="non">
+                    <label class="option-label" for="a_non">Non, quasiment rien</label>
+                </div>
+                <button type="button" class="btn-next" onclick="processResults()">Générer mon audit</button>
+            </div>
+        </form>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h3>Analyse algorithmique en cours...</h3>
+            <p style="color: var(--muted-text);">Croisement avec les critères de l'Article 4B du CGI.</p>
+        </div>
+
+        <!-- Result -->
+        <div class="result-screen" id="result-screen">
+            <div id="risk-badge" class="risk-badge risk-high">Risque Fiscal : ÉLEVÉ</div>
+            
+            <div class="result-content">
+                <h3>Bilan de votre situation</h3>
+                <div id="diagnostic-text">
+                    <!-- Le texte sera injecté ici par JS -->
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <h3>Ne laissez pas le fisc trancher à votre place.</h3>
+                <p style="color: #e2e8f0; margin-bottom: 1.5rem;">Votre profil nécessite une sécurisation immédiate. Obtenez la checklist d'audit exacte utilisée par les avocats d'affaires pour verrouiller les 3 critères de résidence.</p>
+                <a href="#" class="btn">Télécharger le Framework Complet (39€)</a>
+                <p style="margin-top: 15px; font-size: 0.85rem; color: #a0aec0;">Disponible prochainement - Paiement 100% sécurisé</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function nextStep(current) {
+            // Check si une option est sélectionnée
+            const stepDiv = document.getElementById('step-' + current);
+            const radioChecked = stepDiv.querySelector('input[type="radio"]:checked');
+            
+            if(!radioChecked) {
+                alert("Veuillez sélectionner une option pour continuer.");
+                return;
+            }
+
+            document.getElementById('step-' + current).classList.remove('active');
+            document.getElementById('step-' + (current + 1)).classList.add('active');
+            document.getElementById('progress-bar').style.width = ((current + 1) * 25) + '%';
+        }
+
+        function processResults() {
+            const step4Checked = document.querySelector('#step-4 input[type="radio"]:checked');
+            if(!step4Checked) {
+                alert("Veuillez sélectionner une option.");
+                return;
+            }
+
+            // Cacher le form et progress bar, montrer le loading
+            document.getElementById('diagnostic-form').style.display = 'none';
+            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            // Récupérer les valeurs
+            const statut = document.querySelector('input[name="statut"]:checked').value;
+            const famille = document.querySelector('input[name="famille"]:checked').value;
+            const delai = document.querySelector('input[name="delai"]:checked').value;
+            const actifs = document.querySelector('input[name="actifs"]:checked').value;
+
+            // Simuler un calcul de 2.5 secondes
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                generateReport(statut, famille, delai, actifs);
+                document.getElementById('result-screen').style.display = 'block';
+            }, 2500);
+        }
+
+        function generateReport(statut, famille, delai, actifs) {
+            let texte = "";
+            let riskLevel = "high"; // par défaut
+
+            // Logique de construction du texte "Lego"
+            
+            // 1. Statut & Délai
+            if (statut === "sasu") {
+                texte += "<p><strong>Danger sur l'Activité :</strong> En tant que gérant de société, ";
+                if (delai === "urgent") {
+                    texte += "votre départ imminent ne vous laisse pas le temps de réaliser une TUP (Transmission Universelle de Patrimoine) ou une liquidation dans les règles. Le fisc français considèrera que vous dirigez votre société depuis l'étranger de manière occulte (direction effective en France).</p>";
+                } else {
+                    texte += "vous avez encore le temps d'organiser la fermeture ou la transition de votre structure. Attention à la période charnière : le fisc est intraitable sur la gestion de sociétés françaises depuis l'étranger.</p>";
+                    riskLevel = "medium";
+                }
+            } else if (statut === "freelance") {
+                texte += "<p><strong>Danger sur la clientèle :</strong> En tant qu'indépendant, le risque majeur réside dans la localisation de vos clients. Si 100% de votre chiffre d'affaires reste de source française après votre départ, l'administration peut rattacher votre activité professionnelle principale à la France.</p>";
+            } else {
+                texte += "<p><strong>Danger sur l'Exit Tax :</strong> Votre profil d'investisseur vous expose directement au radar de la plus-value latente. Il est impératif d'auditer la valeur de vos portefeuilles au jour exact de votre départ sous peine de double imposition.</p>";
+            }
+
+            // 2. Famille
+            if (famille === "enfant") {
+                texte += "<p><strong>Le Piège du Foyer :</strong> Partir avec des enfants implique des inscriptions scolaires et un transfert de domicile fort. Si l'un des membres de la famille reste partiellement en France pour terminer l'année, le critère du « Foyer » (Article 4B) vous maintiendra fiscalement résident français, peu importe vos jours passés à l'étranger.</p>";
+            } else if (famille === "couple") {
+                texte += "<p><strong>Le Piège du Foyer :</strong> L'administration audite le foyer fiscal dans son ensemble. Votre conjoint(e) doit couper ses liens contractuels français (travail, abonnements) au même rythme que vous.</p>";
+            }
+
+            // 3. Patrimoine
+            if (actifs === "oui") {
+                texte += "<p><strong>Centre des intérêts économiques :</strong> La conservation d'actifs lourds en France est un drapeau rouge massif. C'est l'argument numéro 1 utilisé lors des redressements pour prouver que vos intérêts vitaux n'ont jamais quitté le territoire.</p>";
+            }
+
+            // Injection
+            document.getElementById('diagnostic-text').innerHTML = texte;
+            
+            // Badge
+            const badge = document.getElementById('risk-badge');
+            if (riskLevel === "high") {
+                badge.className = "risk-badge risk-high";
+                badge.innerText = "Risque Fiscal : CRITIQUE";
+            } else {
+                badge.className = "risk-badge risk-medium";
+                badge.innerText = "Risque Fiscal : MODÉRÉ";
+            }
+        }
+    </script>
+</body>
+</html>
