@@ -41,8 +41,12 @@
         input[type="radio"] { display: none; }
         input[type="radio"]:checked + .option-label { border-color: var(--accent-color); background-color: #ebf8ff; color: var(--accent-color); box-shadow: 0 2px 4px rgba(43, 108, 176, 0.1); }
 
-        .btn-next { width: 100%; background-color: var(--text-color); color: #fff; padding: 1.1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; cursor: pointer; transition: background 0.2s; }
+        /* Navigation Buttons */
+        .btn-container { display: flex; gap: 1rem; margin-top: 2rem; }
+        .btn-next { background-color: var(--text-color); color: #fff; padding: 1.1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; flex: 2; }
         .btn-next:hover { background-color: #2d3748; }
+        .btn-prev { background: none; border: 1px solid var(--border-color); color: var(--muted-text); padding: 1.1rem; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; flex: 1; }
+        .btn-prev:hover { background-color: #f7fafc; border-color: #cbd5e0; color: var(--text-color); }
 
         /* Loading Screen */
         .loading { display: none; text-align: center; padding: 4rem 0; }
@@ -98,18 +102,23 @@
                     <label><input type="radio" name="q1" value="salarie"><span class="option-label">Salarié / Dirigeant salarié</span></label>
                     <label><input type="radio" name="q1" value="investisseur"><span class="option-label">Investisseur (Immobilier, Bourse, Crypto) à temps plein</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(1)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-next" style="flex: 1;" onclick="nextStep(1)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-2">
                 <span class="pillar-tag">Axe 1 : Activité & Structure</span>
-                <h2>Où se situe la majorité de vos clients ou sources de revenus actuels ?</h2>
+                <h2>Où se situe la majorité de vos clients ou sources de revenus actifs ?</h2>
                 <div class="options">
                     <label><input type="radio" name="q2" value="france"><span class="option-label">100% en France</span></label>
                     <label><input type="radio" name="q2" value="mixte"><span class="option-label">Mixte (France et International)</span></label>
                     <label><input type="radio" name="q2" value="inter"><span class="option-label">Majoritairement à l'International</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(2)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(2)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(2)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-3">
@@ -120,7 +129,10 @@
                     <label><input type="radio" name="q3" value="garder"><span class="option-label">La garder ouverte et la gérer depuis l'étranger</span></label>
                     <label><input type="radio" name="q3" value="indecis"><span class="option-label">Je ne sais pas encore / Je n'y ai pas pensé</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(3)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(3)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(3)">Suivant</button>
+                </div>
             </div>
 
             <!-- PILIER 2 : FOYER FISCAL -->
@@ -132,7 +144,10 @@
                     <label><input type="radio" name="q4" value="couple"><span class="option-label">En couple (sans enfant)</span></label>
                     <label><input type="radio" name="q4" value="famille"><span class="option-label">Famille avec enfant(s)</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(4)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(4)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(4)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-5">
@@ -143,7 +158,10 @@
                     <label><input type="radio" name="q5" value="decale"><span class="option-label">Non, mon conjoint/mes enfants restent quelques mois de plus</span></label>
                     <label><input type="radio" name="q5" value="na"><span class="option-label">Non applicable (Célibataire)</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(5)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(5)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(5)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-6">
@@ -154,7 +172,10 @@
                     <label><input type="radio" name="q6" value="louer"><span class="option-label">Je la mets en location (nue ou meublée)</span></label>
                     <label><input type="radio" name="q6" value="vide"><span class="option-label">Je la garde à ma disposition (vide ou pied-à-terre)</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(6)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(6)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(6)">Suivant</button>
+                </div>
             </div>
 
             <!-- PILIER 3 : PATRIMOINE -->
@@ -162,11 +183,14 @@
                 <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
                 <h2>Détenez-vous de l'immobilier locatif en France (en nom propre, SCI, SCPI...) ?</h2>
                 <div class="options">
-                    <label><input type="radio" name="q7" value="oui_beaucoup"><span class="option-label">Oui, un patrimoine important (> 500k€)</span></label>
-                    <label><input type="radio" name="q7" value="oui_peu"><span class="option-label">Oui, un petit peu (< 500k€)</span></label>
+                    <label><input type="radio" name="q7" value="oui_beaucoup"><span class="option-label">Oui, un patrimoine important (&gt; 500k€)</span></label>
+                    <label><input type="radio" name="q7" value="oui_peu"><span class="option-label">Oui, un petit peu (&lt; 500k€)</span></label>
                     <label><input type="radio" name="q7" value="non"><span class="option-label">Non, rien du tout</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(7)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(7)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(7)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-8">
@@ -175,9 +199,12 @@
                 <div class="options">
                     <label><input type="radio" name="q8" value="oui"><span class="option-label">Oui, montants significatifs</span></label>
                     <label><input type="radio" name="q8" value="non"><span class="option-label">Non, ou montants dérisoires</span></label>
-                    <label><input type="radio" name="q8" value="nsp"><span class="option-label">Je ne sais pas exactement / Je dois calculer</span></label>
+                    <label><input type="radio" name="q8" value="nsp"><span class="option-label">Je ne sais pas exactement / Je doit calculer</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(8)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(8)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(8)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-9">
@@ -188,7 +215,10 @@
                     <label><input type="radio" name="q9" value="un_seul"><span class="option-label">Uniquement un compte courant pour les frais basiques</span></label>
                     <label><input type="radio" name="q9" value="aucun"><span class="option-label">Non, je clôture absolument tout</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(9)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(9)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(9)">Suivant</button>
+                </div>
             </div>
 
             <!-- PILIER 4 : LE PROJET -->
@@ -200,7 +230,10 @@
                     <label><input type="radio" name="q10" value="moyen"><span class="option-label">Entre 3 et 6 mois</span></label>
                     <label><input type="radio" name="q10" value="long"><span class="option-label">Dans plus de 6 mois</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(10)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(10)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(10)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-11">
@@ -211,7 +244,10 @@
                     <label><input type="radio" name="q11" value="hors_ue"><span class="option-label">Hors UE classique (ex: USA, Canada, UK, Suisse...)</span></label>
                     <label><input type="radio" name="q11" value="paradis"><span class="option-label">Pays à fiscalité privilégiée (ex: Dubaï, Andorre, Panama...)</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(11)">Question suivante</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(11)">Retour</button>
+                    <button type="button" class="btn-next" onclick="nextStep(11)">Suivant</button>
+                </div>
             </div>
 
             <div class="step" id="step-12">
@@ -222,7 +258,10 @@
                     <label><input type="radio" name="q12" value="non"><span class="option-label">Non, je fais mes recherches moi-même pour l'instant</span></label>
                     <label><input type="radio" name="q12" value="cherche"><span class="option-label">Non, et je cherche justement par où commencer</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="processResults()">Générer mon audit</button>
+                <div class="btn-container">
+                    <button type="button" class="btn-prev" onclick="prevStep(12)">Retour</button>
+                    <button type="button" class="btn-next" onclick="processResults()">Générer mon audit</button>
+                </div>
             </div>
         </form>
 
@@ -282,6 +321,17 @@
             document.getElementById('step-counter').innerText = `${next} / 12`;
         }
 
+        function prevStep(step) {
+            // Pas besoin de vérifier la sélection pour reculer
+            document.getElementById(`step-${step}`).classList.remove('active');
+            const prev = step - 1;
+            document.getElementById(`step-${prev}`).classList.add('active');
+            
+            // Update UI Counters
+            document.getElementById('progress-bar').style.width = ((prev / totalSteps) * 100) + '%';
+            document.getElementById('step-counter').innerText = `${prev} / 12`;
+        }
+
         function processResults() {
             const selected = document.querySelector(`input[name="q12"]:checked`);
             if(!selected) {
@@ -311,7 +361,7 @@
 
         function generateReport() {
             let texte = "";
-            let riskScore = 0; // Calcul du score de risque
+            let riskScore = 0;
 
             // --- AXE 1 : STRUCTURE & ACTIVITÉ ---
             texte += "<h4>1. Risque sur la Direction Effective</h4>";
@@ -368,7 +418,7 @@
             // Injection du texte
             document.getElementById('diagnostic-text').innerHTML = texte;
             
-            // Gestion du Badge de Résultat selon le score
+            // Badge
             const badge = document.getElementById('risk-badge');
             const subtitle = document.getElementById('risk-subtitle');
             
