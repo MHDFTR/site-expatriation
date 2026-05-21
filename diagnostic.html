@@ -19,47 +19,53 @@
         header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; }
         .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
         
-        .container { max-width: 600px; margin: 4rem auto; padding: 0 1.5rem; }
+        .container { max-width: 650px; margin: 3rem auto; padding: 0 1.5rem; }
         
         /* Progress Bar */
-        .progress-container { width: 100%; background-color: var(--border-color); border-radius: 99px; height: 8px; margin-bottom: 2rem; overflow: hidden; }
-        .progress-bar { height: 100%; background-color: var(--accent-color); width: 25%; transition: width 0.3s ease; }
+        .progress-header { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted-text); margin-bottom: 0.5rem; font-weight: 600; }
+        .progress-container { width: 100%; background-color: var(--border-color); border-radius: 99px; height: 8px; margin-bottom: 3rem; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: var(--accent-color); width: 8.33%; transition: width 0.4s ease; }
 
         /* Quiz Steps */
         .step { display: none; animation: fadeIn 0.4s ease; }
         .step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .pillar-tag { background-color: #ebf8ff; color: #2b6cb0; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 1rem; }
+        h2 { font-size: 1.4rem; margin-top: 0; margin-bottom: 1.5rem; line-height: 1.3; }
         
         /* Custom Radio Buttons */
-        .options { display: flex; flex-direction: column; gap: 1rem; }
+        .options { display: flex; flex-direction: column; gap: 0.75rem; }
         .option-label { display: block; padding: 1.25rem; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-weight: 600; background: #fff; }
-        .option-label:hover { border-color: #cbd5e0; background-color: #f7fafc; }
+        .option-label:hover { border-color: #cbd5e0; background-color: #f7fafc; transform: translateY(-1px); }
         input[type="radio"] { display: none; }
-        input[type="radio"]:checked + .option-label { border-color: var(--accent-color); background-color: #ebf8ff; color: var(--accent-color); }
+        input[type="radio"]:checked + .option-label { border-color: var(--accent-color); background-color: #ebf8ff; color: var(--accent-color); box-shadow: 0 2px 4px rgba(43, 108, 176, 0.1); }
 
-        .btn-next { width: 100%; background-color: var(--text-color); color: #fff; padding: 1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; margin-top: 2rem; cursor: pointer; transition: background 0.2s; }
+        .btn-next { width: 100%; background-color: var(--text-color); color: #fff; padding: 1.1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; cursor: pointer; transition: background 0.2s; }
         .btn-next:hover { background-color: #2d3748; }
 
         /* Loading Screen */
-        .loading { display: none; text-align: center; padding: 3rem 0; }
-        .spinner { border: 4px solid var(--border-color); border-top: 4px solid var(--accent-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1.5rem; }
+        .loading { display: none; text-align: center; padding: 4rem 0; }
+        .spinner { border: 4px solid var(--border-color); border-top: 4px solid var(--accent-color); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 2rem; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #loading-text { font-size: 1.2rem; font-weight: 600; color: var(--accent-color); margin-bottom: 0.5rem; transition: opacity 0.3s; }
 
         /* Results Screen */
-        .result-screen { display: none; animation: fadeIn 0.5s ease; }
-        .risk-badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 99px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; }
-        .risk-high { background-color: #fff5f5; color: var(--error-text); border: 1px solid #feb2b2; }
-        .risk-medium { background-color: #fffff0; color: var(--warning-text); border: 1px solid #fbd38d; }
+        .result-screen { display: none; animation: fadeIn 0.6s ease; }
+        .risk-header { text-align: center; margin-bottom: 2rem; }
+        .risk-badge { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 99px; font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem; }
+        .risk-critique { background-color: #fff5f5; color: var(--error-text); border: 2px solid #feb2b2; }
+        .risk-eleve { background-color: #fffaf0; color: var(--warning-text); border: 2px solid #fbd38d; }
+        .risk-modere { background-color: #f0fff4; color: #276749; border: 2px solid #9ae6b4; }
         
-        .result-content { background: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; margin-bottom: 2rem; font-size: 1.05rem; }
-        .result-content h3 { margin-top: 0; font-size: 1.3rem; }
+        .result-content { background: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; margin-bottom: 2.5rem; font-size: 1.05rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .result-content h3 { margin-top: 0; font-size: 1.4rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .result-content p { margin-bottom: 1.5rem; }
         
-        .cta-box { background-color: var(--text-color); color: #fff; padding: 2rem; border-radius: 8px; text-align: center; }
-        .cta-box h3 { margin-top: 0; }
-        .cta-box .btn { background-color: #fff; color: var(--text-color); padding: 1rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-block; margin-top: 1rem; font-size: 1.1rem; }
-        .cta-box .btn:hover { background-color: #f1f5f9; }
+        .cta-box { background-color: var(--text-color); color: #fff; padding: 2.5rem 2rem; border-radius: 8px; text-align: center; }
+        .cta-box h3 { margin-top: 0; font-size: 1.5rem; margin-bottom: 1rem; }
+        .cta-box .btn { background-color: #fff; color: var(--text-color); padding: 1.1rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 800; display: inline-block; margin-top: 1.5rem; font-size: 1.1rem; width: 80%; transition: transform 0.2s; }
+        .cta-box .btn:hover { transform: scale(1.02); background-color: #f8fafc; }
     </style>
 </head>
 <body>
@@ -70,69 +76,151 @@
 
     <div class="container">
         
-        <div class="progress-container" id="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
+        <div id="quiz-header">
+            <div class="progress-header">
+                <span>Progression de l'audit</span>
+                <span id="step-counter">1 / 12</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
         </div>
 
         <form id="diagnostic-form">
-            <!-- Etape 1 -->
+            
+            <!-- PILIER 1 : STRUCTURE PRO -->
             <div class="step active" id="step-1">
-                <h2>1. Quel est votre statut professionnel principal actuel ?</h2>
+                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
+                <h2>Quel est votre statut professionnel principal actuel ?</h2>
                 <div class="options">
-                    <input type="radio" name="statut" id="s_sasu" value="sasu">
-                    <label class="option-label" for="s_sasu">Gérant de société française (SASU, EURL, SAS...)</label>
-                    
-                    <input type="radio" name="statut" id="s_freelance" value="freelance">
-                    <label class="option-label" for="s_freelance">Indépendant / Auto-entrepreneur</label>
-                    
-                    <input type="radio" name="statut" id="s_invest" value="invest">
-                    <label class="option-label" for="s_invest">Investisseur (Crypto, Bourse, Immo)</label>
+                    <label><input type="radio" name="q1" value="sasu"><span class="option-label">Gérant de société française (SASU, EURL, SAS...)</span></label>
+                    <label><input type="radio" name="q1" value="indep"><span class="option-label">Indépendant / Auto-entrepreneur / Profession Libérale</span></label>
+                    <label><input type="radio" name="q1" value="salarie"><span class="option-label">Salarié / Dirigeant salarié</span></label>
+                    <label><input type="radio" name="q1" value="investisseur"><span class="option-label">Investisseur (Immobilier, Bourse, Crypto) à temps plein</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(1)">Suivant</button>
+                <button type="button" class="btn-next" onclick="nextStep(1)">Question suivante</button>
             </div>
 
-            <!-- Etape 2 -->
             <div class="step" id="step-2">
-                <h2>2. Quelle est votre situation familiale ?</h2>
+                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
+                <h2>Où se situe la majorité de vos clients ou sources de revenus actuels ?</h2>
                 <div class="options">
-                    <input type="radio" name="famille" id="f_celib" value="celib">
-                    <label class="option-label" for="f_celib">Célibataire</label>
-                    
-                    <input type="radio" name="famille" id="f_couple" value="couple">
-                    <label class="option-label" for="f_couple">En couple (sans enfant à charge)</label>
-                    
-                    <input type="radio" name="famille" id="f_enfant" value="enfant">
-                    <label class="option-label" for="f_enfant">Famille avec enfant(s)</label>
+                    <label><input type="radio" name="q2" value="france"><span class="option-label">100% en France</span></label>
+                    <label><input type="radio" name="q2" value="mixte"><span class="option-label">Mixte (France et International)</span></label>
+                    <label><input type="radio" name="q2" value="inter"><span class="option-label">Majoritairement à l'International</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(2)">Suivant</button>
+                <button type="button" class="btn-next" onclick="nextStep(2)">Question suivante</button>
             </div>
 
-            <!-- Etape 3 -->
             <div class="step" id="step-3">
-                <h2>3. Quel est le délai prévu avant votre départ physique ?</h2>
+                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
+                <h2>Que comptez-vous faire de votre structure/activité française après votre départ ?</h2>
                 <div class="options">
-                    <input type="radio" name="delai" id="d_urgent" value="urgent">
-                    <label class="option-label" for="d_urgent">Moins de 3 mois (ou déjà parti)</label>
-                    
-                    <input type="radio" name="delai" id="d_moyen" value="moyen">
-                    <label class="option-label" for="d_moyen">Entre 3 et 6 mois</label>
-                    
-                    <input type="radio" name="delai" id="d_long" value="long">
-                    <label class="option-label" for="d_long">Dans plus de 6 mois</label>
+                    <label><input type="radio" name="q3" value="fermer"><span class="option-label">La fermer ou la liquider avant de partir</span></label>
+                    <label><input type="radio" name="q3" value="garder"><span class="option-label">La garder ouverte et la gérer depuis l'étranger</span></label>
+                    <label><input type="radio" name="q3" value="indecis"><span class="option-label">Je ne sais pas encore / Je n'y ai pas pensé</span></label>
                 </div>
-                <button type="button" class="btn-next" onclick="nextStep(3)">Suivant</button>
+                <button type="button" class="btn-next" onclick="nextStep(3)">Question suivante</button>
             </div>
 
-            <!-- Etape 4 -->
+            <!-- PILIER 2 : FOYER FISCAL -->
             <div class="step" id="step-4">
-                <h2>4. Avez-vous des actifs immobilisés en France ?</h2>
-                <p style="color: var(--muted-text); font-size: 0.9rem; margin-top: -1rem; margin-bottom: 1.5rem;">(Immobilier locatif, SCPI, gros portefeuilles bancaires français)</p>
+                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
+                <h2>Quelle est votre situation familiale ?</h2>
                 <div class="options">
-                    <input type="radio" name="actifs" id="a_oui" value="oui">
-                    <label class="option-label" for="a_oui">Oui, des montants significatifs</label>
-                    
-                    <input type="radio" name="actifs" id="a_non" value="non">
-                    <label class="option-label" for="a_non">Non, quasiment rien</label>
+                    <label><input type="radio" name="q4" value="celib"><span class="option-label">Célibataire (sans enfant à charge)</span></label>
+                    <label><input type="radio" name="q4" value="couple"><span class="option-label">En couple (sans enfant)</span></label>
+                    <label><input type="radio" name="q4" value="famille"><span class="option-label">Famille avec enfant(s)</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(4)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-5">
+                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
+                <h2>Si applicable, votre famille part-elle exactement en même temps que vous ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="meme_temps"><span class="option-label">Oui, nous partons tous ensemble le même jour</span></label>
+                    <label><input type="radio" name="q5" value="decale"><span class="option-label">Non, mon conjoint/mes enfants restent quelques mois de plus</span></label>
+                    <label><input type="radio" name="q5" value="na"><span class="option-label">Non applicable (Célibataire)</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(5)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-6">
+                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
+                <h2>Qu'allez-vous faire de votre résidence principale française ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="vendre"><span class="option-label">Je la vends ou je rends les clés (locataire)</span></label>
+                    <label><input type="radio" name="q6" value="louer"><span class="option-label">Je la mets en location (nue ou meublée)</span></label>
+                    <label><input type="radio" name="q6" value="vide"><span class="option-label">Je la garde à ma disposition (vide ou pied-à-terre)</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(6)">Question suivante</button>
+            </div>
+
+            <!-- PILIER 3 : PATRIMOINE -->
+            <div class="step" id="step-7">
+                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
+                <h2>Détenez-vous de l'immobilier locatif en France (en nom propre, SCI, SCPI...) ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="oui_beaucoup"><span class="option-label">Oui, un patrimoine important (> 500k€)</span></label>
+                    <label><input type="radio" name="q7" value="oui_peu"><span class="option-label">Oui, un petit peu (< 500k€)</span></label>
+                    <label><input type="radio" name="q7" value="non"><span class="option-label">Non, rien du tout</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(7)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-8">
+                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
+                <h2>Avez-vous des portefeuilles d'actions, parts de société ou cryptomonnaies avec d'importantes plus-values latentes ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="oui"><span class="option-label">Oui, montants significatifs</span></label>
+                    <label><input type="radio" name="q8" value="non"><span class="option-label">Non, ou montants dérisoires</span></label>
+                    <label><input type="radio" name="q8" value="nsp"><span class="option-label">Je ne sais pas exactement / Je dois calculer</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(8)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-9">
+                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
+                <h2>Comptez-vous garder des comptes bancaires français actifs après votre départ ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="plusieurs"><span class="option-label">Oui, plusieurs comptes et livrets</span></label>
+                    <label><input type="radio" name="q9" value="un_seul"><span class="option-label">Uniquement un compte courant pour les frais basiques</span></label>
+                    <label><input type="radio" name="q9" value="aucun"><span class="option-label">Non, je clôture absolument tout</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(9)">Question suivante</button>
+            </div>
+
+            <!-- PILIER 4 : LE PROJET -->
+            <div class="step" id="step-10">
+                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
+                <h2>Dans combien de temps prévoyez-vous de quitter fiscalement et physiquement la France ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="urgent"><span class="option-label">Moins de 3 mois (ou je suis déjà parti)</span></label>
+                    <label><input type="radio" name="q10" value="moyen"><span class="option-label">Entre 3 et 6 mois</span></label>
+                    <label><input type="radio" name="q10" value="long"><span class="option-label">Dans plus de 6 mois</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(10)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-11">
+                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
+                <h2>Quelle est votre destination fiscale visée ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="ue"><span class="option-label">Union Européenne (ex: Espagne, Portugal, Malte...)</span></label>
+                    <label><input type="radio" name="q11" value="hors_ue"><span class="option-label">Hors UE classique (ex: USA, Canada, UK, Suisse...)</span></label>
+                    <label><input type="radio" name="q11" value="paradis"><span class="option-label">Pays à fiscalité privilégiée (ex: Dubaï, Andorre, Panama...)</span></label>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(11)">Question suivante</button>
+            </div>
+
+            <div class="step" id="step-12">
+                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
+                <h2>Êtes-vous déjà accompagné(e) par un professionnel du droit sur ce dossier ?</h2>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="oui"><span class="option-label">Oui, je paie déjà un avocat ou un fiscaliste</span></label>
+                    <label><input type="radio" name="q12" value="non"><span class="option-label">Non, je fais mes recherches moi-même pour l'instant</span></label>
+                    <label><input type="radio" name="q12" value="cherche"><span class="option-label">Non, et je cherche justement par où commencer</span></label>
                 </div>
                 <button type="button" class="btn-next" onclick="processResults()">Générer mon audit</button>
             </div>
@@ -141,25 +229,29 @@
         <!-- Loading -->
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <h3>Analyse algorithmique en cours...</h3>
-            <p style="color: var(--muted-text);">Croisement avec les critères de l'Article 4B du CGI.</p>
+            <div id="loading-text">Initialisation de l'algorithme...</div>
+            <p style="color: var(--muted-text); font-size: 0.95rem;">Croisement de vos 12 réponses avec la jurisprudence de l'Article 4B du CGI.</p>
         </div>
 
         <!-- Result -->
         <div class="result-screen" id="result-screen">
-            <div id="risk-badge" class="risk-badge risk-high">Risque Fiscal : ÉLEVÉ</div>
+            <div class="risk-header">
+                <div id="risk-badge" class="risk-badge risk-critique">NIVEAU DE RISQUE : CRITIQUE</div>
+                <p id="risk-subtitle" style="color: var(--muted-text); margin-top: -10px; font-weight: 500;">Profil flaggé pour requalification fiscale potentielle.</p>
+            </div>
             
             <div class="result-content">
-                <h3>Bilan de votre situation</h3>
+                <h3>Bilan d'Audit Préliminaire</h3>
                 <div id="diagnostic-text">
-                    <!-- Le texte sera injecté ici par JS -->
+                    <!-- Injecté via JS -->
                 </div>
             </div>
 
             <div class="cta-box">
-                <h3>Ne laissez pas le fisc trancher à votre place.</h3>
-                <p style="color: #e2e8f0; margin-bottom: 1.5rem;">Votre profil nécessite une sécurisation immédiate. Obtenez la checklist d'audit exacte utilisée par les avocats d'affaires pour verrouiller les 3 critères de résidence.</p>
-                <a href="#" class="btn">Télécharger le Framework Complet (39€)</a>
+                <h3>Ne laissez pas une erreur technique vous coûter des dizaines de milliers d'euros.</h3>
+                <p style="color: #e2e8f0; margin-bottom: 1rem; font-size: 1.05rem;">Votre profil contient des marqueurs de risque qui attirent systématiquement l'attention de l'administration lors d'un départ. Vous devez impérativement sécuriser votre situation avant de franchir la frontière.</p>
+                <p style="color: #cbd5e0; font-size: 0.95rem;">Obtenez la checklist stricte utilisée par les avocats d'affaires pour verrouiller les 3 critères de résidence et neutraliser le risque de redressement.</p>
+                <a href="#" class="btn">Télécharger le Framework (39€)</a>
                 <p style="margin-top: 15px; font-size: 0.85rem; color: #a0aec0;">Disponible prochainement - Paiement 100% sécurisé</p>
             </div>
         </div>
@@ -167,91 +259,131 @@
     </div>
 
     <script>
-        function nextStep(current) {
-            // Check si une option est sélectionnée
-            const stepDiv = document.getElementById('step-' + current);
-            const radioChecked = stepDiv.querySelector('input[type="radio"]:checked');
-            
-            if(!radioChecked) {
-                alert("Veuillez sélectionner une option pour continuer.");
+        const totalSteps = 12;
+        let answers = {};
+
+        function nextStep(step) {
+            const selected = document.querySelector(`input[name="q${step}"]:checked`);
+            if(!selected) {
+                alert("Veuillez sélectionner une option pour continuer l'audit.");
                 return;
             }
+            
+            // Sauvegarde de la réponse
+            answers[`q${step}`] = selected.value;
 
-            document.getElementById('step-' + current).classList.remove('active');
-            document.getElementById('step-' + (current + 1)).classList.add('active');
-            document.getElementById('progress-bar').style.width = ((current + 1) * 25) + '%';
+            // Transition UI
+            document.getElementById(`step-${step}`).classList.remove('active');
+            const next = step + 1;
+            document.getElementById(`step-${next}`).classList.add('active');
+            
+            // Update UI Counters
+            document.getElementById('progress-bar').style.width = ((next / totalSteps) * 100) + '%';
+            document.getElementById('step-counter').innerText = `${next} / 12`;
         }
 
         function processResults() {
-            const step4Checked = document.querySelector('#step-4 input[type="radio"]:checked');
-            if(!step4Checked) {
-                alert("Veuillez sélectionner une option.");
+            const selected = document.querySelector(`input[name="q12"]:checked`);
+            if(!selected) {
+                alert("Veuillez sélectionner la dernière option.");
                 return;
             }
+            answers[`q12`] = selected.value;
 
-            // Cacher le form et progress bar, montrer le loading
+            // Masquer form, afficher loading
             document.getElementById('diagnostic-form').style.display = 'none';
-            document.getElementById('progress-container').style.display = 'none';
+            document.getElementById('quiz-header').style.display = 'none';
             document.getElementById('loading').style.display = 'block';
 
-            // Récupérer les valeurs
-            const statut = document.querySelector('input[name="statut"]:checked').value;
-            const famille = document.querySelector('input[name="famille"]:checked').value;
-            const delai = document.querySelector('input[name="delai"]:checked').value;
-            const actifs = document.querySelector('input[name="actifs"]:checked').value;
+            // Animation de textes de chargement (Psychologie)
+            const loadingTextDiv = document.getElementById('loading-text');
+            setTimeout(() => { loadingTextDiv.innerText = "Vérification des critères de résidence professionnelle..."; }, 800);
+            setTimeout(() => { loadingTextDiv.innerText = "Évaluation du risque de Foyer Fiscal (Art. 4B)..."; }, 1600);
+            setTimeout(() => { loadingTextDiv.innerText = "Calcul de l'exposition à l'Exit Tax..."; }, 2400);
+            setTimeout(() => { loadingTextDiv.innerText = "Génération de votre rapport sur mesure..."; }, 3200);
 
-            // Simuler un calcul de 2.5 secondes
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
-                generateReport(statut, famille, delai, actifs);
+                generateReport();
                 document.getElementById('result-screen').style.display = 'block';
-            }, 2500);
+            }, 4000);
         }
 
-        function generateReport(statut, famille, delai, actifs) {
+        function generateReport() {
             let texte = "";
-            let riskLevel = "high"; // par défaut
+            let riskScore = 0; // Calcul du score de risque
 
-            // Logique de construction du texte "Lego"
-            
-            // 1. Statut & Délai
-            if (statut === "sasu") {
-                texte += "<p><strong>Danger sur l'Activité :</strong> En tant que gérant de société, ";
-                if (delai === "urgent") {
-                    texte += "votre départ imminent ne vous laisse pas le temps de réaliser une TUP (Transmission Universelle de Patrimoine) ou une liquidation dans les règles. Le fisc français considèrera que vous dirigez votre société depuis l'étranger de manière occulte (direction effective en France).</p>";
-                } else {
-                    texte += "vous avez encore le temps d'organiser la fermeture ou la transition de votre structure. Attention à la période charnière : le fisc est intraitable sur la gestion de sociétés françaises depuis l'étranger.</p>";
-                    riskLevel = "medium";
-                }
-            } else if (statut === "freelance") {
-                texte += "<p><strong>Danger sur la clientèle :</strong> En tant qu'indépendant, le risque majeur réside dans la localisation de vos clients. Si 100% de votre chiffre d'affaires reste de source française après votre départ, l'administration peut rattacher votre activité professionnelle principale à la France.</p>";
+            // --- AXE 1 : STRUCTURE & ACTIVITÉ ---
+            texte += "<h4>1. Risque sur la Direction Effective</h4>";
+            if (answers.q1 === "sasu" && answers.q3 === "garder") {
+                texte += "<p>⚠️ <strong>Alerte Rouge :</strong> Vous prévoyez de conserver la gérance de votre société française depuis l'étranger. L'administration considère que le siège de direction effective est déplacé là où vous résidez physiquement. Votre société s'expose à un redressement massif pour établissement stable occulte.</p>";
+                riskScore += 40;
+            } else if (answers.q1 === "indep" && answers.q2 === "france") {
+                texte += "<p>⚠️ <strong>Alerte Centre Économique :</strong> Vous êtes indépendant avec une clientèle 100% française. Si vous continuez de facturer cette même clientèle depuis l'étranger sans changer la nature de vos contrats, le fisc peut arguer que le centre de vos intérêts économiques n'a jamais quitté la France.</p>";
+                riskScore += 30;
+            } else if (answers.q3 === "indecis") {
+                texte += "<p>⚠️ <strong>Alerte Impréparation :</strong> Partir sans statuer sur le sort juridique de votre structure actuelle est le moyen le plus rapide d'attirer l'attention du fisc. L'inaction est considérée comme un maintien de l'activité en France.</p>";
+                riskScore += 25;
             } else {
-                texte += "<p><strong>Danger sur l'Exit Tax :</strong> Votre profil d'investisseur vous expose directement au radar de la plus-value latente. Il est impératif d'auditer la valeur de vos portefeuilles au jour exact de votre départ sous peine de double imposition.</p>";
+                texte += "<p>✅ <strong>Projet cohérent :</strong> Votre approche concernant votre structure professionnelle semble s'orienter vers une coupure claire, ce qui est le premier pilier d'une expatriation réussie. Attention toutefois à l'exécution de la liquidation.</p>";
+                riskScore += 5;
             }
 
-            // 2. Famille
-            if (famille === "enfant") {
-                texte += "<p><strong>Le Piège du Foyer :</strong> Partir avec des enfants implique des inscriptions scolaires et un transfert de domicile fort. Si l'un des membres de la famille reste partiellement en France pour terminer l'année, le critère du « Foyer » (Article 4B) vous maintiendra fiscalement résident français, peu importe vos jours passés à l'étranger.</p>";
-            } else if (famille === "couple") {
-                texte += "<p><strong>Le Piège du Foyer :</strong> L'administration audite le foyer fiscal dans son ensemble. Votre conjoint(e) doit couper ses liens contractuels français (travail, abonnements) au même rythme que vous.</p>";
+            // --- AXE 2 : FOYER FISCAL ---
+            texte += "<h4>2. Risque sur le Foyer (Critère Personnel)</h4>";
+            if ((answers.q4 === "famille" || answers.q4 === "couple") && answers.q5 === "decale") {
+                texte += "<p>⚠️ <strong>Alerte Article 4B :</strong> Attention, jurisprudence très stricte. Si votre famille reste en France, même temporairement pour finir l'année scolaire ou un contrat de travail, le fisc français estimera que votre 'Foyer' est toujours en France, et vous resterez imposable en France sur vos revenus mondiaux dès le 1er jour.</p>";
+                riskScore += 40;
+            } else if (answers.q6 === "vide") {
+                texte += "<p>⚠️ <strong>Alerte Habitation :</strong> Conserver votre résidence principale vide, c'est conserver 'une habitation à votre disposition'. En cas de doute sur les autres critères, ce seul élément suffit à un inspecteur pour justifier le maintien de votre résidence fiscale française.</p>";
+                riskScore += 25;
+            } else {
+                texte += "<p>✅ <strong>Mobilité globale :</strong> Le détachement de votre foyer semble total. En rendant votre logement et/ou en faisant migrer votre cellule familiale en même temps que vous, vous neutralisez le critère le plus redoutable du Code Général des Impôts.</p>";
+                riskScore += 0;
             }
 
-            // 3. Patrimoine
-            if (actifs === "oui") {
-                texte += "<p><strong>Centre des intérêts économiques :</strong> La conservation d'actifs lourds en France est un drapeau rouge massif. C'est l'argument numéro 1 utilisé lors des redressements pour prouver que vos intérêts vitaux n'ont jamais quitté le territoire.</p>";
+            // --- AXE 3 : PATRIMOINE ---
+            texte += "<h4>3. Risque Patrimonial & Exit Tax</h4>";
+            if (answers.q8 === "oui" || answers.q8 === "nsp") {
+                texte += "<p>⚠️ <strong>Alerte Exit Tax :</strong> Vos plus-values latentes (actions, crypto, parts de société) vous placent directement sous la menace de l'Exit Tax. Un manquement déclaratif 30 jours avant le départ entraîne l'exigibilité immédiate de l'impôt (30% + pénalités).</p>";
+                riskScore += 30;
+            } else if (answers.q7 === "oui_beaucoup") {
+                texte += "<p>⚠️ <strong>Alerte IFI et Revenus Fonciers :</strong> Votre patrimoine immobilier lourd vous maintient fortement connecté à l'économie française. Vous subirez une fiscalité punitive (taux minimum des non-résidents) sur vos loyers si aucune restructuration n'est anticipée.</p>";
+                riskScore += 20;
+            } else {
+                texte += "<p>✅ <strong>Fluidité patrimoniale :</strong> Votre patrimoine n'est pas un point de blocage majeur, ce qui simplifie grandement vos démarches déclaratives lors de votre année de transfert.</p>";
+                riskScore += 5;
             }
 
-            // Injection
+            // --- AXE 4 : LE TIMING ---
+            texte += "<h4>4. Votre Chronologie</h4>";
+            if (answers.q10 === "urgent" && answers.q12 !== "oui") {
+                texte += "<p>⚠️ <strong>Alerte Urgence :</strong> Un départ prévu dans moins de 3 mois sans filet de sécurité juridique est un scénario catastrophe. Les délais administratifs français (banques, liquidations, impôts) sont incompatibles avec votre calendrier sans une méthode stricte.</p>";
+                riskScore += 25;
+            } else if (answers.q11 === "paradis") {
+                texte += "<p>⚠️ <strong>Alerte Convention Fiscale :</strong> Partir vers une destination à fiscalité privilégiée (Dubaï, Andorre, etc.) vous place automatiquement en haut de la pile des contrôles douaniers et fiscaux. La charge de la preuve d'un vrai départ reposera entièrement sur vous.</p>";
+                riskScore += 15;
+            }
+
+            // Injection du texte
             document.getElementById('diagnostic-text').innerHTML = texte;
             
-            // Badge
+            // Gestion du Badge de Résultat selon le score
             const badge = document.getElementById('risk-badge');
-            if (riskLevel === "high") {
-                badge.className = "risk-badge risk-high";
-                badge.innerText = "Risque Fiscal : CRITIQUE";
+            const subtitle = document.getElementById('risk-subtitle');
+            
+            if (riskScore >= 60) {
+                badge.className = "risk-badge risk-critique";
+                badge.innerText = "NIVEAU DE RISQUE : CRITIQUE";
+                subtitle.innerText = "Profil flaggé. Le risque de redressement est très élevé sans action corrective.";
+            } else if (riskScore >= 30) {
+                badge.className = "risk-badge risk-eleve";
+                badge.innerText = "NIVEAU DE RISQUE : ÉLEVÉ";
+                subtitle.innerText = "Votre dossier comporte des failles classiques exploitées par l'administration.";
             } else {
-                badge.className = "risk-badge risk-medium";
-                badge.innerText = "Risque Fiscal : MODÉRÉ";
+                badge.className = "risk-badge risk-modere";
+                badge.innerText = "NIVEAU DE RISQUE : À SURVEILLER";
+                subtitle.innerText = "Votre dossier est cohérent, mais la procédure administrative doit être sans faille.";
             }
         }
     </script>
