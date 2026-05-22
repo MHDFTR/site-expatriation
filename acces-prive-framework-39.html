@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téléchargement - Expatriation Framework</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+            --muted-text: #718096;
+            --success-color: #38a169;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        
+        .container { max-width: 600px; margin: 0 auto; padding: 3rem 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); text-align: center; }
+        
+        .success-icon { font-size: 4rem; margin-bottom: 1rem; line-height: 1; }
+        h1 { font-size: 2rem; margin-top: 0; margin-bottom: 1rem; }
+        p { color: var(--muted-text); margin-bottom: 2rem; font-size: 1.1rem; }
+        
+        .btn-download { background-color: var(--success-color); color: #fff; padding: 1.2rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1.2rem; display: inline-block; transition: opacity 0.2s; }
+        .btn-download:hover { opacity: 0.9; }
+        
+        .warning-box { background-color: #fffaf0; border: 1px solid #feebc8; color: #c05621; padding: 1rem; border-radius: 8px; font-size: 0.9rem; margin-top: 3rem; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        <h1>Paiement validé !</h1>
+        <p>Merci pour votre confiance. Votre expatriation est sur le point d'être sécurisée à 100%.</p>
+        
+        <!-- LE LIEN VERS TON PDF EST ICI -->
+        <a href="le-framework-expatriation.pdf" download class="btn-download">
+            ⬇️ Télécharger le Framework (PDF)
+        </a>
+
+        <div class="warning-box">
+            <strong>⚠️ Important :</strong> Pensez à enregistrer ce document immédiatement sur votre ordinateur. Pour des raisons de sécurité, le lien de cette page expirera et ne doit pas être partagé.
+        </div>
+    </div>
+
+</body>
+</html>
