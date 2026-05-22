@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expatriation Framework - Sécurisez votre départ</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2b6cb0; /* Bleu pro */
+            --accent-hover: #2c5282;
+            --border-color: #e2e8f0;
+            --muted-text: #718096;
+            --success-color: #38a169;
+            --cta-color: #dd6b20; /* Orange conversion */
+            --cta-hover: #c05621;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 0; }
+        header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Hero Section */
+        .hero { text-align: center; padding: 5rem 1rem 4rem; }
+        .hero-tag { background-color: #ebf8ff; color: var(--accent-color); padding: 0.5rem 1rem; border-radius: 99px; font-size: 0.9rem; font-weight: 700; display: inline-block; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 2.8rem; line-height: 1.2; margin-top: 0; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        .hero p { font-size: 1.25rem; color: var(--muted-text); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        /* Boutons */
+        .btn-primary { background-color: var(--cta-color); color: #fff; padding: 1.2rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1.2rem; display: inline-block; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 14px 0 rgba(221, 107, 32, 0.39); }
+        .btn-primary:hover { background-color: var(--cta-hover); transform: translateY(-2px); }
+        
+        /* Section Problème */
+        .problem-section { background-color: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; margin-bottom: 4rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .problem-section h2 { font-size: 1.8rem; margin-top: 0; margin-bottom: 1.5rem; }
+        .problem-list { list-style: none; padding: 0; margin: 0; }
+        .problem-list li { padding: 1rem 0; border-bottom: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem; }
+        .problem-list li:last-child { border-bottom: none; }
+        .problem-icon { font-size: 1.5rem; line-height: 1; }
+        
+        /* Section Contenu (Ce qu'ils achètent) */
+        .features { margin-bottom: 4rem; }
+        .features h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .feature-card { background: #fff; padding: 2rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .feature-card h3 { margin-top: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+        .feature-card p { color: var(--muted-text); font-size: 0.95rem; margin-bottom: 0; }
+        
+        @media (max-width: 600px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+
+        /* Section Prix */
+        .pricing { text-align: center; background-color: var(--text-color); color: #fff; padding: 4rem 2rem; border-radius: 12px; margin-bottom: 4rem; }
+        .pricing h2 { margin-top: 0; font-size: 2.2rem; }
+        .price { font-size: 4rem; font-weight: 800; margin: 1.5rem 0; line-height: 1; }
+        .price span { font-size: 1.2rem; font-weight: 400; color: #a0aec0; }
+        .pricing-features { list-style: none; padding: 0; margin: 0 auto 2.5rem; max-width: 400px; text-align: left; }
+        .pricing-features li { margin-bottom: 0.8rem; display: flex; gap: 0.5rem; }
+        
+        /* FAQ */
+        .faq { margin-bottom: 5rem; }
+        .faq h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
+        .faq-item { margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; }
+        .faq-item h4 { margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+        .faq-item p { margin: 0; color: var(--muted-text); }
+
+        footer { text-align: center; padding: 3rem; color: var(--muted-text); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="logo">Expatriation Framework</a>
+    </header>
+
+    <div class="container">
+        
+        <!-- HERO -->
+        <section class="hero">
+            <span class="hero-tag">Mise à jour : Législation 2024</span>
+            <h1>Quittez la France sans risquer le redressement fiscal.</h1>
+            <p>L'administration fiscale traque les expatriations mal préparées. Obtenez la checklist juridique exacte pour verrouiller votre départ et couper vos liens fiscaux proprement, sans payer 3000€ d'avocat.</p>
+            <a href="#commander" class="btn-primary">Télécharger le Framework immédiat</a>
+            <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted-text);">Accès instantané • Format PDF interactif</p>
+        </section>
+
+        <!-- AGITATION DU PROBLÈME -->
+        <section class="problem-section">
+            <h2>Pourquoi la plupart des expatriations finissent mal ?</h2>
+            <p style="color: var(--muted-text); margin-bottom: 2rem;">L'Article 4B du Code Général des Impôts est un piège. Il suffit d'une seule erreur pour que le fisc considère que vous êtes toujours résident fiscal français.</p>
+            <ul class="problem-list">
+                <li>
+                    <span class="problem-icon">❌</span>
+                    <div><strong>Garder la mauvaise adresse :</strong> Utiliser l'adresse de ses parents ou un mauvais service de domiciliation déclenche des alertes automatiques.</div>
+                </li>
+                <li>
+                    <span class="problem-icon">❌</span>
+                    <div><strong>Mauvaise gestion bancaire :</strong> Clôturer les mauvais comptes ou garder des livrets réglementés (LEP, LDD) vous maintient dans le radar.</div>
+                </li>
+                <li>
+                    <span class="problem-icon">❌</span>
+                    <div><strong>Le piège de la Direction Effective :</strong> Gérer sa société française depuis Dubaï ou l'Espagne sans montage juridique clair.</div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- CE QU'ILS ACHÈTENT -->
+        <section class="features">
+            <h2>Ce que contient le Framework</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>📅 La Timeline de Départ (J-90 à Jour J)</h3>
+                    <p>Un plan d'action chronologique. Sachez exactement quoi résilier, qui prévenir et à quel moment pour éviter les chevauchements fiscaux.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🛡️ Le Test des 3 Critères</h3>
+                    <p>Foyer, Activité, Centre Économique : comment verrouiller ces 3 critères selon la jurisprudence récente pour être intouchable en cas de contrôle.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🏦 Banques & Patrimoine</h3>
+                    <p>La liste exacte des comptes à fermer absolument, ceux que vous pouvez garder, et comment justifier vos flux financiers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✉️ Modèles de Déclarations</h3>
+                    <p>Ne laissez aucune place à l'interprétation. Utilisez nos templates pré-remplis pour informer les impôts, votre banque et le Greffe.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIX ET OFFRE -->
+        <section id="commander" class="pricing">
+            <h2>Sécurisez votre expatriation aujourd'hui</h2>
+            <p style="color: #cbd5e0; max-width: 500px; margin: 0 auto;">Une heure de consultation avec un fiscaliste coûte en moyenne 250€. Ce framework vous donne le plan exact pour une fraction du prix.</p>
+            
+            <div class="price">39€ <span>TTC</span></div>
+            
+            <ul class="pricing-features">
+                <li>✅ Le Framework Complet (PDF interactif)</li>
+                <li>✅ Les modèles de lettres (Format Word)</li>
+                <li>✅ Checklist imprimable de départ</li>
+                <li>✅ Synthèse sur l'Exit Tax 2024</li>
+            </ul>
+
+            <!-- LE LIEN DE PAIEMENT IRA ICI -->
+            <a href="#" onclick="alert('Le module de paiement sera intégré à la prochaine étape !'); return false;" class="btn-primary" style="width: 80%; max-width: 300px; background-color: #fff; color: var(--text-color);">
+                Acheter maintenant
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: #a0aec0;">Paiement 100% sécurisé via Stripe</p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq">
+            <h2>Questions Fréquentes</h2>
+            <div class="faq-item">
+                <h4>À qui s'adresse ce Framework ?</h4>
+                <p>Aux freelances, gérants de sociétés (SASU, EURL), e-commerçants, investisseurs ou salariés qui prévoient de quitter la France et qui veulent être sûrs à 100% de ne pas subir de redressement fiscal l'année de leur départ.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Est-ce que ça remplace un avocat fiscaliste ?</h4>
+                <p>Non. Si vous avez un patrimoine de plusieurs millions d'euros ou des montages complexes (Holdings multiples), prenez un avocat. Si vous avez une situation classique (indépendant, SASU, salaire, cryptos, petit immobilier), ce Framework contient 95% de ce que vous dira un avocat lors des premiers rendez-vous.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Le contenu est-il à jour ?</h4>
+                <p>Oui, le document est mis à jour selon les dernières lois de finances et les jurisprudences récentes concernant l'article 4B du CGI.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Expatriation Framework. Tous droits réservés.</p>
+        <p style="font-size: 0.8rem;">Ce document est fourni à titre d'information et ne constitue pas un conseil juridique personnalisé.</p>
+    </footer>
+
+</body>
+</html>
