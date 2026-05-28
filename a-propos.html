@@ -6,60 +6,75 @@
     <title>À propos - Expatriation Framework</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+            --muted-text: #718096;
+        }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 40px 20px; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
             line-height: 1.6; 
-            color: #2c3e50; 
-            background-color: #f8fafc;
+            margin: 0; 
+            padding: 0; 
         }
+        header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; }
+        .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
         .container {
+            max-width: 800px;
+            margin: 40px auto;
             background-color: #ffffff;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
         h1 { color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
-        h2 { color: #334155; margin-top: 35px; font-size: 1.3rem; }
+        h2 { color: var(--accent-color); margin-top: 35px; font-size: 1.3rem; }
         p { color: #475569; margin-bottom: 1.5rem; }
-        .highlight-box { background-color: #ebf8ff; padding: 20px; border-radius: 8px; border-left: 4px solid #2b6cb0; margin: 30px 0; }
-        a { color: #2563eb; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .back-link { display: inline-block; margin-top: 40px; font-weight: bold; padding: 10px 20px; background-color: #f1f5f9; border-radius: 6px; color: #475569; }
-        .back-link:hover { background-color: #e2e8f0; text-decoration: none; }
-        footer { text-align: center; margin-top: 40px; padding-top: 20px; color: #718096; font-size: 0.8rem; border-top: 1px solid #e2e8f0; }
+        .back-link { display: inline-block; margin-top: 40px; font-weight: bold; padding: 10px 20px; background-color: #f1f5f9; border-radius: 6px; color: #475569; text-decoration: none; }
+        .back-link:hover { background-color: #e2e8f0; }
+        footer { text-align: center; padding: 3rem; color: var(--muted-text); font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
     </style>
 </head>
 <body>
+
+    <header>
+        <a href="/" class="logo">Expatriation Framework</a>
+    </header>
+
     <div class="container">
         <h1>À propos</h1>
         
-        <h2>Qui suis-je ?</h2>
+        <h2>Qui suis-je et quel était mon problème ?</h2>
         <p>Bonjour, je suis Mehdi Fitour.</p>
-        <p>[Ajoutez ici 2 ou 3 phrases sur votre parcours. Par exemple : Entrepreneur et investisseur, j'ai moi-même traversé le processus complexe de l'expatriation. Face au manque d'informations claires et aux tarifs prohibitifs des cabinets de conseil, j'ai décidé de documenter chaque étape.]</p>
+        <p>Il y a quelques temps, j'ai pris la décision de quitter la France pour développer mes projets à l'étranger. Comme beaucoup d'entrepreneurs, je pensais que le processus serait simple : une nouvelle adresse, un vol aller simple, et le tour était joué. J'avais tort.</p>
 
-        <div class="highlight-box">
-            <p style="margin: 0;"><strong>Notre Mission :</strong> Rendre l'expatriation fiscale accessible, sécurisée et compréhensible pour les indépendants et les entrepreneurs français, sans nécessiter des milliers d'euros de frais d'avocats.</p>
-        </div>
+        <h2>Le mur juridique</h2>
+        <p>En creusant le sujet de l'Article 4B du Code Général des Impôts, j'ai découvert à quel point l'administration fiscale française gardait un œil sur les départs. J'ai réalisé que la moindre erreur (un mauvais compte bancaire resté ouvert, une adresse mal déclarée) pouvait requalifier ma résidence fiscale et déclencher un redressement de plusieurs dizaines de milliers d'euros.</p>
 
-        <h2>Pourquoi ce Framework ?</h2>
-        <p>L'Article 4B du Code Général des Impôts est un terrain miné. J'ai vu trop d'entrepreneurs penser qu'il suffisait de prendre un billet d'avion pour ne plus être résident fiscal, avant de subir un redressement massif quelques années plus tard.</p>
-        <p>Ce Framework est né d'un besoin personnel de sécurité. Il rassemble des mois de recherches, d'analyses de jurisprudences et de consultations synthétisées dans un plan d'action chronologique et applicable immédiatement.</p>
+        <h2>L'investissement en temps et en argent</h2>
+        <p>Refusant de vivre avec cette épée de Damoclès au-dessus de la tête, j'ai consulté des experts, épluché la jurisprudence récente et déconstruit les stratégies des avocats fiscalistes, dont les honoraires dépassent souvent les 3000€ pour un simple accompagnement.</p>
 
-        <h2>Contact</h2>
-        <p>Si vous avez la moindre question sur le contenu du Framework avant ou après votre achat, n'hésitez pas à me contacter directement à l'adresse suivante : <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>.</p>
+        <h2>Pourquoi avoir créé ce produit ?</h2>
+        <p>J'ai tout documenté, étape par étape, pour sécuriser mon propre départ. Aujourd'hui, je mets ce travail de fond à disposition de ceux qui, comme moi, veulent s'expatrier l'esprit tranquille.</p>
+        <p>Le Framework d'Expatriation n'est pas de la théorie : c'est le plan d'action pragmatique que j'aurais aimé avoir dès mon premier jour de réflexion.</p>
         
         <a href="/" class="back-link">← Retour à l'accueil</a>
     </div>
 
     <footer>
         <p>&copy; 2026 Expatriation Framework. Tous droits réservés.</p>
+        <p style="font-size: 0.8rem;">Ce document est fourni à titre d'information et ne constitue pas un conseil juridique personnalisé.</p>
         <p style="margin-top: 15px;">
-            <a href="/legal.html" style="color: #718096; text-decoration: underline; margin-right: 15px;">Mentions Légales</a>
-            <a href="/a-propos.html" style="color: #718096; text-decoration: underline;">À propos</a>
+            <a href="/legal.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">Mentions Légales</a>
+            <a href="/a-propos.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">À propos</a>
+            <a href="/avertissement.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem;">Avertissement</a>
         </p>
     </footer>
+
 </body>
 </html>
