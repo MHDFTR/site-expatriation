@@ -1,441 +1,1111 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic de Risque Fiscal - Expatriation Framework</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-    <style>
-        :root {
-            --bg-color: #fcfcfc;
-            --text-color: #1a1a1a;
-            --accent-color: #2b6cb0;
-            --border-color: #e2e8f0;
-            --muted-text: #718096;
-            --error-text: #c53030;
-            --warning-text: #dd6b20;
-        }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 0; }
-        header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; }
-        .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
-        
-        .container { max-width: 650px; margin: 3rem auto; padding: 0 1.5rem; }
-        
-        /* Progress Bar */
-        .progress-header { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted-text); margin-bottom: 0.5rem; font-weight: 600; }
-        .progress-container { width: 100%; background-color: var(--border-color); border-radius: 99px; height: 8px; margin-bottom: 3rem; overflow: hidden; }
-        .progress-bar { height: 100%; background-color: var(--accent-color); width: 8.33%; transition: width 0.4s ease; }
-
-        /* Quiz Steps */
-        .step { display: none; animation: fadeIn 0.4s ease; }
-        .step.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .pillar-tag { background-color: #ebf8ff; color: #2b6cb0; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 1rem; }
-        h2 { font-size: 1.4rem; margin-top: 0; margin-bottom: 1.5rem; line-height: 1.3; }
-        
-        /* Custom Radio Buttons */
-        .options { display: flex; flex-direction: column; gap: 0.75rem; }
-        .option-label { display: block; padding: 1.25rem; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-weight: 600; background: #fff; }
-        .option-label:hover { border-color: #cbd5e0; background-color: #f7fafc; transform: translateY(-1px); }
-        input[type="radio"] { display: none; }
-        input[type="radio"]:checked + .option-label { border-color: var(--accent-color); background-color: #ebf8ff; color: var(--accent-color); box-shadow: 0 2px 4px rgba(43, 108, 176, 0.1); }
-
-        /* Navigation Buttons */
-        .btn-container { display: flex; gap: 1rem; margin-top: 2rem; }
-        .btn-next { background-color: var(--text-color); color: #fff; padding: 1.1rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; flex: 2; }
-        .btn-next:hover { background-color: #2d3748; }
-        .btn-prev { background: none; border: 1px solid var(--border-color); color: var(--muted-text); padding: 1.1rem; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; flex: 1; }
-        .btn-prev:hover { background-color: #f7fafc; border-color: #cbd5e0; color: var(--text-color); }
-
-        /* Loading Screen */
-        .loading { display: none; text-align: center; padding: 4rem 0; }
-        .spinner { border: 4px solid var(--border-color); border-top: 4px solid var(--accent-color); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 2rem; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #loading-text { font-size: 1.2rem; font-weight: 600; color: var(--accent-color); margin-bottom: 0.5rem; transition: opacity 0.3s; }
-
-        /* Results Screen */
-        .result-screen { display: none; animation: fadeIn 0.6s ease; }
-        .risk-header { text-align: center; margin-bottom: 2rem; }
-        .risk-badge { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 99px; font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem; }
-        .risk-critique { background-color: #fff5f5; color: var(--error-text); border: 2px solid #feb2b2; }
-        .risk-eleve { background-color: #fffaf0; color: var(--warning-text); border: 2px solid #fbd38d; }
-        .risk-modere { background-color: #f0fff4; color: #276749; border: 2px solid #9ae6b4; }
-        
-        .result-content { background: #fff; border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; margin-bottom: 2.5rem; font-size: 1.05rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .result-content h3 { margin-top: 0; font-size: 1.4rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
-        .result-content p { margin-bottom: 1.5rem; }
-        
-        .cta-box { background-color: var(--text-color); color: #fff; padding: 2.5rem 2rem; border-radius: 8px; text-align: center; }
-        .cta-box h3 { margin-top: 0; font-size: 1.5rem; margin-bottom: 1rem; }
-        .cta-box .btn { background-color: #fff; color: var(--text-color); padding: 1.1rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 800; display: inline-block; margin-top: 1.5rem; font-size: 1.1rem; width: 80%; transition: transform 0.2s; }
-        .cta-box .btn:hover { transform: scale(1.02); background-color: #f8fafc; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnostic de Risque Fiscal — Expatriation Framework</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ 
+  <style>
+    /* ══════════════════════════════════════
+       TOKENS — même système que index.html
+    ══════════════════════════════════════ */
+    :root {
+      --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
+      --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
+      --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
+      --blue:#3B6FD4; --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
+      --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
+      --fd:'Cormorant Garant',serif; --fb:'Figtree',sans-serif; --fm:'Space Mono',monospace;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+      --spring:cubic-bezier(.34,1.56,.64,1);
+      --slow:cubic-bezier(.16,1,.3,1);
+      --sharp:cubic-bezier(.4,0,.2,1);
+      --gutter:clamp(20px,4vw,48px); --max-w:1200px;
+    }
+ 
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--fb); background:var(--bg-1); color:var(--t0);
+      line-height:1.6; overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font:inherit}
+ 
+    /* grain */
+    body::after{
+      content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+ 
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:900;height:64px;
+      padding:0 var(--gutter);display:flex;align-items:center;justify-content:center;
+      background:rgba(6,9,18,.92);
+      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      border-bottom:1px solid var(--br-0);
+    }
+    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
+    .nav-logo:hover{opacity:.8}
+    .nav-mark{
+      width:30px;height:30px;border-radius:7px;
+      background:linear-gradient(145deg,var(--gold-d),var(--gold));
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;
+    }
+    .nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+    .nav-links a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .nav-links a:hover{color:var(--t0)}
+ 
+    /* ══════════════════════════════════════
+       PAGE WRAPPER
+    ══════════════════════════════════════ */
+    .page{
+      min-height:100vh;padding:96px var(--gutter) 80px;
+      display:flex;flex-direction:column;align-items:center;
+    }
+    .quiz-wrap{width:100%;max-width:640px}
+ 
+    /* ══════════════════════════════════════
+       HEADER DU QUIZ
+    ══════════════════════════════════════ */
+    .quiz-header{
+      margin-bottom:40px;
+      animation:fadeUp .6s var(--slow) forwards;
+      opacity:0;transform:translateY(16px);
+    }
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+ 
+    .quiz-meta{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .quiz-label{
+      font-family:var(--fm);font-size:10px;color:var(--t2);
+      letter-spacing:.14em;text-transform:uppercase;
+    }
+    .quiz-counter{
+      font-family:var(--fm);font-size:11px;color:var(--gold-d);
+      letter-spacing:.08em;
+    }
+ 
+    /* Barre de progression */
+    .progress-track{
+      width:100%;height:2px;background:var(--br-1);border-radius:2px;overflow:hidden;
+    }
+    .progress-fill{
+      height:100%;border-radius:2px;
+      background:linear-gradient(90deg,var(--gold-d),var(--gold));
+      transition:width .5s var(--slow);
+      width:8.33%;
+    }
+ 
+    /* Pillar dots indicator */
+    .pillar-dots{
+      display:flex;gap:6px;margin-top:14px;
+    }
+    .p-dot{
+      flex:1;height:2px;border-radius:2px;background:var(--br-1);
+      transition:background .4s var(--ease);
+    }
+    .p-dot.act{background:var(--gold-d)}
+    .p-dot.done{background:rgba(200,169,106,.3)}
+ 
+    /* ══════════════════════════════════════
+       STEP CARDS
+    ══════════════════════════════════════ */
+    .step{display:none}
+    .step.active{
+      display:block;
+      animation:stepIn .45s var(--slow) forwards;
+      opacity:0;transform:translateY(18px);
+    }
+    @keyframes stepIn{to{opacity:1;transform:translateY(0)}}
+ 
+    /* Axe tag */
+    .axe-tag{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--fm);font-size:10px;color:var(--gold-d);
+      text-transform:uppercase;letter-spacing:.12em;
+      margin-bottom:18px;
+    }
+    .axe-tag::before{content:'';width:18px;height:1px;background:var(--gold-d);opacity:.5}
+ 
+    /* Question */
+    .q-text{
+      font-family:var(--fd);
+      font-size:clamp(22px,4vw,30px);
+      font-weight:600;line-height:1.15;letter-spacing:-.01em;
+      color:var(--t0);margin-bottom:28px;
+    }
+ 
+    /* Options */
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+ 
+    .opt-label{
+      display:flex;align-items:center;gap:14px;
+      padding:16px 18px;
+      border-radius:12px;
+      background:var(--bg-2);
+      border:1px solid var(--br-1);
+      cursor:pointer;
+      transition:border-color .22s var(--sharp),background .22s var(--sharp),transform .22s var(--spring),box-shadow .22s;
+      position:relative;overflow:hidden;
+    }
+    .opt-label:hover{
+      border-color:var(--br-3);
+      background:var(--bg-3);
+      transform:translateX(3px);
+    }
+ 
+    /* Indicateur radio custom */
+    .opt-radio{
+      width:18px;height:18px;border-radius:50%;
+      border:1.5px solid var(--br-2);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+      transition:border-color .2s,background .2s;
+    }
+    .opt-radio-inner{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--gold);transform:scale(0);
+      transition:transform .25s var(--spring);
+    }
+    .opt-text{
+      font-size:14.5px;font-weight:400;color:var(--t1);
+      line-height:1.45;transition:color .2s;
+    }
+ 
+    /* Input radio masqué */
+    input[type="radio"]{display:none}
+ 
+    /* State : sélectionné */
+    input[type="radio"]:checked + .opt-label{
+      border-color:var(--gold-d);
+      background:rgba(200,169,106,.05);
+      box-shadow:0 0 24px rgba(200,169,106,.08);
+      transform:translateX(0);
+    }
+    input[type="radio"]:checked + .opt-label .opt-radio{
+      border-color:var(--gold);
+      background:rgba(200,169,106,.1);
+    }
+    input[type="radio"]:checked + .opt-label .opt-radio-inner{
+      transform:scale(1);
+    }
+    input[type="radio"]:checked + .opt-label .opt-text{
+      color:var(--t0);
+    }
+ 
+    /* Shimmer on selected */
+    input[type="radio"]:checked + .opt-label::after{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,transparent 0%,rgba(200,169,106,.04) 50%,transparent 100%);
+    }
+ 
+    /* ══════════════════════════════════════
+       BUTTONS NAV
+    ══════════════════════════════════════ */
+    .btn-row{display:flex;gap:12px;align-items:center}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;
+      border-radius:10px;cursor:pointer;
+      transition:all .22s var(--sharp);
+      white-space:nowrap;border:none;outline:none;text-decoration:none;
+      padding:13px 24px;
+    }
+    .btn-p{background:var(--gold);color:#08080f;font-weight:600;flex:2}
+    .btn-p:hover{background:var(--gold-b);transform:translateY(-2px);box-shadow:0 0 32px rgba(200,169,106,.2),0 0 12px rgba(200,169,106,.12)}
+    .btn-p:active{transform:translateY(0)}
+    .btn-g{background:transparent;color:var(--t2);border:1px solid var(--br-1);flex:1}
+    .btn-g:hover{border-color:var(--br-2);color:var(--t1)}
+    .btn-ic{transition:transform .2s var(--spring)}
+    .btn:hover .btn-ic{transform:translateX(3px)}
+ 
+    /* ══════════════════════════════════════
+       LOADING SCREEN
+    ══════════════════════════════════════ */
+    .loading{
+      display:none;text-align:center;padding:60px 0;
+      animation:fadeUp .5s var(--slow) forwards;
+    }
+    .loading.show{display:block}
+ 
+    /* Anneau tournant premium */
+    .spin-wrap{position:relative;width:72px;height:72px;margin:0 auto 36px}
+    .spin-svg{width:100%;height:100%;animation:rotateSpin 1.2s linear infinite}
+    @keyframes rotateSpin{to{transform:rotate(360deg)}}
+ 
+    .loading-title{
+      font-family:var(--fd);font-size:22px;font-weight:600;
+      color:var(--t0);margin-bottom:10px;
+      transition:opacity .3s var(--ease);
+    }
+    .loading-sub{
+      font-family:var(--fm);font-size:10.5px;color:var(--t2);
+      letter-spacing:.1em;text-transform:uppercase;
+      margin-bottom:32px;
+    }
+ 
+    /* Steps d'analyse */
+    .loading-steps{
+      display:flex;flex-direction:column;gap:8px;
+      max-width:360px;margin:0 auto;
+    }
+    .l-step{
+      display:flex;align-items:center;gap:12px;padding:10px 14px;
+      border-radius:8px;background:var(--bg-2);border:1px solid var(--br-0);
+      opacity:.35;transition:opacity .4s,border-color .4s,background .4s;
+    }
+    .l-step.active{opacity:1;border-color:rgba(200,169,106,.2);background:rgba(200,169,106,.04)}
+    .l-step.done{opacity:.6;border-color:var(--br-1)}
+    .l-step-ico{
+      width:22px;height:22px;border-radius:5px;
+      background:rgba(200,169,106,.08);border:1px solid rgba(200,169,106,.15);
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .l-step-ico.done-ico{background:rgba(74,168,122,.08);border-color:rgba(74,168,122,.2)}
+    .l-step-txt{font-size:12.5px;color:var(--t1);line-height:1.3;text-align:left}
+ 
+    /* ══════════════════════════════════════
+       RÉSULTATS
+    ══════════════════════════════════════ */
+    .result-wrap{
+      display:none;
+      animation:fadeUp .65s var(--slow) forwards;
+      opacity:0;transform:translateY(18px);
+    }
+    .result-wrap.show{display:block}
+ 
+    /* Badge risque */
+    .risk-header{text-align:center;margin-bottom:32px}
+    .risk-badge{
+      display:inline-flex;align-items:center;gap:10px;
+      font-family:var(--fm);font-size:11px;font-weight:700;
+      text-transform:uppercase;letter-spacing:.12em;
+      padding:9px 18px;border-radius:100px;border:1px solid;
+      margin-bottom:14px;
+    }
+    .risk-badge-dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+    .badge-critique{color:var(--red);background:rgba(196,92,92,.08);border-color:rgba(196,92,92,.22)}
+    .badge-eleve   {color:var(--amber);background:rgba(196,146,74,.08);border-color:rgba(196,146,74,.22)}
+    .badge-modere  {color:var(--green);background:rgba(74,168,122,.08);border-color:rgba(74,168,122,.22)}
+ 
+    .risk-title{
+      font-family:var(--fd);font-size:clamp(26px,4vw,36px);font-weight:600;
+      line-height:1.1;letter-spacing:-.02em;color:var(--t0);margin-bottom:10px;
+    }
+    .risk-subtitle{font-size:14.5px;font-weight:300;color:var(--t1)}
+ 
+    /* Score visuel */
+    .score-bar-wrap{margin:28px 0}
+    .score-bar-label{
+      display:flex;justify-content:space-between;
+      font-family:var(--fm);font-size:10px;color:var(--t2);
+      letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;
+    }
+    .score-track{height:6px;background:var(--br-1);border-radius:6px;overflow:hidden}
+    .score-fill{height:100%;border-radius:6px;transition:width 1.2s var(--slow);width:0}
+ 
+    /* Bloc de résultat par axe */
+    .result-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:16px;padding:28px;margin-bottom:14px;
+      position:relative;overflow:hidden;
+    }
+    .result-card::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+      border-radius:3px 0 0 3px;
+    }
+    .rc-alert::before{background:var(--red)}
+    .rc-warn::before {background:var(--amber)}
+    .rc-ok::before   {background:var(--green)}
+ 
+    .result-axe{
+      font-family:var(--fm);font-size:10px;color:var(--t2);
+      letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;
+    }
+    .result-card h4{
+      font-family:var(--fd);font-size:19px;font-weight:600;
+      color:var(--t0);margin-bottom:8px;line-height:1.2;
+    }
+    .result-card p{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.65;margin:0}
+    .result-card p + p{margin-top:8px}
+    .result-card strong{color:var(--t0);font-weight:500}
+ 
+    /* CTA résultat */
+    .result-cta{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:24px;padding:44px 36px;margin-top:28px;text-align:center;
+      position:relative;overflow:hidden;
+    }
+    .result-cta::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold-d) 38%,var(--gold) 50%,var(--gold-d) 62%,transparent);
+      opacity:.6;
+    }
+    .result-cta::after{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 65% 65% at 50% 0%,rgba(200,169,106,.04) 0%,transparent 70%);
+    }
+    .result-cta-inner{position:relative;z-index:1}
+    .result-cta h3{
+      font-family:var(--fd);font-size:clamp(22px,3.5vw,30px);font-weight:600;
+      color:var(--t0);margin-bottom:14px;line-height:1.15;
+    }
+    .result-cta p{font-size:14.5px;font-weight:300;color:var(--t1);line-height:1.7;margin-bottom:28px}
+    .cta-note{
+      display:inline-flex;align-items:center;gap:6px;
+      font-family:var(--fm);font-size:10px;color:var(--green);
+      background:rgba(74,168,122,.08);border:1px solid rgba(74,168,122,.18);
+      padding:5px 11px;border-radius:4px;margin-top:14px;
+      text-transform:uppercase;letter-spacing:.1em;
+    }
+    .cta-note-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+    .cta-price{
+      font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:16px;
+      letter-spacing:.06em;
+    }
+ 
+    /* Bouton recommencer */
+    .btn-restart{
+      display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+      font-size:13px;color:var(--t2);padding:9px 16px;
+      border-radius:8px;border:1px solid var(--br-1);
+      cursor:pointer;transition:all .2s;background:none;font-family:var(--fb);
+    }
+    .btn-restart:hover{color:var(--t1);border-color:var(--br-2)}
+ 
+    /* ══════════════════════════════════════
+       DISCLAIMER + FOOTER
+    ══════════════════════════════════════ */
+    .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter)}
+    .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
+    .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
+    .disc-txt strong{color:var(--t1);font-weight:500}
+ 
+    .footer{border-top:1px solid var(--br-0);padding:48px var(--gutter) 32px;background:var(--bg-0)}
+    .footer-i{max-width:var(--max-w);margin:0 auto}
+    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid var(--br-0)}
+    .f-logo-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:12px}
+    .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:12px;line-height:1.5}
+    .f-disc{font-size:11.5px;color:var(--t2);line-height:1.6;padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0)}
+    .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:12px}
+    .f-nav{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .f-nav a:hover{color:var(--t0)}
+    .f-btm{padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
+    .f-legal{display:flex;align-items:center;gap:20px}
+    .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
+    .f-legal a:hover{color:var(--t1)}
+ 
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media(max-width:768px){
+      :root{--gutter:20px}
+      .nav-links{display:none}
+      .page{padding:84px var(--gutter) 64px}
+      .result-cta{padding:28px 22px}
+      .f-grid{grid-template-columns:1fr;gap:24px}
+      .f-btm{flex-direction:column;text-align:center}
+      .f-legal{justify-content:center}
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <a href="/" class="logo">Expatriation Framework</a>
-    </header>
-
-    <div class="container">
-        
-        <div id="quiz-header">
-            <div class="progress-header">
-                <span>Progression de l'audit</span>
-                <span id="step-counter">1 / 12</span>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-        </div>
-
-        <form id="diagnostic-form">
-            
-            <!-- PILIER 1 : STRUCTURE PRO -->
-            <div class="step active" id="step-1">
-                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
-                <h2>Quel est votre statut professionnel principal actuel ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="sasu"><span class="option-label">Gérant de société française (SASU, EURL, SAS...)</span></label>
-                    <label><input type="radio" name="q1" value="indep"><span class="option-label">Indépendant / Auto-entrepreneur / Profession Libérale</span></label>
-                    <label><input type="radio" name="q1" value="salarie"><span class="option-label">Salarié / Dirigeant salarié</span></label>
-                    <label><input type="radio" name="q1" value="investisseur"><span class="option-label">Investisseur (Immobilier, Bourse, Crypto) à temps plein</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-next" style="flex: 1;" onclick="nextStep(1)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-2">
-                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
-                <h2>Où se situe la majorité de vos clients ou sources de revenus actifs ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q2" value="france"><span class="option-label">100% en France</span></label>
-                    <label><input type="radio" name="q2" value="mixte"><span class="option-label">Mixte (France et International)</span></label>
-                    <label><input type="radio" name="q2" value="inter"><span class="option-label">Majoritairement à l'International</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(2)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(2)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-3">
-                <span class="pillar-tag">Axe 1 : Activité & Structure</span>
-                <h2>Que comptez-vous faire de votre structure/activité française après votre départ ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q3" value="fermer"><span class="option-label">La fermer ou la liquider avant de partir</span></label>
-                    <label><input type="radio" name="q3" value="garder"><span class="option-label">La garder ouverte et la gérer depuis l'étranger</span></label>
-                    <label><input type="radio" name="q3" value="indecis"><span class="option-label">Je ne sais pas encore / Je n'y ai pas pensé</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(3)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(3)">Suivant</button>
-                </div>
-            </div>
-
-            <!-- PILIER 2 : FOYER FISCAL -->
-            <div class="step" id="step-4">
-                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
-                <h2>Quelle est votre situation familiale ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q4" value="celib"><span class="option-label">Célibataire (sans enfant à charge)</span></label>
-                    <label><input type="radio" name="q4" value="couple"><span class="option-label">En couple (sans enfant)</span></label>
-                    <label><input type="radio" name="q4" value="famille"><span class="option-label">Famille avec enfant(s)</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(4)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(4)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-5">
-                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
-                <h2>Si applicable, votre famille part-elle exactement en même temps que vous ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q5" value="meme_temps"><span class="option-label">Oui, nous partons tous ensemble le même jour</span></label>
-                    <label><input type="radio" name="q5" value="decale"><span class="option-label">Non, mon conjoint/mes enfants restent quelques mois de plus</span></label>
-                    <label><input type="radio" name="q5" value="na"><span class="option-label">Non applicable (Célibataire)</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(5)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(5)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-6">
-                <span class="pillar-tag">Axe 2 : Foyer Fiscal</span>
-                <h2>Qu'allez-vous faire de votre résidence principale française ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q6" value="vendre"><span class="option-label">Je la vends ou je rends les clés (locataire)</span></label>
-                    <label><input type="radio" name="q6" value="louer"><span class="option-label">Je la mets en location (nue ou meublée)</span></label>
-                    <label><input type="radio" name="q6" value="vide"><span class="option-label">Je la garde à ma disposition (vide ou pied-à-terre)</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(6)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(6)">Suivant</button>
-                </div>
-            </div>
-
-            <!-- PILIER 3 : PATRIMOINE -->
-            <div class="step" id="step-7">
-                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
-                <h2>Détenez-vous de l'immobilier locatif en France (en nom propre, SCI, SCPI...) ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q7" value="oui_beaucoup"><span class="option-label">Oui, un patrimoine important (&gt; 500k€)</span></label>
-                    <label><input type="radio" name="q7" value="oui_peu"><span class="option-label">Oui, un petit peu (&lt; 500k€)</span></label>
-                    <label><input type="radio" name="q7" value="non"><span class="option-label">Non, rien du tout</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(7)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(7)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-8">
-                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
-                <h2>Avez-vous des portefeuilles d'actions, parts de société ou cryptomonnaies avec d'importantes plus-values latentes ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q8" value="oui"><span class="option-label">Oui, montants significatifs</span></label>
-                    <label><input type="radio" name="q8" value="non"><span class="option-label">Non, ou montants dérisoires</span></label>
-                    <label><input type="radio" name="q8" value="nsp"><span class="option-label">Je ne sais pas exactement / Je doit calculer</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(8)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(8)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-9">
-                <span class="pillar-tag">Axe 3 : Patrimoine & Actifs</span>
-                <h2>Comptez-vous garder des comptes bancaires français actifs après votre départ ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q9" value="plusieurs"><span class="option-label">Oui, plusieurs comptes et livrets</span></label>
-                    <label><input type="radio" name="q9" value="un_seul"><span class="option-label">Uniquement un compte courant pour les frais basiques</span></label>
-                    <label><input type="radio" name="q9" value="aucun"><span class="option-label">Non, je clôture absolument tout</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(9)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(9)">Suivant</button>
-                </div>
-            </div>
-
-            <!-- PILIER 4 : LE PROJET -->
-            <div class="step" id="step-10">
-                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
-                <h2>Dans combien de temps prévoyez-vous de quitter fiscalement et physiquement la France ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q10" value="urgent"><span class="option-label">Moins de 3 mois (ou je suis déjà parti)</span></label>
-                    <label><input type="radio" name="q10" value="moyen"><span class="option-label">Entre 3 et 6 mois</span></label>
-                    <label><input type="radio" name="q10" value="long"><span class="option-label">Dans plus de 6 mois</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(10)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(10)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-11">
-                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
-                <h2>Quelle est votre destination fiscale visée ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q11" value="ue"><span class="option-label">Union Européenne (ex: Espagne, Portugal, Malte...)</span></label>
-                    <label><input type="radio" name="q11" value="hors_ue"><span class="option-label">Hors UE classique (ex: USA, Canada, UK, Suisse...)</span></label>
-                    <label><input type="radio" name="q11" value="paradis"><span class="option-label">Pays à fiscalité privilégiée (ex: Dubaï, Andorre, Panama...)</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(11)">Retour</button>
-                    <button type="button" class="btn-next" onclick="nextStep(11)">Suivant</button>
-                </div>
-            </div>
-
-            <div class="step" id="step-12">
-                <span class="pillar-tag">Axe 4 : Paramètres du Départ</span>
-                <h2>Êtes-vous déjà accompagné(e) par un professionnel du droit sur ce dossier ?</h2>
-                <div class="options">
-                    <label><input type="radio" name="q12" value="oui"><span class="option-label">Oui, je paie déjà un avocat ou un fiscaliste</span></label>
-                    <label><input type="radio" name="q12" value="non"><span class="option-label">Non, je fais mes recherches moi-même pour l'instant</span></label>
-                    <label><input type="radio" name="q12" value="cherche"><span class="option-label">Non, et je cherche justement par où commencer</span></label>
-                </div>
-                <div class="btn-container">
-                    <button type="button" class="btn-prev" onclick="prevStep(12)">Retour</button>
-                    <button type="button" class="btn-next" onclick="processResults()">Générer mon audit</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Loading -->
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <div id="loading-text">Initialisation de l'algorithme...</div>
-            <p style="color: var(--muted-text); font-size: 0.95rem;">Croisement de vos 12 réponses avec la jurisprudence de l'Article 4B du CGI.</p>
-        </div>
-
-        <!-- Result -->
-        <div class="result-screen" id="result-screen">
-            <div class="risk-header">
-                <div id="risk-badge" class="risk-badge risk-critique">NIVEAU DE RISQUE : CRITIQUE</div>
-                <p id="risk-subtitle" style="color: var(--muted-text); margin-top: -10px; font-weight: 500;">Profil flaggé pour requalification fiscale potentielle.</p>
-            </div>
-            
-            <div class="result-content">
-                <h3>Bilan d'Audit Préliminaire</h3>
-                <div id="diagnostic-text">
-                    <!-- Injecté via JS -->
-                </div>
-            </div>
-
-            <div class="cta-box">
-                <h3>Ne laissez pas une erreur technique vous coûter des dizaines de milliers d'euros.</h3>
-                <p style="color: #e2e8f0; margin-bottom: 1rem; font-size: 1.05rem;">Votre profil contient des marqueurs de risque qui attirent systématiquement l'attention de l'administration lors d'un départ. Vous devez impérativement sécuriser votre situation avant de franchir la frontière.</p>
-                <p style="color: #cbd5e0; font-size: 0.95rem;">Obtenez la checklist stricte utilisée par les avocats d'affaires pour verrouiller les 3 critères de résidence et neutraliser le risque de redressement.</p>
-                <a href="vente.html" class="btn">Télécharger le Framework (39€)</a>
-                <p style="margin-top: 15px; font-size: 0.85rem; color: #a0aec0;">Paiement 100% sécurisé</p>
-            </div>
-        </div>
-
+ 
+  <!-- ══════════════════════════════════
+       NAV
+  ══════════════════════════════════ -->
+  <nav class="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav-i">
+      <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
+        <div class="nav-mark" aria-hidden="true">EF</div>
+        Expatriation Framework
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#methodologie">Méthodologie</a></li>
+        <li><a href="index.html#articles">Articles</a></li>
+        <li><a href="a-propos.html">À Propos</a></li>
+        <li><a href="vente.html">Le Framework (39€)</a></li>
+      </ul>
     </div>
-
-    <script>
-        const totalSteps = 12;
-        let answers = {};
-
-        function nextStep(step) {
-            const selected = document.querySelector(`input[name="q${step}"]:checked`);
-            if(!selected) {
-                alert("Veuillez sélectionner une option pour continuer l'audit.");
-                return;
-            }
-            
-            // Sauvegarde de la réponse
-            answers[`q${step}`] = selected.value;
-
-            // Transition UI
-            document.getElementById(`step-${step}`).classList.remove('active');
-            const next = step + 1;
-            document.getElementById(`step-${next}`).classList.add('active');
-            
-            // Update UI Counters
-            document.getElementById('progress-bar').style.width = ((next / totalSteps) * 100) + '%';
-            document.getElementById('step-counter').innerText = `${next} / 12`;
-        }
-
-        function prevStep(step) {
-            // Pas besoin de vérifier la sélection pour reculer
-            document.getElementById(`step-${step}`).classList.remove('active');
-            const prev = step - 1;
-            document.getElementById(`step-${prev}`).classList.add('active');
-            
-            // Update UI Counters
-            document.getElementById('progress-bar').style.width = ((prev / totalSteps) * 100) + '%';
-            document.getElementById('step-counter').innerText = `${prev} / 12`;
-        }
-
-        function processResults() {
-            const selected = document.querySelector(`input[name="q12"]:checked`);
-            if(!selected) {
-                alert("Veuillez sélectionner la dernière option.");
-                return;
-            }
-            answers[`q12`] = selected.value;
-
-            // Masquer form, afficher loading
-            document.getElementById('diagnostic-form').style.display = 'none';
-            document.getElementById('quiz-header').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
-
-            // Animation de textes de chargement (Psychologie)
-            const loadingTextDiv = document.getElementById('loading-text');
-            setTimeout(() => { loadingTextDiv.innerText = "Vérification des critères de résidence professionnelle..."; }, 800);
-            setTimeout(() => { loadingTextDiv.innerText = "Évaluation du risque de Foyer Fiscal (Art. 4B)..."; }, 1600);
-            setTimeout(() => { loadingTextDiv.innerText = "Calcul de l'exposition à l'Exit Tax..."; }, 2400);
-            setTimeout(() => { loadingTextDiv.innerText = "Génération de votre rapport sur mesure..."; }, 3200);
-
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                generateReport();
-                document.getElementById('result-screen').style.display = 'block';
-            }, 4000);
-        }
-
-        function generateReport() {
-            let texte = "";
-            let riskScore = 0;
-
-            // --- AXE 1 : STRUCTURE & ACTIVITÉ ---
-            texte += "<h4>1. Risque sur la Direction Effective</h4>";
-            if (answers.q1 === "sasu" && answers.q3 === "garder") {
-                texte += "<p>⚠️ <strong>Alerte Rouge :</strong> Vous prévoyez de conserver la gérance de votre société française depuis l'étranger. L'administration considère que le siège de direction effective est déplacé là où vous résidez physiquement. Votre société s'expose à un redressement massif pour établissement stable occulte.</p>";
-                riskScore += 40;
-            } else if (answers.q1 === "indep" && answers.q2 === "france") {
-                texte += "<p>⚠️ <strong>Alerte Centre Économique :</strong> Vous êtes indépendant avec une clientèle 100% française. Si vous continuez de facturer cette même clientèle depuis l'étranger sans changer la nature de vos contrats, le fisc peut arguer que le centre de vos intérêts économiques n'a jamais quitté la France.</p>";
-                riskScore += 30;
-            } else if (answers.q3 === "indecis") {
-                texte += "<p>⚠️ <strong>Alerte Impréparation :</strong> Partir sans statuer sur le sort juridique de votre structure actuelle est le moyen le plus rapide d'attirer l'attention du fisc. L'inaction est considérée comme un maintien de l'activité en France.</p>";
-                riskScore += 25;
-            } else {
-                texte += "<p>✅ <strong>Projet cohérent :</strong> Votre approche concernant votre structure professionnelle semble s'orienter vers une coupure claire, ce qui est le premier pilier d'une expatriation réussie. Attention toutefois à l'exécution de la liquidation.</p>";
-                riskScore += 5;
-            }
-
-            // --- AXE 2 : FOYER FISCAL ---
-            texte += "<h4>2. Risque sur le Foyer (Critère Personnel)</h4>";
-            if ((answers.q4 === "famille" || answers.q4 === "couple") && answers.q5 === "decale") {
-                texte += "<p>⚠️ <strong>Alerte Article 4B :</strong> Attention, jurisprudence très stricte. Si votre famille reste en France, même temporairement pour finir l'année scolaire ou un contrat de travail, le fisc français estimera que votre 'Foyer' est toujours en France, et vous resterez imposable en France sur vos revenus mondiaux dès le 1er jour.</p>";
-                riskScore += 40;
-            } else if (answers.q6 === "vide") {
-                texte += "<p>⚠️ <strong>Alerte Habitation :</strong> Conserver votre résidence principale vide, c'est conserver 'une habitation à votre disposition'. En cas de doute sur les autres critères, ce seul élément suffit à un inspecteur pour justifier le maintien de votre résidence fiscale française.</p>";
-                riskScore += 25;
-            } else {
-                texte += "<p>✅ <strong>Mobilité globale :</strong> Le détachement de votre foyer semble total. En rendant votre logement et/ou en faisant migrer votre cellule familiale en même temps que vous, vous neutralisez le critère le plus redoutable du Code Général des Impôts.</p>";
-                riskScore += 0;
-            }
-
-            // --- AXE 3 : PATRIMOINE ---
-            texte += "<h4>3. Risque Patrimonial & Exit Tax</h4>";
-            if (answers.q8 === "oui" || answers.q8 === "nsp") {
-                texte += "<p>⚠️ <strong>Alerte Exit Tax :</strong> Vos plus-values latentes (actions, crypto, parts de société) vous placent directement sous la menace de l'Exit Tax. Un manquement déclaratif 30 jours avant le départ entraîne l'exigibilité immédiate de l'impôt (30% + pénalités).</p>";
-                riskScore += 30;
-            } else if (answers.q7 === "oui_beaucoup") {
-                texte += "<p>⚠️ <strong>Alerte IFI et Revenus Fonciers :</strong> Votre patrimoine immobilier lourd vous maintient fortement connecté à l'économie française. Vous subirez une fiscalité punitive (taux minimum des non-résidents) sur vos loyers si aucune restructuration n'est anticipée.</p>";
-                riskScore += 20;
-            } else {
-                texte += "<p>✅ <strong>Fluidité patrimoniale :</strong> Votre patrimoine n'est pas un point de blocage majeur, ce qui simplifie grandement vos démarches déclaratives lors de votre année de transfert.</p>";
-                riskScore += 5;
-            }
-
-            // --- AXE 4 : LE TIMING ---
-            texte += "<h4>4. Votre Chronologie</h4>";
-            if (answers.q10 === "urgent" && answers.q12 !== "oui") {
-                texte += "<p>⚠️ <strong>Alerte Urgence :</strong> Un départ prévu dans moins de 3 mois sans filet de sécurité juridique est un scénario catastrophe. Les délais administratifs français (banques, liquidations, impôts) sont incompatibles avec votre calendrier sans une méthode stricte.</p>";
-                riskScore += 25;
-            } else if (answers.q11 === "paradis") {
-                texte += "<p>⚠️ <strong>Alerte Convention Fiscale :</strong> Partir vers une destination à fiscalité privilégiée (Dubaï, Andorre, etc.) vous place automatiquement en haut de la pile des contrôles douaniers et fiscaux. La charge de la preuve d'un vrai départ reposera entièrement sur vous.</p>";
-                riskScore += 15;
-            }
-
-            // Injection du texte
-            document.getElementById('diagnostic-text').innerHTML = texte;
-            
-            // Badge
-            const badge = document.getElementById('risk-badge');
-            const subtitle = document.getElementById('risk-subtitle');
-            
-            if (riskScore >= 60) {
-                badge.className = "risk-badge risk-critique";
-                badge.innerText = "NIVEAU DE RISQUE : CRITIQUE";
-                subtitle.innerText = "Profil flaggé. Le risque de redressement est très élevé sans action corrective.";
-            } else if (riskScore >= 30) {
-                badge.className = "risk-badge risk-eleve";
-                badge.innerText = "NIVEAU DE RISQUE : ÉLEVÉ";
-                subtitle.innerText = "Votre dossier comporte des failles classiques exploitées par l'administration.";
-            } else {
-                badge.className = "risk-badge risk-modere";
-                badge.innerText = "NIVEAU DE RISQUE : À SURVEILLER";
-                subtitle.innerText = "Votre dossier est cohérent, mais la procédure administrative doit être sans faille.";
-            }
-        }
-    </script>
+  </nav>
+ 
+  <!-- ══════════════════════════════════
+       PAGE BODY
+  ══════════════════════════════════ -->
+  <div class="page">
+    <div class="quiz-wrap">
+ 
+      <!-- HEADER PROGRESSION -->
+      <div class="quiz-header" id="quiz-header">
+        <div class="quiz-meta">
+          <span class="quiz-label">Audit de risque fiscal · Article 4B CGI</span>
+          <span class="quiz-counter" id="step-counter">1 / 12</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="12" aria-valuenow="1">
+          <div class="progress-fill" id="prog-fill"></div>
+        </div>
+        <div class="pillar-dots" id="pillar-dots" aria-hidden="true">
+          <div class="p-dot act" data-axe="1" title="Axe 1 : Activité & Structure"></div>
+          <div class="p-dot" data-axe="2" title="Axe 2 : Foyer Fiscal"></div>
+          <div class="p-dot" data-axe="3" title="Axe 3 : Patrimoine & Actifs"></div>
+          <div class="p-dot" data-axe="4" title="Axe 4 : Paramètres du Départ"></div>
+        </div>
+      </div>
+ 
+      <!-- ══ FORM ══ -->
+      <form id="diag-form" novalidate>
+ 
+        <!-- Q1 -->
+        <div class="step active" id="step-1">
+          <div class="axe-tag">Axe 1 · Activité &amp; Structure</div>
+          <p class="q-text">Quel est votre statut professionnel principal&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q1" value="sasu"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Gérant de société française (SASU, EURL, SAS...)</span></span></label>
+            <label><input type="radio" name="q1" value="indep"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Indépendant / Auto-entrepreneur / Profession Libérale</span></span></label>
+            <label><input type="radio" name="q1" value="salarie"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Salarié / Dirigeant salarié</span></span></label>
+            <label><input type="radio" name="q1" value="investisseur"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Investisseur (Immobilier, Bourse, Crypto) à temps plein</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-p" style="flex:1" onclick="nextStep(1)">
+              Continuer
+              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+ 
+        <!-- Q2 -->
+        <div class="step" id="step-2">
+          <div class="axe-tag">Axe 1 · Activité &amp; Structure</div>
+          <p class="q-text">Où se situe la majorité de vos clients ou sources de revenus&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q2" value="france"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">100% en France</span></span></label>
+            <label><input type="radio" name="q2" value="mixte"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Mixte (France et International)</span></span></label>
+            <label><input type="radio" name="q2" value="inter"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Majoritairement à l'International</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(2)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(2)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q3 -->
+        <div class="step" id="step-3">
+          <div class="axe-tag">Axe 1 · Activité &amp; Structure</div>
+          <p class="q-text">Que comptez-vous faire de votre structure française après le départ&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q3" value="fermer"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">La fermer ou la liquider avant de partir</span></span></label>
+            <label><input type="radio" name="q3" value="garder"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">La garder ouverte et la gérer depuis l'étranger</span></span></label>
+            <label><input type="radio" name="q3" value="indecis"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Je ne sais pas encore / Je n'y ai pas pensé</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(3)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(3)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q4 -->
+        <div class="step" id="step-4">
+          <div class="axe-tag">Axe 2 · Foyer Fiscal</div>
+          <p class="q-text">Quelle est votre situation familiale&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q4" value="celib"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Célibataire (sans enfant à charge)</span></span></label>
+            <label><input type="radio" name="q4" value="couple"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">En couple (sans enfant)</span></span></label>
+            <label><input type="radio" name="q4" value="famille"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Famille avec enfant(s)</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(4)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(4)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q5 -->
+        <div class="step" id="step-5">
+          <div class="axe-tag">Axe 2 · Foyer Fiscal</div>
+          <p class="q-text">Si applicable, votre famille part-elle au même moment que vous&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q5" value="meme_temps"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, nous partons tous ensemble le même jour</span></span></label>
+            <label><input type="radio" name="q5" value="decale"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, mon conjoint / mes enfants restent quelques mois de plus</span></span></label>
+            <label><input type="radio" name="q5" value="na"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non applicable (Célibataire)</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(5)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(5)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q6 -->
+        <div class="step" id="step-6">
+          <div class="axe-tag">Axe 2 · Foyer Fiscal</div>
+          <p class="q-text">Qu'allez-vous faire de votre résidence principale française&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q6" value="vendre"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Je la vends ou je rends les clés (locataire)</span></span></label>
+            <label><input type="radio" name="q6" value="louer"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Je la mets en location (nue ou meublée)</span></span></label>
+            <label><input type="radio" name="q6" value="vide"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Je la garde à ma disposition (vide ou pied-à-terre)</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(6)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(6)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q7 -->
+        <div class="step" id="step-7">
+          <div class="axe-tag">Axe 3 · Patrimoine &amp; Actifs</div>
+          <p class="q-text">Détenez-vous de l'immobilier locatif en France (nom propre, SCI, SCPI...)&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q7" value="oui_beaucoup"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, un patrimoine important (&gt; 500 k€)</span></span></label>
+            <label><input type="radio" name="q7" value="oui_peu"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, un petit peu (&lt; 500 k€)</span></span></label>
+            <label><input type="radio" name="q7" value="non"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, rien du tout</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(7)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(7)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q8 -->
+        <div class="step" id="step-8">
+          <div class="axe-tag">Axe 3 · Patrimoine &amp; Actifs</div>
+          <p class="q-text">Avez-vous des actions, parts de société ou cryptos avec d'importantes plus-values latentes&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q8" value="oui"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, montants significatifs</span></span></label>
+            <label><input type="radio" name="q8" value="non"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, ou montants dérisoires</span></span></label>
+            <label><input type="radio" name="q8" value="nsp"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Je ne sais pas exactement / Je dois calculer</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(8)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(8)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q9 -->
+        <div class="step" id="step-9">
+          <div class="axe-tag">Axe 3 · Patrimoine &amp; Actifs</div>
+          <p class="q-text">Comptez-vous garder des comptes bancaires français actifs après votre départ&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q9" value="plusieurs"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, plusieurs comptes et livrets</span></span></label>
+            <label><input type="radio" name="q9" value="un_seul"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Uniquement un compte courant pour les frais basiques</span></span></label>
+            <label><input type="radio" name="q9" value="aucun"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, je clôture absolument tout</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(9)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(9)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q10 -->
+        <div class="step" id="step-10">
+          <div class="axe-tag">Axe 4 · Paramètres du Départ</div>
+          <p class="q-text">Dans combien de temps prévoyez-vous de quitter fiscalement la France&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q10" value="urgent"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Moins de 3 mois (ou je suis déjà parti)</span></span></label>
+            <label><input type="radio" name="q10" value="moyen"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Entre 3 et 6 mois</span></span></label>
+            <label><input type="radio" name="q10" value="long"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Dans plus de 6 mois</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(10)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(10)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q11 -->
+        <div class="step" id="step-11">
+          <div class="axe-tag">Axe 4 · Paramètres du Départ</div>
+          <p class="q-text">Quelle est votre destination fiscale visée&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q11" value="ue"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Union Européenne (ex : Espagne, Portugal, Malte...)</span></span></label>
+            <label><input type="radio" name="q11" value="hors_ue"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Hors UE classique (ex : USA, Canada, UK, Suisse...)</span></span></label>
+            <label><input type="radio" name="q11" value="paradis"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Pays à fiscalité privilégiée (ex : Dubaï, Andorre, Panama...)</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(11)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="nextStep(11)">Continuer <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+ 
+        <!-- Q12 -->
+        <div class="step" id="step-12">
+          <div class="axe-tag">Axe 4 · Paramètres du Départ</div>
+          <p class="q-text">Êtes-vous déjà accompagné(e) par un professionnel du droit sur ce dossier&nbsp;?</p>
+          <div class="options">
+            <label><input type="radio" name="q12" value="oui"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Oui, je paie déjà un avocat ou un fiscaliste</span></span></label>
+            <label><input type="radio" name="q12" value="non"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, je fais mes recherches moi-même pour l'instant</span></span></label>
+            <label><input type="radio" name="q12" value="cherche"><span class="opt-label"><span class="opt-radio"><span class="opt-radio-inner"></span></span><span class="opt-text">Non, et je cherche justement par où commencer</span></span></label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-g" onclick="prevStep(12)">← Retour</button>
+            <button type="button" class="btn btn-p" onclick="processResults()">
+              Générer mon audit
+              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+ 
+      </form><!-- fin form -->
+ 
+      <!-- ══ LOADING ══ -->
+      <div class="loading" id="loading" aria-live="polite">
+        <div class="spin-wrap">
+          <svg class="spin-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="36" cy="36" r="32" stroke="#182033" stroke-width="1.5"/>
+            <circle cx="36" cy="36" r="32" stroke="url(#sg)" stroke-width="1.5"
+              stroke-dasharray="56 145" stroke-linecap="round" transform="rotate(-90 36 36)"/>
+            <circle cx="36" cy="36" r="26" stroke="#111826" stroke-width="1"/>
+            <circle cx="36" cy="36" r="26" stroke="rgba(200,169,106,0.3)" stroke-width="1"
+              stroke-dasharray="3 6"/>
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="72" y2="0">
+                <stop offset="0%" stop-color="#9A7B44"/>
+                <stop offset="100%" stop-color="#DEC083"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+ 
+        <div class="loading-title" id="loading-title">Analyse en cours...</div>
+        <div class="loading-sub">Croisement des données avec l'Article 4B du CGI</div>
+ 
+        <div class="loading-steps">
+          <div class="l-step" id="ls1">
+            <div class="l-step-ico" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="#9A7B44" stroke-width="1.1"/><path d="M3.5 6h5M3.5 8h3" stroke="#9A7B44" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </div>
+            <span class="l-step-txt">Vérification de la structure professionnelle...</span>
+          </div>
+          <div class="l-step" id="ls2">
+            <div class="l-step-ico" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5l5 3.5v6H1v-6l5-3.5z" stroke="#9A7B44" stroke-width="1.1" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="l-step-txt">Évaluation du critère Foyer (Art. 4B)...</span>
+          </div>
+          <div class="l-step" id="ls3">
+            <div class="l-step-ico" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#9A7B44" stroke-width="1.1"/><path d="M6 3.5v3l2 1.2" stroke="#9A7B44" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </div>
+            <span class="l-step-txt">Calcul de l'exposition à l'Exit Tax...</span>
+          </div>
+          <div class="l-step" id="ls4">
+            <div class="l-step-ico" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.5 6l3 3 6-7" stroke="#9A7B44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="l-step-txt">Génération du rapport personnalisé...</span>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ══ RÉSULTATS ══ -->
+      <div class="result-wrap" id="result-screen">
+ 
+        <div class="risk-header">
+          <div id="risk-badge" class="risk-badge badge-critique">
+            <div class="risk-badge-dot"></div>
+            <span id="badge-text">Niveau de risque : Critique</span>
+          </div>
+          <h2 class="risk-title" id="risk-title">Profil à risque élevé détecté</h2>
+          <p class="risk-subtitle" id="risk-subtitle">Plusieurs marqueurs critiques ont été identifiés dans votre dossier.</p>
+        </div>
+ 
+        <!-- Score bar -->
+        <div class="score-bar-wrap">
+          <div class="score-bar-label">
+            <span>Niveau d'exposition</span>
+            <span id="score-pct">—</span>
+          </div>
+          <div class="score-track">
+            <div class="score-fill" id="score-fill"></div>
+          </div>
+        </div>
+ 
+        <!-- Résultats dynamiques par axe -->
+        <div id="result-cards"></div>
+ 
+        <!-- CTA -->
+        <div class="result-cta">
+          <div class="result-cta-inner">
+            <h3>Ne laissez pas une erreur technique vous coûter des dizaines de milliers d'euros.</h3>
+            <p id="cta-body">Votre profil contient des marqueurs de risque qui attirent systématiquement l'attention de l'administration lors d'un départ. Sécurisez votre situation avant de franchir la frontière.</p>
+            <a href="vente.html" class="btn btn-p btn-lg" style="display:inline-flex">
+              Télécharger le Framework (39€)
+              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px">
+              <div class="cta-note"><div class="cta-note-dot"></div>Téléchargement immédiat · PDF</div>
+              <div class="cta-note"><div class="cta-note-dot"></div>Paiement 100% sécurisé</div>
+            </div>
+            <p class="cta-price">Accès instantané · Une heure d'avocat coûte en moyenne 300–600€</p>
+          </div>
+        </div>
+ 
+        <div style="text-align:center;margin-top:20px">
+          <button class="btn-restart" onclick="restartQuiz()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7a5 5 0 1 1 1.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M2 10.5V7h3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Recommencer le diagnostic
+          </button>
+        </div>
+ 
+      </div>
+ 
+    </div><!-- fin quiz-wrap -->
+  </div><!-- fin page -->
+ 
+  <!-- ── DISCLAIMER ── -->
+  <div class="disc-strip" role="note">
+    <div class="disc-i">
+      <div class="disc-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3L15 13H1L8 3z" stroke="#9A7B44" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <p class="disc-txt"><strong>Avertissement :</strong> Ce diagnostic est un outil d'information générale. Il ne constitue pas un avis juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision d'expatriation.</p>
+    </div>
+  </div>
+ 
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-i">
+      <div class="f-grid">
+        <div>
+          <div class="f-logo-row"><div class="nav-mark" aria-hidden="true">EF</div>Expatriation Framework</div>
+          <p class="f-tag">Valider, Anticiper, Décider.</p>
+          <p class="f-disc">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié.</p>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Ressources</div>
+          <ul class="f-nav">
+            <li><a href="article-1-timing.html">Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html">Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Framework</div>
+          <ul class="f-nav">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="vente.html">Obtenir le Framework</a></li>
+            <li><a href="a-propos.html">À Propos</a></li>
+            <li><a href="avertissement.html">Avertissement</a></li>
+            <li><a href="mentions-legales.html">Mentions Légales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="f-btm">
+        <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
+        <nav class="f-legal" aria-label="Liens légaux">
+          <a href="mentions-legales.html">Mentions Légales</a>
+          <a href="avertissement.html">Avertissement</a>
+          <a href="a-propos.html">À Propos</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+ 
+  <!-- ══════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════ -->
+  <script>
+    "use strict";
+ 
+    const TOTAL = 12;
+    let answers = {};
+    let current = 1;
+ 
+    /* ── Axe par question ── */
+    const AXE_MAP = { 1:'1',2:'1',3:'1', 4:'2',5:'2',6:'2', 7:'3',8:'3',9:'3', 10:'4',11:'4',12:'4' };
+ 
+    /* ── Update UI ── */
+    function updateUI(step){
+      // Counter
+      document.getElementById('step-counter').textContent = step + ' / 12';
+      // Progress fill
+      document.getElementById('prog-fill').style.width = ((step / TOTAL) * 100) + '%';
+      // ARIA
+      document.querySelector('.progress-track').setAttribute('aria-valuenow', step);
+      // Pillar dots
+      const axe = parseInt(AXE_MAP[step]);
+      document.querySelectorAll('.p-dot').forEach((d, i) => {
+        const a = i + 1;
+        d.className = 'p-dot' + (a < axe ? ' done' : a === axe ? ' act' : '');
+      });
+    }
+ 
+    /* ── Navigation ── */
+    function nextStep(step){
+      const sel = document.querySelector(`input[name="q${step}"]:checked`);
+      if(!sel){ shakeStep(step); return; }
+      answers[`q${step}`] = sel.value;
+      if(step >= TOTAL){ return; }
+      document.getElementById(`step-${step}`).classList.remove('active');
+      document.getElementById(`step-${step+1}`).classList.add('active');
+      current = step + 1;
+      updateUI(current);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+ 
+    function prevStep(step){
+      document.getElementById(`step-${step}`).classList.remove('active');
+      document.getElementById(`step-${step-1}`).classList.add('active');
+      current = step - 1;
+      updateUI(current);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+ 
+    /* Shake si pas de sélection */
+    function shakeStep(step){
+      const el = document.getElementById(`step-${step}`);
+      el.style.animation = 'none';
+      el.offsetHeight; /* reflow */
+      el.style.animation = 'shake .4s var(--sharp)';
+    }
+    const shakeCSS = document.createElement('style');
+    shakeCSS.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}`;
+    document.head.appendChild(shakeCSS);
+ 
+    /* ── Loading + Résultats ── */
+    function processResults(){
+      const sel = document.querySelector('input[name="q12"]:checked');
+      if(!sel){ shakeStep(12); return; }
+      answers['q12'] = sel.value;
+ 
+      // Masquer form + header
+      document.getElementById('diag-form').style.display = 'none';
+      document.getElementById('quiz-header').style.display = 'none';
+ 
+      // Afficher loading
+      const loading = document.getElementById('loading');
+      loading.classList.add('show');
+ 
+      // Animation steps séquentielle
+      const steps = ['ls1','ls2','ls3','ls4'];
+      const titles = [
+        'Vérification de la structure professionnelle...',
+        'Évaluation du critère Foyer (Art. 4B)...',
+        'Calcul de l\'exposition à l\'Exit Tax...',
+        'Génération du rapport personnalisé...'
+      ];
+ 
+      steps.forEach((id, i) => {
+        setTimeout(() => {
+          if(i > 0) document.getElementById(steps[i-1]).classList.remove('active');
+          document.getElementById(id).classList.add('active');
+          document.getElementById('loading-title').textContent = titles[i];
+        }, i * 900);
+      });
+ 
+      setTimeout(() => {
+        steps.forEach(id => {
+          const el = document.getElementById(id);
+          el.classList.remove('active');
+          el.classList.add('done');
+          el.querySelector('.l-step-ico').classList.add('done-ico');
+        });
+      }, 3600);
+ 
+      setTimeout(() => {
+        loading.classList.remove('show');
+        loading.style.display = 'none';
+        generateReport();
+        const result = document.getElementById('result-screen');
+        result.classList.add('show');
+        window.scrollTo({top:0,behavior:'smooth'});
+      }, 4200);
+    }
+ 
+    /* ── Algorithme de scoring ── */
+    function generateReport(){
+      let score = 0;
+      const cards = [];
+ 
+      /* ── AXE 1 : STRUCTURE ── */
+      if(answers.q1 === 'sasu' && answers.q3 === 'garder'){
+        score += 40;
+        cards.push({
+          cls:'rc-alert', axe:'Axe 1 · Direction Effective',
+          title:'Alerte Rouge — Société française maintenue',
+          body:`Vous prévoyez de conserver la gérance de votre société française depuis l'étranger. L'administration considère que le siège de direction effective est déplacé là où vous résidez physiquement. <strong>Risque de redressement pour établissement stable occulte.</strong>`
+        });
+      } else if(answers.q1 === 'indep' && answers.q2 === 'france'){
+        score += 30;
+        cards.push({
+          cls:'rc-alert', axe:'Axe 1 · Centre Économique',
+          title:'Alerte — Clientèle 100% française',
+          body:`En tant qu'indépendant avec une clientèle entièrement française, le fisc peut arguer que votre centre d'intérêts économiques n'a jamais quitté la France, même si vous résidez à l'étranger. Une restructuration contractuelle s'impose avant le départ.`
+        });
+      } else if(answers.q3 === 'indecis'){
+        score += 25;
+        cards.push({
+          cls:'rc-warn', axe:'Axe 1 · Impréparation structurelle',
+          title:'Vigilance — Sort de la structure non défini',
+          body:`Partir sans statuer sur le sort juridique de votre structure est le moyen le plus sûr d'attirer l'attention du fisc. L'inaction administrative est interprétée comme un maintien de l'activité en France.`
+        });
+      } else {
+        cards.push({
+          cls:'rc-ok', axe:'Axe 1 · Structure professionnelle',
+          title:'Cohérent — Coupure structurelle planifiée',
+          body:`Votre approche concernant votre structure professionnelle s'oriente vers une coupure nette. C'est le premier pilier d'une expatriation réussie. Veillez à l'exécution formelle de la liquidation (TUP, dissolution, radiation).`
+        });
+        score += 5;
+      }
+ 
+      /* ── AXE 2 : FOYER ── */
+      if((answers.q4 === 'famille' || answers.q4 === 'couple') && answers.q5 === 'decale'){
+        score += 40;
+        cards.push({
+          cls:'rc-alert', axe:'Axe 2 · Foyer Fiscal',
+          title:'Alerte Rouge — Famille restée en France',
+          body:`Jurisprudence constante. Si votre conjoint ou vos enfants restent en France, même temporairement, le fisc estimera que votre "Foyer" n'a pas bougé. <strong>Vous resterez imposable en France sur vos revenus mondiaux dès le premier jour de votre départ.</strong> Ce critère seul suffit à une requalification totale.`
+        });
+      } else if(answers.q6 === 'vide'){
+        score += 25;
+        cards.push({
+          cls:'rc-warn', axe:'Axe 2 · Habitation à disposition',
+          title:'Vigilance — Résidence conservée à votre disposition',
+          body:`Conserver votre logement vide est légalement équivalent à avoir "une habitation à votre disposition" en France. En cas de contrôle et de doute sur les autres critères, cet élément seul peut suffire à l'inspecteur pour justifier le maintien de votre domicile fiscal français.`
+        });
+      } else {
+        cards.push({
+          cls:'rc-ok', axe:'Axe 2 · Foyer Fiscal',
+          title:'Cohérent — Détachement du foyer total',
+          body:`Le détachement de votre foyer semble complet. En libérant votre logement et en faisant migrer votre cellule familiale simultanément, vous neutralisez le critère le plus redoutable de l'Article 4B du CGI.`
+        });
+      }
+ 
+      /* ── AXE 3 : PATRIMOINE ── */
+      if(answers.q8 === 'oui' || answers.q8 === 'nsp'){
+        score += 30;
+        cards.push({
+          cls:'rc-alert', axe:'Axe 3 · Exit Tax & Plus-values',
+          title:'Alerte — Exposition à l\'Exit Tax',
+          body:`Vos plus-values latentes (actions, crypto, parts de société) vous placent directement sous la menace de l'Exit Tax. <strong>Un manquement déclaratif dans les 30 jours précédant le départ entraîne l'exigibilité immédiate de l'impôt (30% + pénalités de 40%).</strong> Ce point est non-négociable.`
+        });
+      } else if(answers.q7 === 'oui_beaucoup'){
+        score += 20;
+        cards.push({
+          cls:'rc-warn', axe:'Axe 3 · Patrimoine immobilier',
+          title:'Vigilance — Immobilier locatif important',
+          body:`Votre patrimoine immobilier vous maintient fortement connecté à l'économie française. En tant que non-résident, vous subirez une fiscalité punitive sur vos loyers (taux minimum 20%) si aucune restructuration n'est anticipée avant le départ.`
+        });
+      } else {
+        cards.push({
+          cls:'rc-ok', axe:'Axe 3 · Patrimoine & Actifs',
+          title:'Cohérent — Fluidité patrimoniale',
+          body:`Votre patrimoine ne semble pas constituer un point de blocage majeur, ce qui simplifie considérablement vos démarches déclaratives lors de l'année de transfert de domicile fiscal.`
+        });
+      }
+ 
+      /* ── AXE 4 : TIMING ── */
+      if(answers.q10 === 'urgent' && answers.q12 !== 'oui'){
+        score += 25;
+        cards.push({
+          cls:'rc-alert', axe:'Axe 4 · Chronologie',
+          title:'Alerte Urgence — Départ imminent sans filet juridique',
+          body:`Un départ prévu dans moins de 3 mois sans accompagnement juridique est un scénario à très haut risque. Les délais administratifs français (radiation, clôture de comptes, déclaration 2042-NR) sont incompatibles avec votre calendrier sans une méthode rigoureuse et immédiate.`
+        });
+      } else if(answers.q11 === 'paradis'){
+        score += 15;
+        cards.push({
+          cls:'rc-warn', axe:'Axe 4 · Destination à risque',
+          title:'Vigilance — Destination à fiscalité privilégiée',
+          body:`Partir vers Dubaï, Andorre ou tout pays à fiscalité nulle vous place automatiquement dans la catégorie des départs les plus scrutés par Bercy. La charge de la preuve d'un vrai départ effectif reposera entièrement sur vous. Chaque élément documentaire comptera.`
+        });
+      } else {
+        cards.push({
+          cls:'rc-ok', axe:'Axe 4 · Chronologie',
+          title:'Cohérent — Fenêtre de préparation disponible',
+          body:`Votre calendrier vous laisse une fenêtre de préparation suffisante pour structurer un départ propre. C'est une position favorable — utilisez ce temps pour auditer votre situation en détail avant de franchir la frontière.`
+        });
+      }
+ 
+      /* ── Injection DOM ── */
+      const container = document.getElementById('result-cards');
+      container.innerHTML = cards.map(c => `
+        <div class="result-card ${c.cls}">
+          <div class="result-axe">${c.axe}</div>
+          <h4>${c.title}</h4>
+          <p>${c.body}</p>
+        </div>
+      `).join('');
+ 
+      /* ── Badge + titre ── */
+      const badge   = document.getElementById('risk-badge');
+      const badgeTxt= document.getElementById('badge-text');
+      const title   = document.getElementById('risk-title');
+      const sub     = document.getElementById('risk-subtitle');
+      const ctaBody = document.getElementById('cta-body');
+      const fill    = document.getElementById('score-fill');
+      const pct     = document.getElementById('score-pct');
+ 
+      const pctVal = Math.min(Math.round(score), 100);
+ 
+      if(score >= 60){
+        badge.className = 'risk-badge badge-critique';
+        badgeTxt.textContent = 'Niveau de risque : Critique';
+        title.textContent = 'Profil flaggé — Risque de redressement élevé';
+        sub.textContent = 'Plusieurs marqueurs critiques ont été détectés. Un départ sans correction expose votre dossier à une requalification fiscale.';
+        fill.style.background = 'linear-gradient(90deg, #9A2B2B, #C45C5C)';
+        ctaBody.textContent = "Votre profil cumule plusieurs drapeaux rouges exploités systématiquement par l'administration lors des contrôles de départ. Vous devez impérativement sécuriser votre situation avant de franchir la frontière.";
+      } else if(score >= 30){
+        badge.className = 'risk-badge badge-eleve';
+        badgeTxt.textContent = 'Niveau de risque : Élevé';
+        title.textContent = 'Dossier fragile — Des failles classiques identifiées';
+        sub.textContent = 'Votre dossier comporte des marqueurs de risque exploitables par l\'administration en cas de contrôle.';
+        fill.style.background = 'linear-gradient(90deg, #7A4A1A, #C4924A)';
+        ctaBody.textContent = "Votre profil présente des failles classiques que l'administration connaît parfaitement. Sans correction structurée, votre départ peut être contesté lors de l'année de transfert.";
+      } else {
+        badge.className = 'risk-badge badge-modere';
+        badgeTxt.textContent = 'Niveau de risque : À surveiller';
+        title.textContent = 'Profil cohérent — La procédure doit être sans faille';
+        sub.textContent = 'Votre dossier est globalement solide, mais l\'exécution administrative doit être irréprochable.';
+        fill.style.background = 'linear-gradient(90deg, #1A5A3A, #4AA87A)';
+        ctaBody.textContent = "Votre profil est sur la bonne voie. Il vous reste à verrouiller l'exécution : déclarations dans les délais, clôtures formelles, documentation irréprochable. Un dossier solide se confirme dans les détails.";
+      }
+ 
+      pct.textContent = pctVal + ' / 100';
+      setTimeout(() => { fill.style.width = pctVal + '%'; }, 200);
+    }
+ 
+    /* ── Restart ── */
+    function restartQuiz(){
+      answers = {}; current = 1;
+      document.getElementById('result-screen').classList.remove('show');
+      document.getElementById('result-screen').style.display = '';
+      const loading = document.getElementById('loading');
+      loading.style.display = ''; loading.classList.remove('show');
+      document.querySelectorAll('.l-step').forEach(el => {
+        el.classList.remove('active','done');
+        el.querySelector('.l-step-ico').classList.remove('done-ico');
+      });
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById('step-1').classList.add('active');
+      document.getElementById('diag-form').style.display = '';
+      document.getElementById('quiz-header').style.display = '';
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      updateUI(1);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+ 
+    /* Init */
+    updateUI(1);
+  </script>
+ 
 </body>
 </html>
+ 
