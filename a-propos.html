@@ -1,120 +1,803 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À Propos - Expatriation Framework</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-    <style>
-        :root {
-            --bg-color: #fcfcfc;
-            --text-color: #1a1a1a;
-            --accent-color: #2b6cb0;
-            --border-color: #e2e8f0;
-            --muted-text: #718096;
-        }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            line-height: 1.6; 
-            margin: 0; 
-            padding: 0; 
-        }
-        header { 
-            border-bottom: 1px solid var(--border-color); 
-            padding: 1.5rem 2rem; 
-            background: #fff; 
-            text-align: center; 
-        }
-        .logo { 
-            font-weight: 700; 
-            font-size: 1.5rem; 
-            text-decoration: none; 
-            color: var(--text-color); 
-        }
-        .container { 
-            max-width: 800px; 
-            margin: 40px auto; 
-            background-color: #ffffff; 
-            padding: 40px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border-color); 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
-        }
-        h1 { 
-            color: #1e293b; 
-            border-bottom: 2px solid #f1f5f9; 
-            padding-bottom: 15px; 
-            margin-top: 0; 
-        }
-        h2 { 
-            color: #334155; 
-            margin-top: 30px; 
-            font-size: 1.2rem; 
-        }
-        p { 
-            color: #475569; 
-            margin-bottom: 1rem; 
-            text-align: justify; 
-        }
-        .back-link { 
-            display: inline-block; 
-            margin-top: 40px; 
-            font-weight: bold; 
-            padding: 10px 20px; 
-            background-color: #f1f5f9; 
-            border-radius: 6px; 
-            color: #475569; 
-            text-decoration: none; 
-        }
-        .back-link:hover { 
-            background-color: #e2e8f0; 
-        }
-        footer { 
-            text-align: center; 
-            padding: 3rem; 
-            color: var(--muted-text); 
-            font-size: 0.9rem; 
-            border-top: 1px solid var(--border-color); 
-            margin-top: 40px; 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À Propos — Expatriation Framework</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ 
+  <style>
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
+    :root {
+      --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
+      --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
+      --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
+      --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
+      --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
+      --fd:'Cormorant Garant',serif;
+      --fb:'Figtree',sans-serif;
+      --fm:'Space Mono',monospace;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+      --spring:cubic-bezier(.34,1.56,.64,1);
+      --slow:cubic-bezier(.16,1,.3,1);
+      --sharp:cubic-bezier(.4,0,.2,1);
+      --gutter:clamp(20px,4vw,48px);
+      --max-w:1100px;
+      --content-w:680px;
+    }
+ 
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--fb);background:var(--bg-1);color:var(--t0);
+      line-height:1.6;overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font:inherit}
+ 
+    body::after{
+      content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+ 
+    #prog{position:fixed;top:0;left:0;height:1px;width:0;z-index:9999;
+      background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
+      transition:width .08s linear}
+ 
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:900;height:64px;
+      padding:0 var(--gutter);display:flex;align-items:center;justify-content:center;
+      border-bottom:1px solid transparent;
+      transition:background .45s var(--ease),border-color .45s;
+    }
+    .nav.solid{
+      background:rgba(6,9,18,.92);
+      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      border-bottom-color:var(--br-0);
+    }
+    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
+    .nav-logo:hover{opacity:.8}
+    .nav-mark{
+      width:30px;height:30px;border-radius:7px;
+      background:linear-gradient(145deg,var(--gold-d),var(--gold));
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;
+    }
+    .nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+    .nav-links a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .nav-links a:hover{color:var(--t0)}
+    .nav-cta{
+      font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;
+      background:rgba(200,169,106,.08);color:var(--gold);
+      border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
+    }
+    .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
+ 
+    /* ══════════════════════════════════════
+       BOUTON
+    ══════════════════════════════════════ */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;
+      border-radius:10px;cursor:pointer;transition:all .22s var(--sharp);
+      white-space:nowrap;border:none;outline:none;text-decoration:none;
+    }
+    .btn-p{padding:13px 28px;background:var(--gold);color:#08080f;font-weight:600}
+    .btn-p:hover{background:var(--gold-b);transform:translateY(-2px);box-shadow:0 0 32px rgba(200,169,106,.2),0 0 12px rgba(200,169,106,.12);color:#08080f}
+    .btn-p:active{transform:translateY(0)}
+    .btn-g{padding:11px 20px;background:transparent;color:var(--t1);border:1px solid var(--br-2)}
+    .btn-g:hover{border-color:var(--br-3);color:var(--t0);background:rgba(255,255,255,.025)}
+    .btn-ic{transition:transform .2s var(--spring)}
+    .btn:hover .btn-ic{transform:translateX(4px)}
+ 
+    /* ══════════════════════════════════════
+       REVEAL
+    ══════════════════════════════════════ */
+    .rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--slow),transform .7s var(--slow)}
+    .rv.in{opacity:1;transform:translateY(0)}
+    .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}
+    .rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+ 
+    /* ══════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════ */
+    .page-hero{
+      padding:120px var(--gutter) 64px;
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(24,32,51,.2) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(24,32,51,.2) 1px,transparent 1px);
+      background-size:64px 64px;
+      -webkit-mask-image:radial-gradient(ellipse 70% 90% at 50% 0%,black 20%,transparent 80%);
+      mask-image:radial-gradient(ellipse 70% 90% at 50% 0%,black 20%,transparent 80%);
+      pointer-events:none;
+    }
+    .page-hero::after{
+      content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+      width:500px;height:360px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(200,169,106,.055) 0%,transparent 70%);
+      filter:blur(40px);pointer-events:none;
+    }
+    .page-hero-inner{
+      max-width:var(--content-w);margin:0 auto;position:relative;z-index:1;
+    }
+ 
+    @keyframes up{to{opacity:1;transform:translateY(0)}}
+ 
+    .breadcrumb{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--fm);font-size:10px;color:var(--t2);
+      letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;
+      opacity:0;transform:translateY(10px);animation:up .5s var(--slow) .1s forwards;
+    }
+    .breadcrumb a{color:var(--t2);transition:color .2s}
+    .breadcrumb a:hover{color:var(--t1)}
+    .breadcrumb-sep{color:var(--t3)}
+    .breadcrumb-current{color:var(--gold-d)}
+ 
+    .page-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--fm);font-size:10px;color:var(--gold-d);
+      text-transform:uppercase;letter-spacing:.14em;
+      padding:5px 12px 5px 10px;border-radius:100px;
+      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.18);
+      margin-bottom:22px;
+      opacity:0;transform:translateY(10px);animation:up .55s var(--slow) .18s forwards;
+    }
+    .page-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-d)}
+ 
+    .page-h1{
+      font-family:var(--fd);font-size:clamp(40px,6vw,64px);
+      font-weight:600;line-height:1.02;letter-spacing:-.03em;color:var(--t0);
+      margin-bottom:20px;
+      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .28s forwards;
+    }
+    .page-h1 em{font-style:italic;font-weight:400;color:var(--gold-b)}
+ 
+    .page-intro{
+      font-family:var(--fd);font-size:clamp(16px,2.2vw,20px);
+      font-weight:400;font-style:italic;color:var(--t1);
+      line-height:1.7;
+      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .4s forwards;
+    }
+ 
+    /* ══════════════════════════════════════
+       LAYOUT PRINCIPAL
+    ══════════════════════════════════════ */
+    .page-layout{
+      display:grid;
+      grid-template-columns:1fr min(var(--content-w),100%) 1fr;
+      padding:0 var(--gutter) 80px;
+    }
+    .page-body{grid-column:2}
+ 
+    .section-sep{
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);
+      margin:52px 0;
+    }
+ 
+    /* ══════════════════════════════════════
+       PROFIL AUTEUR
+    ══════════════════════════════════════ */
+    .author-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:20px;padding:0;overflow:hidden;margin-bottom:52px;
+      position:relative;
+    }
+    .author-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold-d) 30%,var(--gold) 50%,var(--gold-d) 70%,transparent);
+      opacity:.5;
+    }
+    .author-card-top{
+      padding:36px;display:flex;align-items:center;gap:24px;
+      border-bottom:1px solid var(--br-0);
+    }
+    .author-avatar{
+      width:72px;height:72px;border-radius:16px;flex-shrink:0;
+      background:linear-gradient(145deg,var(--bg-3),var(--bg-2));
+      border:1px solid var(--br-2);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    /* Initiales stylisées */
+    .author-avatar-txt{
+      font-family:var(--fd);font-size:28px;font-weight:600;
+      color:var(--gold-d);letter-spacing:-.02em;
+    }
+    /* Subtle gradient overlay */
+    .author-avatar::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 30% 30%,rgba(200,169,106,.1) 0%,transparent 70%);
+    }
+    .author-info{}
+    .author-name{
+      font-family:var(--fd);font-size:26px;font-weight:600;
+      letter-spacing:-.01em;color:var(--t0);margin-bottom:4px;
+    }
+    .author-title{
+      font-size:13.5px;font-weight:300;color:var(--t1);margin-bottom:10px;
+    }
+    .author-tags{display:flex;gap:8px;flex-wrap:wrap}
+    .author-tag{
+      font-family:var(--fm);font-size:9px;color:var(--t2);
+      text-transform:uppercase;letter-spacing:.1em;
+      padding:3px 9px;border-radius:4px;
+      background:rgba(255,255,255,.025);border:1px solid var(--br-0);
+    }
+    .author-card-body{padding:28px 36px}
+    .author-quote{
+      font-family:var(--fd);font-size:19px;font-weight:400;font-style:italic;
+      color:var(--t1);line-height:1.65;position:relative;padding-left:20px;
+    }
+    .author-quote::before{
+      content:'';position:absolute;left:0;top:4px;bottom:4px;
+      width:2px;background:linear-gradient(180deg,var(--gold),var(--gold-d));
+      border-radius:2px;opacity:.5;
+    }
+    .author-card-stats{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      border-top:1px solid var(--br-0);
+    }
+    .author-stat{
+      padding:20px 24px;border-right:1px solid var(--br-0);text-align:center;
+    }
+    .author-stat:last-child{border-right:none}
+    .author-stat-num{
+      font-family:var(--fd);font-size:28px;font-weight:600;
+      line-height:1;color:var(--t0);margin-bottom:4px;
+      letter-spacing:-.02em;
+    }
+    .author-stat-lbl{
+      font-family:var(--fm);font-size:9px;color:var(--t2);
+      text-transform:uppercase;letter-spacing:.1em;line-height:1.4;
+    }
+ 
+    /* ══════════════════════════════════════
+       SECTIONS DE TEXTE
+    ══════════════════════════════════════ */
+    .s-h2{
+      font-family:var(--fd);font-size:clamp(24px,3.5vw,34px);font-weight:600;
+      line-height:1.12;letter-spacing:-.015em;color:var(--t0);
+      margin-top:52px;margin-bottom:18px;padding-bottom:16px;
+      border-bottom:1px solid var(--br-0);
+    }
+    .s-p{font-size:15.5px;font-weight:300;line-height:1.8;color:var(--t1);margin-bottom:20px}
+    .s-p strong{color:var(--t0);font-weight:500}
+    .s-p em{font-style:italic}
+    .s-p a{color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;transition:color .2s}
+    .s-p a:hover{color:var(--gold)}
+ 
+    /* ══════════════════════════════════════
+       PARCOURS TIMELINE
+    ══════════════════════════════════════ */
+    .journey-track{
+      border-left:1px solid var(--br-2);padding-left:28px;
+      margin:28px 0 36px;position:relative;
+    }
+    /* gradient de ligne */
+    .journey-track::before{
+      content:'';position:absolute;left:-1px;top:12px;bottom:12px;
+      width:1px;
+      background:linear-gradient(180deg,var(--gold-d),rgba(200,169,106,.3) 60%,var(--br-2));
+      opacity:.6;
+    }
+    .jt-item{position:relative;margin-bottom:32px}
+    .jt-item:last-child{margin-bottom:0}
+    .jt-item::before{
+      content:'';position:absolute;left:-35px;top:7px;
+      width:10px;height:10px;border-radius:50%;
+      background:var(--bg-1);border:1.5px solid var(--br-2);
+      transition:border-color .3s,box-shadow .3s;
+    }
+    .jt-item.highlight::before{
+      border-color:var(--gold-d);
+      box-shadow:0 0 10px rgba(200,169,106,.2);
+      background:rgba(200,169,106,.06);
+    }
+    .jt-period{
+      font-family:var(--fm);font-size:10px;color:var(--gold-d);
+      text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .jt-period::after{content:'';flex:0 0 20px;height:1px;background:var(--gold-d);opacity:.3}
+    .jt-title{
+      font-family:var(--fd);font-size:20px;font-weight:600;
+      color:var(--t0);margin-bottom:6px;line-height:1.25;
+    }
+    .jt-desc{font-size:14px;font-weight:300;color:var(--t1);line-height:1.7;margin:0}
+    .jt-desc strong{color:var(--t0);font-weight:500}
+ 
+    /* ══════════════════════════════════════
+       TRANSPARENCE MÉTHODE
+    ══════════════════════════════════════ */
+    .method-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:16px;padding:32px;margin:28px 0;
+      position:relative;overflow:hidden;
+    }
+    .method-card::after{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 60% at 90% 10%,rgba(200,169,106,.03) 0%,transparent 70%);
+    }
+    .method-head{
+      display:flex;align-items:center;gap:14px;margin-bottom:20px;
+    }
+    .method-ico{
+      width:40px;height:40px;border-radius:9px;flex-shrink:0;
+      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.15);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .method-overline{
+      font-family:var(--fm);font-size:9.5px;color:var(--gold-d);
+      text-transform:uppercase;letter-spacing:.13em;margin-bottom:3px;
+    }
+    .method-title{
+      font-family:var(--fd);font-size:20px;font-weight:600;
+      color:var(--t0);line-height:1.2;
+    }
+    .method-body{font-size:14px;font-weight:300;color:var(--t1);line-height:1.72}
+    .method-body strong{color:var(--t0);font-weight:500}
+    .method-body p + p{margin-top:12px}
+    .method-disclaimer{
+      margin-top:20px;padding:14px 16px;
+      background:var(--bg-1);border:1px solid var(--br-0);border-radius:9px;
+      font-family:var(--fm);font-size:10.5px;color:var(--t2);
+      line-height:1.6;letter-spacing:.02em;
+    }
+    .method-disclaimer strong{color:var(--t1);font-weight:700}
+ 
+    /* ══════════════════════════════════════
+       VALEURS — ce que n'est pas le framework
+    ══════════════════════════════════════ */
+    .values-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+      margin:24px 0;
+    }
+    .value-item{
+      padding:18px;border-radius:12px;border:1px solid;
+      display:flex;align-items:flex-start;gap:12px;
+    }
+    .value-yes{
+      background:rgba(74,168,122,.05);border-color:rgba(74,168,122,.15);
+    }
+    .value-no{
+      background:rgba(196,92,92,.05);border-color:rgba(196,92,92,.12);
+    }
+    .value-ico{
+      width:22px;height:22px;flex-shrink:0;margin-top:2px;
+      display:flex;align-items:center;justify-content:center;border-radius:5px;
+    }
+    .value-yes .value-ico{background:rgba(74,168,122,.1)}
+    .value-no .value-ico{background:rgba(196,92,92,.1)}
+    .value-text{font-size:13.5px;font-weight:300;line-height:1.55}
+    .value-yes .value-text{color:#A0C8B0}
+    .value-no .value-text{color:#B8A0A0}
+    .value-text strong{font-weight:500}
+    .value-yes .value-text strong{color:#C0D8C0}
+    .value-no .value-text strong{color:#D0B0B0}
+ 
+    /* ══════════════════════════════════════
+       CONTACT CARD
+    ══════════════════════════════════════ */
+    .contact-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:16px;padding:28px;margin-top:36px;
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+      flex-wrap:wrap;
+    }
+    .contact-left{}
+    .contact-label{
+      font-family:var(--fm);font-size:9.5px;color:var(--gold-d);
+      text-transform:uppercase;letter-spacing:.13em;margin-bottom:6px;
+    }
+    .contact-title{
+      font-family:var(--fd);font-size:20px;font-weight:600;
+      color:var(--t0);margin-bottom:6px;line-height:1.2;
+    }
+    .contact-email{
+      font-size:14px;font-weight:300;color:var(--t1);
+      display:flex;align-items:center;gap:7px;
+    }
+    .contact-email a{
+      color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;
+      transition:color .2s;
+    }
+    .contact-email a:hover{color:var(--gold)}
+ 
+    /* ══════════════════════════════════════
+       BACK BUTTON
+    ══════════════════════════════════════ */
+    .back-row{margin-top:52px}
+    .back-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:400;color:var(--t2);
+      padding:10px 16px;border-radius:8px;border:1px solid var(--br-1);
+      transition:all .2s;
+    }
+    .back-btn:hover{color:var(--t1);border-color:var(--br-2)}
+ 
+    /* ══════════════════════════════════════
+       DISCLAIMER + FOOTER
+    ══════════════════════════════════════ */
+    .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter);margin-top:64px}
+    .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
+    .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
+    .disc-txt strong{color:var(--t1);font-weight:500}
+ 
+    .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
+    .footer-i{max-width:var(--max-w);margin:0 auto}
+    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
+    .f-logo-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px}
+    .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:14px;line-height:1.5}
+    .f-disc{font-size:11.5px;color:var(--t2);line-height:1.6;padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0)}
+    .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
+    .f-nav{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .f-nav a:hover{color:var(--t0)}
+    .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
+    .f-legal{display:flex;align-items:center;gap:20px}
+    .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
+    .f-legal a:hover{color:var(--t1)}
+ 
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media(max-width:768px){
+      :root{--gutter:20px}
+      .nav-links{display:none}
+      .page-layout{grid-template-columns:1fr;padding:0 var(--gutter) 60px}
+      .page-body{grid-column:1}
+      .author-card-top{flex-direction:column;align-items:flex-start;gap:16px}
+      .author-card-stats{grid-template-columns:1fr;border-top:1px solid var(--br-0)}
+      .author-stat{border-right:none;border-bottom:1px solid var(--br-0);text-align:left;padding:16px 24px}
+      .author-stat:last-child{border-bottom:none}
+      .values-grid{grid-template-columns:1fr}
+      .contact-card{flex-direction:column;align-items:flex-start}
+      .f-grid{grid-template-columns:1fr;gap:28px}
+      .f-btm{flex-direction:column;text-align:center}
+      .f-legal{justify-content:center}
+      .journey-track{padding-left:22px}
+      .jt-item::before{left:-29px}
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <a href="/" class="logo">Expatriation Framework</a>
-    </header>
-
-    <div class="container">
-        <h1>À Propos</h1>
-        
-        <h2>Qui suis-je ?</h2>
-        <p>Je ne suis ni avocat fiscaliste, ni expert-comptable. Je suis avant tout un professionnel en pleine transition, tout comme vous.</p>
-        <p>Actuellement salarié et installé en Suisse, j'ai déjà franchi la première étape de la sortie du système français. Aujourd'hui, je prépare ma prochaine expatriation à l'international d'ici 1 à 2 ans. En anticipant ce futur départ, je me suis heurté au même mur que la majorité des entrepreneurs et indépendants : la complexité redoutable de l'administration fiscale française et le manque cruel de feuilles de route claires.</p>
-
-        <h2>Pourquoi ce Framework ?</h2>
-        <p>En préparant mon propre dossier, j'ai constaté que l'information en ligne était fragmentée, souvent contradictoire, ou noyée dans un jargon juridique incompréhensible. J'avais besoin d'<strong>une méthode claire et directe</strong> : savoir exactement ce qu'il faut faire, et surtout ce qu'il ne faut pas faire dans les 24 mois précédant un départ.</p>
-        <p>J'ai donc décidé de créer l'outil qui me manquait.</p>
-
-        <h2>La méthode : Comment ce guide a-t-il été conçu ?</h2>
-        <p>Plutôt que de prétendre avoir épluché personnellement des décennies de jurisprudence, j'ai fait le choix de la transparence et de l'efficacité moderne. Ce Framework est le résultat d'un travail de structuration approfondi, réalisé avec l'appui des meilleures intelligences artificielles actuelles.</p>
-        <p>J'ai utilisé ces technologies pour synthétiser, traduire et vulgariser les règles fiscales complexes (notamment l'Article 4B du CGI) afin d'en extraire un plan d'action chronologique pur.</p>
-        <p><strong>Le résultat n'est pas un conseil juridique personnalisé, mais un outil d'audit préparatoire.</strong> Il a été pensé pour vous permettre de nettoyer votre situation, d'éviter les drapeaux rouges évidents, et d'arriver préparé face à un avocat fiscaliste le jour J, sans perdre votre temps ni votre argent.</p>
-        
-        <a href="/" class="back-link">← Retour à l'accueil</a>
+ 
+  <div id="prog"></div>
+ 
+  <!-- ══ NAV ══ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav-i">
+      <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
+        <div class="nav-mark" aria-hidden="true">EF</div>
+        Expatriation Framework
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#articles">Articles</a></li>
+        <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
+        <li><a href="a-propos.html" style="color:var(--t0)">À Propos</a></li>
+        <li><a href="vente.html" class="nav-cta">Le Framework — 39€</a></li>
+      </ul>
     </div>
-
-    <footer>
-        <p>&copy; 2026 Expatriation Framework. Tous droits réservés.</p>
-        <p style="font-size: 0.8rem;">Ce document est fourni à titre d'information et ne constitue pas un conseil juridique personnalisé.</p>
-        <p style="margin-top: 15px;">
-            <a href="/mentions-legales.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">Mentions Légales</a>
-            <a href="/a-propos.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">À propos</a>
-            <a href="/avertissement.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem;">Avertissement</a>
-        </p>
-    </footer>
-
+  </nav>
+ 
+  <!-- ══════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════ -->
+  <header class="page-hero" role="banner">
+    <div class="page-hero-inner">
+ 
+      <nav class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="breadcrumb-current">À Propos</span>
+      </nav>
+ 
+      <div class="page-eyebrow">
+        <div class="page-eyebrow-dot" aria-hidden="true"></div>
+        La personne derrière le Framework
+      </div>
+ 
+      <h1 class="page-h1">
+        Ni avocat,<br><em>ni expert-comptable.</em>
+      </h1>
+ 
+      <p class="page-intro">
+        Avant tout, un professionnel en pleine transition — comme vous. Ce Framework est l'outil que j'aurais voulu avoir quand j'ai commencé à chercher.
+      </p>
+ 
+    </div>
+  </header>
+ 
+  <!-- ══════════════════════════════════
+       CORPS DE LA PAGE
+  ══════════════════════════════════ -->
+  <div class="page-layout">
+    <main class="page-body" role="main">
+ 
+      <!-- ─── Carte auteur ─── -->
+      <div class="author-card rv">
+        <div class="author-card-top">
+          <div class="author-avatar" aria-label="Initiales de l'auteur : MF">
+            <span class="author-avatar-txt" aria-hidden="true">MF</span>
+          </div>
+          <div class="author-info">
+            <div class="author-name">Mehdi Fitour</div>
+            <div class="author-title">Professionnel en transition · Installé en Suisse</div>
+            <div class="author-tags">
+              <span class="author-tag">Non-avocat</span>
+              <span class="author-tag">Non-expert-comptable</span>
+              <span class="author-tag">En préparation active</span>
+            </div>
+          </div>
+        </div>
+        <div class="author-card-body">
+          <blockquote class="author-quote">
+            "J'avais besoin d'une méthode claire et directe : savoir exactement ce qu'il faut faire, et surtout ce qu'il ne faut pas faire dans les 24 mois précédant un départ. J'ai décidé de créer l'outil qui me manquait."
+          </blockquote>
+        </div>
+        <div class="author-card-stats" role="list" aria-label="Données clés">
+          <div class="author-stat" role="listitem">
+            <div class="author-stat-num">1<span style="font-size:18px;color:var(--gold-d)">ère</span></div>
+            <div class="author-stat-lbl">Étape franchie<br>Installé en Suisse</div>
+          </div>
+          <div class="author-stat" role="listitem">
+            <div class="author-stat-num">24</div>
+            <div class="author-stat-lbl">Mois de<br>préparation active</div>
+          </div>
+          <div class="author-stat" role="listitem">
+            <div class="author-stat-num">4B</div>
+            <div class="author-stat-lbl">Art. du CGI<br>étudié en profondeur</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ─── Qui suis-je ─── -->
+      <h2 class="s-h2 rv">Qui suis-je&nbsp;?</h2>
+ 
+      <p class="s-p rv">
+        Je ne suis ni avocat fiscaliste, ni expert-comptable. Je suis avant tout un professionnel en pleine transition, tout comme vous l'êtes peut-être en lisant ces lignes.
+      </p>
+ 
+      <p class="s-p rv">
+        Actuellement salarié et installé en Suisse, j'ai déjà franchi la première étape de la sortie du système français. Aujourd'hui, je prépare ma prochaine expatriation à l'international d'ici un à deux ans. En anticipant ce futur départ, je me suis heurté au même mur que la majorité des entrepreneurs et indépendants : <strong>la complexité redoutable de l'administration fiscale française et le manque cruel de feuilles de route claires.</strong>
+      </p>
+ 
+      <!-- Timeline parcours -->
+      <div class="journey-track rv">
+        <div class="jt-item highlight">
+          <div class="jt-period">Phase actuelle</div>
+          <div class="jt-title">Installé en Suisse · Sortie partielle réussie</div>
+          <p class="jt-desc">Première étape franchie avec succès. Les liens fiscaux français sont partiellement coupés. La transition a mis en lumière les zones de risque que personne ne documente clairement en ligne.</p>
+        </div>
+        <div class="jt-item highlight">
+          <div class="jt-period">En cours</div>
+          <div class="jt-title">Préparation de la prochaine expatriation internationale</div>
+          <p class="jt-desc">Horizon 1–2 ans. <strong>C'est dans le cadre de cette préparation</strong> que le Framework a été créé — en structurant pour moi-même l'information dispersée, les jurisprudences pertinentes et les erreurs documentées.</p>
+        </div>
+        <div class="jt-item">
+          <div class="jt-period">Objectif</div>
+          <div class="jt-title">Un départ propre, documenté, sans drapeau rouge</div>
+          <p class="jt-desc">Le Framework que j'aurais voulu avoir dès le début. Pas un conseil juridique — un outil d'audit préparatoire pour arriver prêt face aux professionnels.</p>
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Pourquoi ce Framework ─── -->
+      <h2 class="s-h2 rv">Pourquoi ce Framework&nbsp;?</h2>
+ 
+      <p class="s-p rv">
+        En préparant mon propre dossier, j'ai constaté que l'information disponible en ligne était fragmentée, souvent contradictoire, ou noyée dans un jargon juridique incompréhensible. Les vidéos YouTube promettent des solutions miracles basées sur la "règle des 183 jours" — qui n'existe pas dans le droit fiscal français. Les forums regorgent de témoignages incomplets ou de situations non généralisables.
+      </p>
+ 
+      <p class="s-p rv">
+        Ce qui manquait, c'était <strong>un plan d'action chronologique pur</strong> : quoi faire, dans quel ordre, avec quels documents, pour éviter les drapeaux rouges évidents qui déclenchent les redressements. Pas un traité de droit fiscal — un outil opérationnel pour des entrepreneurs intelligents qui ont besoin de structure, pas de jargon.
+      </p>
+ 
+      <!-- Ce que c'est / ce que ce n'est pas -->
+      <div class="values-grid rv">
+        <div class="value-item value-yes">
+          <div class="value-ico" aria-hidden="true">
+            <svg width="12" height="11" viewBox="0 0 12 11" fill="none">
+              <path d="M1 5.5l3.5 3.5 6.5-8" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="value-text"><strong>Un outil d'audit préparatoire</strong> pour nettoyer votre situation avant de consulter un professionnel</p>
+        </div>
+        <div class="value-item value-no">
+          <div class="value-ico" aria-hidden="true">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M1 1l8 8M9 1L1 9" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="value-text"><strong>Pas un conseil juridique personnalisé</strong> ni un substitut à un avocat fiscaliste</p>
+        </div>
+        <div class="value-item value-yes">
+          <div class="value-ico" aria-hidden="true">
+            <svg width="12" height="11" viewBox="0 0 12 11" fill="none">
+              <path d="M1 5.5l3.5 3.5 6.5-8" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="value-text"><strong>Un plan chronologique structuré</strong> pour arriver préparé et économiser des heures d'honoraires</p>
+        </div>
+        <div class="value-item value-no">
+          <div class="value-ico" aria-hidden="true">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M1 1l8 8M9 1L1 9" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="value-text"><strong>Pas un traité de droit fiscal</strong> ni une garantie de résultat pour votre situation spécifique</p>
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Méthode et transparence ─── -->
+      <h2 class="s-h2 rv">La méthode — transparence totale</h2>
+ 
+      <p class="s-p rv">
+        Plutôt que de prétendre avoir épluché personnellement des décennies de jurisprudence, j'ai fait le choix de la transparence et de l'efficacité moderne.
+      </p>
+ 
+      <div class="method-card rv">
+        <div class="method-head">
+          <div class="method-ico" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="8" stroke="#C8A96A" stroke-width="1.2"/>
+              <path d="M8 11l2 2 4-4" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="method-overline">Transparence · Méthodologie</div>
+            <div class="method-title">Comment ce Framework a été construit</div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>Ce Framework est le résultat d'un travail de structuration approfondi, réalisé avec l'appui des meilleures intelligences artificielles actuelles. Ces technologies ont été utilisées pour synthétiser, traduire et vulgariser les règles fiscales complexes — notamment l'Article 4B du CGI, la jurisprudence de la Cour de cassation et les instructions administratives de la DGFiP — afin d'en extraire un plan d'action chronologique pur et directement actionnable.</p>
+          <p>Le résultat n'est pas un conseil juridique personnalisé. C'est un <strong>outil d'audit préparatoire</strong>, pensé pour vous permettre de nettoyer votre situation, d'éviter les drapeaux rouges évidents, et d'arriver préparé face à un avocat fiscaliste le jour J — sans perdre votre temps ni votre argent à expliquer les bases.</p>
+        </div>
+        <div class="method-disclaimer">
+          <strong>Limitation importante :</strong> La législation fiscale est complexe et sujette à évolution. Ce Framework est fourni à titre informatif et ne saurait se substituer à un conseil professionnel adapté à votre situation personnelle. Consultez toujours un avocat fiscaliste ou un expert-comptable qualifié avant de prendre toute décision d'expatriation.
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Contact ─── -->
+      <h2 class="s-h2 rv">Une question&nbsp;?</h2>
+ 
+      <p class="s-p rv">
+        Ce site est maintenu à titre personnel. Si vous avez une question sur le contenu du Framework ou une remarque sur son contenu, vous pouvez me contacter directement. Je réponds dans la mesure du possible, mais je ne fournis pas de conseil fiscal individualisé.
+      </p>
+ 
+      <div class="contact-card rv">
+        <div class="contact-left">
+          <div class="contact-label">Contact direct</div>
+          <div class="contact-title">Mehdi Fitour</div>
+          <div class="contact-email">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <rect x="1.5" y="3" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M1.5 5l5.5 3.5L12.5 5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+            <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>
+          </div>
+        </div>
+        <a href="vente.html" class="btn btn-p">
+          Obtenir le Framework
+          <svg class="btn-ic" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+            <path d="M2.5 7.5h10M8.5 4 12 7.5 8.5 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+ 
+      <!-- ─── Retour accueil ─── -->
+      <div class="back-row rv">
+        <a href="index.html" class="back-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M11 7H3M6.5 3.5 3 7l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Retour à l'accueil
+        </a>
+      </div>
+ 
+    </main>
+  </div>
+ 
+  <!-- ── DISCLAIMER ── -->
+  <div class="disc-strip" role="note">
+    <div class="disc-i">
+      <div class="disc-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3L15 13H1L8 3z" stroke="#9A7B44" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale. Il ne constitue pas un conseil juridique, fiscal ou patrimonial personnalisé. Consultez un professionnel qualifié avant toute décision.</p>
+    </div>
+  </div>
+ 
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-i">
+      <div class="f-grid">
+        <div>
+          <div class="f-logo-row">
+            <div class="nav-mark" aria-hidden="true">EF</div>
+            Expatriation Framework
+          </div>
+          <p class="f-tag">Valider, Anticiper, Décider.</p>
+          <p class="f-disc">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié avant toute décision.</p>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Articles</div>
+          <ul class="f-nav">
+            <li><a href="article-1-timing.html">01 · Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html">02 · Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">03 · Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">04 · Préparation &amp; Experts</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Site</div>
+          <ul class="f-nav">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
+            <li><a href="vente.html">Le Framework — 39€</a></li>
+            <li><a href="a-propos.html" style="color:var(--gold-d)">À Propos</a></li>
+            <li><a href="mentions-legales.html">Mentions Légales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="f-btm">
+        <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
+        <nav class="f-legal" aria-label="Liens légaux">
+          <a href="mentions-legales.html">Mentions Légales</a>
+          <a href="avertissement.html">Avertissement</a>
+          <a href="a-propos.html">À Propos</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+ 
+  <!-- ══ SCRIPTS ══ -->
+  <script>
+    "use strict";
+ 
+    const prog = document.getElementById('prog');
+    const nav  = document.getElementById('nav');
+ 
+    window.addEventListener('scroll', () => {
+      const s = window.scrollY;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (s / h * 100).toFixed(2) + '%';
+      nav.classList.toggle('solid', s > 24);
+    }, { passive: true });
+ 
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: .07, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  </script>
+ 
 </body>
 </html>
+ 
