@@ -1,66 +1,602 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avertissement - Expatriation Framework</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-    <style>
-        :root {
-            --bg-color: #fcfcfc;
-            --text-color: #1a1a1a;
-            --accent-color: #2b6cb0;
-            --border-color: #e2e8f0;
-            --muted-text: #718096;
-        }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 0; }
-        header { border-bottom: 1px solid var(--border-color); padding: 1.5rem 2rem; background: #fff; text-align: center; }
-        .logo { font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--text-color); }
-        .container { max-width: 800px; margin: 40px auto; background-color: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        h1 { color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
-        h2 { color: #334155; margin-top: 30px; font-size: 1.2rem; }
-        p { color: #475569; margin-bottom: 1rem; text-align: justify; }
-        .back-link { display: inline-block; margin-top: 40px; font-weight: bold; padding: 10px 20px; background-color: #f1f5f9; border-radius: 6px; color: #475569; text-decoration: none; }
-        .back-link:hover { background-color: #e2e8f0; }
-        footer { text-align: center; padding: 3rem; color: var(--muted-text); font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avertissement (Disclaimer) — Expatriation Framework</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ 
+  <style>
+    :root {
+      --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
+      --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
+      --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
+      --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
+      --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
+      --fd:'Cormorant Garant',serif;
+      --fb:'Figtree',sans-serif;
+      --fm:'Space Mono',monospace;
+      --ease:cubic-bezier(.25,.46,.45,.94);
+      --spring:cubic-bezier(.34,1.56,.64,1);
+      --slow:cubic-bezier(.16,1,.3,1);
+      --sharp:cubic-bezier(.4,0,.2,1);
+      --gutter:clamp(20px,4vw,48px);
+      --max-w:1100px;
+      --content-w:680px;
+    }
+ 
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--fb);background:var(--bg-1);color:var(--t0);
+      line-height:1.6;overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit;text-decoration:none}
+ 
+    body::after{
+      content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+ 
+    #prog{position:fixed;top:0;left:0;height:1px;width:0;z-index:9999;
+      background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
+      transition:width .08s linear}
+ 
+    /* ── NAV ── */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:900;height:64px;
+      padding:0 var(--gutter);display:flex;align-items:center;justify-content:center;
+      border-bottom:1px solid transparent;
+      transition:background .45s var(--ease),border-color .45s;
+    }
+    .nav.solid{
+      background:rgba(6,9,18,.92);
+      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      border-bottom-color:var(--br-0);
+    }
+    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
+    .nav-logo:hover{opacity:.8}
+    .nav-mark{
+      width:30px;height:30px;border-radius:7px;
+      background:linear-gradient(145deg,var(--gold-d),var(--gold));
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;
+    }
+    .nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+    .nav-links a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .nav-links a:hover{color:var(--t0)}
+    .nav-cta{
+      font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;
+      background:rgba(200,169,106,.08);color:var(--gold);
+      border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
+    }
+    .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
+ 
+    /* ── REVEAL ── */
+    .rv{opacity:0;transform:translateY(20px);transition:opacity .65s var(--slow),transform .65s var(--slow)}
+    .rv.in{opacity:1;transform:translateY(0)}
+    .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}
+    .rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+ 
+    /* ── PAGE HERO ── */
+    .page-hero{
+      padding:120px var(--gutter) 60px;
+      position:relative;overflow:hidden;
+    }
+    .page-hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:linear-gradient(rgba(24,32,51,.2) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(24,32,51,.2) 1px,transparent 1px);
+      background-size:64px 64px;
+      -webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,black 20%,transparent 80%);
+      mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,black 20%,transparent 80%);
+      pointer-events:none;
+    }
+    .page-hero::after{
+      content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+      width:480px;height:320px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(196,146,74,.05) 0%,transparent 70%);
+      filter:blur(40px);pointer-events:none;
+    }
+    .page-hero-inner{
+      max-width:var(--content-w);margin:0 auto;position:relative;z-index:1;
+    }
+ 
+    @keyframes up{to{opacity:1;transform:translateY(0)}}
+ 
+    .breadcrumb{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--fm);font-size:10px;color:var(--t2);
+      letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;
+      opacity:0;transform:translateY(10px);animation:up .5s var(--slow) .1s forwards;
+    }
+    .breadcrumb a{color:var(--t2);transition:color .2s}
+    .breadcrumb a:hover{color:var(--t1)}
+    .breadcrumb-sep{color:var(--t3)}
+    .breadcrumb-current{color:var(--gold-d)}
+ 
+    .page-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--fm);font-size:10px;color:var(--amber);
+      text-transform:uppercase;letter-spacing:.14em;
+      padding:5px 12px 5px 10px;border-radius:100px;
+      background:rgba(196,146,74,.07);border:1px solid rgba(196,146,74,.18);
+      margin-bottom:22px;
+      opacity:0;transform:translateY(10px);animation:up .55s var(--slow) .18s forwards;
+    }
+    .page-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--amber)}
+ 
+    .page-h1{
+      font-family:var(--fd);font-size:clamp(36px,5.5vw,56px);
+      font-weight:600;line-height:1.04;letter-spacing:-.025em;color:var(--t0);
+      margin-bottom:20px;
+      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .28s forwards;
+    }
+ 
+    .page-intro{
+      font-family:var(--fd);font-size:clamp(15px,2vw,18px);
+      font-weight:400;font-style:italic;color:var(--t1);
+      line-height:1.7;max-width:560px;
+      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .4s forwards;
+    }
+ 
+    /* ── LAYOUT ── */
+    .page-layout{
+      display:grid;
+      grid-template-columns:1fr min(var(--content-w),100%) 1fr;
+      padding:0 var(--gutter) 80px;
+    }
+    .page-body{grid-column:2}
+ 
+    /* ── Table des matières ── */
+    .toc-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:14px;padding:22px 24px;margin-bottom:48px;
+    }
+    .toc-label{
+      font-family:var(--fm);font-size:9.5px;color:var(--t3);
+      text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .toc-label::after{content:'';flex:1;height:1px;background:var(--br-0)}
+    .toc-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .toc-list li a{
+      display:flex;align-items:center;gap:10px;
+      font-size:13.5px;font-weight:300;color:var(--t2);
+      transition:color .2s;padding:4px 0;
+    }
+    .toc-list li a:hover{color:var(--t1)}
+    .toc-num{
+      font-family:var(--fm);font-size:9.5px;color:var(--t3);
+      letter-spacing:.08em;min-width:24px;
+    }
+ 
+    /* ── Sections légales ── */
+    .legal-section{margin-top:48px}
+    .legal-section:first-of-type{margin-top:36px}
+ 
+    .ls-header{
+      display:flex;align-items:center;gap:14px;
+      margin-bottom:18px;padding-bottom:16px;
+      border-bottom:1px solid var(--br-0);
+    }
+    .ls-num{
+      font-family:var(--fm);font-size:11px;font-weight:700;
+      color:var(--amber);letter-spacing:.08em;
+      background:rgba(196,146,74,.07);border:1px solid rgba(196,146,74,.15);
+      border-radius:6px;padding:4px 10px;flex-shrink:0;
+    }
+    .ls-title{
+      font-family:var(--fd);font-size:clamp(20px,3vw,26px);font-weight:600;
+      line-height:1.15;letter-spacing:-.01em;color:var(--t0);
+    }
+ 
+    .ls-p{
+      font-size:15px;font-weight:300;line-height:1.78;color:var(--t1);margin-bottom:18px;
+    }
+    .ls-p:last-child{margin-bottom:0}
+    .ls-p strong{color:var(--t0);font-weight:500}
+    .ls-p em{font-style:italic}
+    .ls-p a{
+      color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;
+      transition:color .2s;
+    }
+    .ls-p a:hover{color:var(--gold)}
+ 
+    /* Bloc de mise en évidence */
+    .highlight-block{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-left:3px solid var(--amber);
+      border-radius:0 10px 10px 0;
+      padding:18px 20px;margin:22px 0;
+    }
+    .highlight-block p{
+      font-size:14px;font-weight:300;line-height:1.7;color:var(--t1);margin:0;
+    }
+    .highlight-block p strong{color:var(--t0);font-weight:500}
+    .highlight-block p + p{margin-top:10px}
+ 
+    /* Section séparateur */
+    .section-sep{
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);
+      margin:48px 0;
+    }
+ 
+    /* ── Summary card — récapitulatif final ── */
+    .summary-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:16px;padding:28px;margin-top:48px;
+      position:relative;overflow:hidden;
+    }
+    .summary-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--amber) 40%,var(--gold-d) 60%,transparent);
+      opacity:.5;
+    }
+    .summary-head{
+      display:flex;align-items:center;gap:12px;margin-bottom:18px;
+    }
+    .summary-ico{
+      width:36px;height:36px;border-radius:8px;flex-shrink:0;
+      background:rgba(196,146,74,.08);border:1px solid rgba(196,146,74,.18);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .summary-label{
+      font-family:var(--fm);font-size:9.5px;color:var(--amber);
+      text-transform:uppercase;letter-spacing:.13em;margin-bottom:2px;
+    }
+    .summary-title{
+      font-family:var(--fd);font-size:18px;font-weight:600;color:var(--t0);
+    }
+    .summary-list{display:flex;flex-direction:column;gap:8px}
+    .summary-item{
+      display:flex;align-items:flex-start;gap:10px;
+      font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.55;
+    }
+    .summary-dash{
+      font-family:var(--fm);font-size:11px;color:var(--amber);
+      flex-shrink:0;margin-top:2px;opacity:.7;
+    }
+ 
+    /* ── Back button ── */
+    .back-row{margin-top:52px}
+    .back-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:400;color:var(--t2);
+      padding:10px 16px;border-radius:8px;border:1px solid var(--br-1);
+      transition:all .2s;
+    }
+    .back-btn:hover{color:var(--t1);border-color:var(--br-2)}
+ 
+    /* ── DISCLAIMER + FOOTER ── */
+    .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter);margin-top:64px}
+    .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
+    .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
+    .disc-txt strong{color:var(--t1);font-weight:500}
+ 
+    .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
+    .footer-i{max-width:var(--max-w);margin:0 auto}
+    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
+    .f-logo-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px}
+    .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:14px;line-height:1.5}
+    .f-disc-box{font-size:11.5px;color:var(--t2);line-height:1.6;padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0)}
+    .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
+    .f-nav{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .f-nav a:hover{color:var(--t0)}
+    .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
+    .f-legal{display:flex;align-items:center;gap:20px}
+    .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
+    .f-legal a:hover{color:var(--t1)}
+ 
+    @media(max-width:768px){
+      :root{--gutter:20px}
+      .nav-links{display:none}
+      .page-layout{grid-template-columns:1fr;padding:0 var(--gutter) 60px}
+      .page-body{grid-column:1}
+      .f-grid{grid-template-columns:1fr;gap:28px}
+      .f-btm{flex-direction:column;text-align:center}
+      .f-legal{justify-content:center}
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <a href="/" class="logo">Expatriation Framework</a>
-    </header>
-
-    <div class="container">
-        <h1>Avertissement (Disclaimer)</h1>
-        
-        <h2>1. Objectif éducatif et informatif</h2>
-        <p>Le contenu proposé sur le site <em>expatriation-framework.fr</em>, ainsi que les documents, modèles et guides vendus (ci-après "le Framework"), sont fournis à des fins strictement éducatives et informatives.</p>
-        <p>L'auteur de ce site, Mehdi Fitour, n'est ni avocat, ni expert-comptable, ni conseiller fiscal diplômé. Le Framework est le résultat de recherches personnelles, d'expériences pratiques et de la compilation de données publiques visant à aider les entrepreneurs dans leurs démarches d'expatriation.</p>
-
-        <h2>2. Absence de conseil juridique personnalisé</h2>
-        <p>L'achat et l'utilisation du Framework ne créent en aucun cas une relation avocat-client ou conseiller-client. Les informations fournies ne constituent pas des conseils juridiques, fiscaux ou financiers personnalisés et ne doivent pas être interprétées comme tels.</p>
-        <p>La législation fiscale, notamment l'Article 4B du Code Général des Impôts français, est complexe et sujette à interprétation ainsi qu'à des évolutions fréquentes. Chaque situation patrimoniale et professionnelle étant unique, il est fortement recommandé à l'utilisateur de consulter un professionnel du droit (avocat fiscaliste ou notaire) pour valider l'application de ces stratégies à sa situation personnelle.</p>
-
-        <h2>3. Limitation de responsabilité</h2>
-        <p>En utilisant ce site et en acquérant le Framework, l'utilisateur accepte la pleine responsabilité de ses actes. L'éditeur du site ne saurait être tenu responsable des conséquences directes ou indirectes, qu'elles soient financières, juridiques ou fiscales (notamment en cas de contrôle ou de redressement fiscal), résultant de l'utilisation, de la mauvaise utilisation ou de l'interprétation des informations contenues dans le Framework.</p>
-        <p>Les modèles de lettres et de documents sont fournis à titre d'exemple et doivent impérativement être adaptés par l'utilisateur à sa situation spécifique.</p>
-
-        <h2>4. Mise à jour des informations</h2>
-        <p>Bien que nous nous efforcions de maintenir les informations à jour en fonction des dernières lois de finances et jurisprudences, nous ne garantissons pas l'exhaustivité, l'exactitude absolue ou la validité intemporelle du contenu fourni.</p>
-        
-        <a href="/" class="back-link">← Retour à l'accueil</a>
+ 
+  <div id="prog"></div>
+ 
+  <!-- ══ NAV ══ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav-i">
+      <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
+        <div class="nav-mark" aria-hidden="true">EF</div>
+        Expatriation Framework
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#articles">Articles</a></li>
+        <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
+        <li><a href="a-propos.html">À Propos</a></li>
+        <li><a href="vente.html" class="nav-cta">Le Framework — 39€</a></li>
+      </ul>
     </div>
-
-    <footer>
-        <p>&copy; 2026 Expatriation Framework. Tous droits réservés.</p>
-        <p style="font-size: 0.8rem;">Ce document est fourni à titre d'information et ne constitue pas un conseil juridique personnalisé.</p>
-        <p style="margin-top: 15px;">
-            <a href="/mentions-legales.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">Mentions Légales</a>
-            <a href="/a-propos.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem; margin-right: 15px;">À propos</a>
-            <a href="/avertissement.html" style="color: var(--muted-text); text-decoration: underline; font-size: 0.85rem;">Avertissement</a>
+  </nav>
+ 
+  <!-- ══════════════════════════════════
+       PAGE HERO
+  ══════════════════════════════════ -->
+  <header class="page-hero" role="banner">
+    <div class="page-hero-inner">
+ 
+      <nav class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="breadcrumb-current">Avertissement</span>
+      </nav>
+ 
+      <div class="page-eyebrow">
+        <div class="page-eyebrow-dot" aria-hidden="true"></div>
+        Disclaimer · Limitation de responsabilité
+      </div>
+ 
+      <h1 class="page-h1">Avertissement</h1>
+ 
+      <p class="page-intro">
+        Ce document précise les conditions d'utilisation du site et du Framework. Sa lecture est indispensable avant tout usage du contenu publié.
+      </p>
+ 
+    </div>
+  </header>
+ 
+  <!-- ══════════════════════════════════
+       CORPS
+  ══════════════════════════════════ -->
+  <div class="page-layout">
+    <main class="page-body" role="main">
+ 
+      <!-- Table des matières -->
+      <div class="toc-card rv" aria-label="Table des matières">
+        <div class="toc-label">Sommaire</div>
+        <ol class="toc-list" role="list">
+          <li>
+            <a href="#section-1">
+              <span class="toc-num">01</span>
+              Objectif éducatif et informatif
+            </a>
+          </li>
+          <li>
+            <a href="#section-2">
+              <span class="toc-num">02</span>
+              Absence de conseil juridique personnalisé
+            </a>
+          </li>
+          <li>
+            <a href="#section-3">
+              <span class="toc-num">03</span>
+              Limitation de responsabilité
+            </a>
+          </li>
+          <li>
+            <a href="#section-4">
+              <span class="toc-num">04</span>
+              Mise à jour des informations
+            </a>
+          </li>
+        </ol>
+      </div>
+ 
+      <!-- ─── Section 1 ─── -->
+      <div class="legal-section rv" id="section-1">
+        <div class="ls-header">
+          <div class="ls-num" aria-label="Section 1">01</div>
+          <h2 class="ls-title">Objectif éducatif et informatif</h2>
+        </div>
+ 
+        <p class="ls-p">
+          Le contenu proposé sur le site <strong>expatriation-framework.fr</strong>, ainsi que les documents, modèles et guides vendus (ci-après "le Framework"), sont fournis à des fins <strong>strictement éducatives et informatives</strong>.
         </p>
-    </footer>
-
+ 
+        <p class="ls-p">
+          L'auteur de ce site, Mehdi Fitour, n'est ni avocat, ni expert-comptable, ni conseiller fiscal diplômé. Le Framework est le résultat de recherches personnelles, d'expériences pratiques et de la compilation de données publiques, visant à aider les entrepreneurs dans leurs démarches d'expatriation.
+        </p>
+ 
+        <div class="highlight-block">
+          <p>Ce site a été conçu pour combler un manque documentaire réel : l'absence de feuille de route claire et accessible pour les entrepreneurs français envisageant une expatriation fiscale. Il ne prétend en aucun cas remplacer l'expertise d'un professionnel du droit ou de la fiscalité.</p>
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Section 2 ─── -->
+      <div class="legal-section rv" id="section-2">
+        <div class="ls-header">
+          <div class="ls-num" aria-label="Section 2">02</div>
+          <h2 class="ls-title">Absence de conseil juridique personnalisé</h2>
+        </div>
+ 
+        <p class="ls-p">
+          L'achat et l'utilisation du Framework ne créent en aucun cas une <strong>relation avocat-client</strong> ou conseiller-client. Les informations fournies ne constituent pas des conseils juridiques, fiscaux ou financiers personnalisés et ne doivent pas être interprétées comme tels.
+        </p>
+ 
+        <p class="ls-p">
+          La législation fiscale — notamment <strong>l'Article 4B du Code Général des Impôts français</strong> — est complexe et sujette à interprétation ainsi qu'à des évolutions fréquentes. Chaque situation patrimoniale et professionnelle étant unique, il est fortement recommandé à l'utilisateur de consulter un professionnel du droit (avocat fiscaliste ou notaire) pour valider l'application de ces stratégies à sa situation personnelle.
+        </p>
+ 
+        <div class="highlight-block">
+          <p><strong>Recommandation :</strong> Le Framework est conçu pour être utilisé <em>avant</em> une consultation professionnelle, non à la place. Son objectif est de vous permettre d'arriver préparé, avec un dossier structuré, afin d'optimiser le temps passé avec votre conseiller juridique.</p>
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Section 3 ─── -->
+      <div class="legal-section rv" id="section-3">
+        <div class="ls-header">
+          <div class="ls-num" aria-label="Section 3">03</div>
+          <h2 class="ls-title">Limitation de responsabilité</h2>
+        </div>
+ 
+        <p class="ls-p">
+          En utilisant ce site et en acquérant le Framework, l'utilisateur accepte la <strong>pleine responsabilité de ses actes</strong>. L'éditeur du site ne saurait être tenu responsable des conséquences directes ou indirectes, qu'elles soient financières, juridiques ou fiscales — notamment en cas de contrôle ou de redressement fiscal — résultant de l'utilisation, de la mauvaise utilisation ou de l'interprétation des informations contenues dans le Framework.
+        </p>
+ 
+        <p class="ls-p">
+          Les modèles de lettres et de documents sont fournis à titre d'exemple et doivent <strong>impérativement être adaptés</strong> par l'utilisateur à sa situation spécifique, idéalement avec le concours d'un professionnel qualifié.
+        </p>
+ 
+        <div class="highlight-block">
+          <p><strong>Important :</strong> Ce Framework ne saurait constituer un bouclier juridique en cas de contrôle fiscal. Son utilisation correcte réduit les risques d'erreurs grossières, mais ne garantit pas l'absence de redressement dans des situations complexes ou atypiques. Chaque dossier d'expatriation est unique.</p>
+        </div>
+      </div>
+ 
+      <div class="section-sep rv" aria-hidden="true"></div>
+ 
+      <!-- ─── Section 4 ─── -->
+      <div class="legal-section rv" id="section-4">
+        <div class="ls-header">
+          <div class="ls-num" aria-label="Section 4">04</div>
+          <h2 class="ls-title">Mise à jour des informations</h2>
+        </div>
+ 
+        <p class="ls-p">
+          Bien que nous nous efforcions de maintenir les informations à jour en fonction des <strong>dernières lois de finances et jurisprudences</strong>, nous ne garantissons pas l'exhaustivité, l'exactitude absolue ou la validité intemporelle du contenu fourni.
+        </p>
+ 
+        <p class="ls-p">
+          La fiscalité internationale évolue régulièrement. Des conventions fiscales peuvent être modifiées, des seuils révisés, et des jurisprudences inverser des pratiques établies. Il appartient à l'utilisateur de vérifier la validité des informations au moment de leur application, auprès de sources officielles (DGFiP, Legifrance, Bofip) ou d'un professionnel du droit.
+        </p>
+      </div>
+ 
+      <!-- ─── Récapitulatif ─── -->
+      <div class="summary-card rv">
+        <div class="summary-head">
+          <div class="summary-ico" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 2.5L16 13H2L9 2.5z" stroke="#C4924A" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M9 8v2.5M9 12.5v.5" stroke="#C4924A" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="summary-label">En résumé</div>
+            <div class="summary-title">Ce que vous devez retenir</div>
+          </div>
+        </div>
+        <div class="summary-list" role="list">
+          <div class="summary-item" role="listitem">
+            <span class="summary-dash" aria-hidden="true">—</span>
+            Ce site et le Framework sont des outils d'information, pas de conseil juridique personnalisé.
+          </div>
+          <div class="summary-item" role="listitem">
+            <span class="summary-dash" aria-hidden="true">—</span>
+            L'auteur n'est ni avocat, ni expert-comptable. Aucune relation professionnelle n'est créée par l'achat du Framework.
+          </div>
+          <div class="summary-item" role="listitem">
+            <span class="summary-dash" aria-hidden="true">—</span>
+            L'utilisateur est seul responsable de ses décisions fiscales et patrimoniales.
+          </div>
+          <div class="summary-item" role="listitem">
+            <span class="summary-dash" aria-hidden="true">—</span>
+            Consultez impérativement un avocat fiscaliste avant de prendre toute décision d'expatriation.
+          </div>
+          <div class="summary-item" role="listitem">
+            <span class="summary-dash" aria-hidden="true">—</span>
+            Les informations peuvent évoluer : vérifiez leur validité au moment de leur application.
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Retour -->
+      <div class="back-row rv">
+        <a href="index.html" class="back-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M11 7H3M6.5 3.5 3 7l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Retour à l'accueil
+        </a>
+      </div>
+ 
+    </main>
+  </div>
+ 
+  <!-- ── DISCLAIMER ── -->
+  <div class="disc-strip" role="note">
+    <div class="disc-i">
+      <div class="disc-ico" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3L15 13H1L8 3z" stroke="#9A7B44" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision.</p>
+    </div>
+  </div>
+ 
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-i">
+      <div class="f-grid">
+        <div>
+          <div class="f-logo-row">
+            <div class="nav-mark" aria-hidden="true">EF</div>
+            Expatriation Framework
+          </div>
+          <p class="f-tag">Valider, Anticiper, Décider.</p>
+          <p class="f-disc-box">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié avant toute décision.</p>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Articles</div>
+          <ul class="f-nav">
+            <li><a href="article-1-timing.html">01 · Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html">02 · Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">03 · Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">04 · Préparation &amp; Experts</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-nav-lbl">Site</div>
+          <ul class="f-nav">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
+            <li><a href="vente.html">Le Framework — 39€</a></li>
+            <li><a href="a-propos.html">À Propos</a></li>
+            <li><a href="avertissement.html" style="color:var(--gold-d)">Avertissement</a></li>
+            <li><a href="mentions-legales.html">Mentions Légales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="f-btm">
+        <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
+        <nav class="f-legal" aria-label="Liens légaux">
+          <a href="mentions-legales.html">Mentions Légales</a>
+          <a href="avertissement.html">Avertissement</a>
+          <a href="a-propos.html">À Propos</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+ 
+  <script>
+    "use strict";
+    const prog = document.getElementById('prog');
+    const nav  = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      const s = window.scrollY;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (s / h * 100).toFixed(2) + '%';
+      nav.classList.toggle('solid', s > 24);
+    }, { passive: true });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .07, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  </script>
+ 
 </body>
 </html>
+ 
