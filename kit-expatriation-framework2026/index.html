@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téléchargement - Expatriation Framework</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0A0E1C; /* Ton bleu nuit */
+            color: #FFFFFF;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+        }
+        .loader {
+            border: 3px solid #1a233d;
+            border-top: 3px solid #C8A96A; /* Ton doré */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px auto;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+        }
+        p {
+            color: #8E9AA8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="loader"></div>
+        <h1>Authentification réussie</h1>
+        <p>Préparation de votre Framework sécurisé.<br>Le téléchargement va démarrer automatiquement...</p>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Chemin vers le fichier stocké dans le dossier assets
+        var fileUrl = "../assets/kit-expatriation-framework-2026.pdf";
+        
+        // 2. Création d'un lien invisible avec l'attribut HTML5 "download"
+        // C'est cet attribut qui force le nom final avec les espaces de ton choix
+        var hiddenLink = document.createElement('a');
+        hiddenLink.href = fileUrl;
+        hiddenLink.download = 'Kit Expatriation Framework 2026.pdf';
+        
+        // 3. Déclenchement automatique après 1,5 seconde
+        setTimeout(function() {
+            document.body.appendChild(hiddenLink);
+            hiddenLink.click();
+            document.body.removeChild(hiddenLink);
+        }, 1500);
+    });
+    </script>
+
+</body>
+</html>
