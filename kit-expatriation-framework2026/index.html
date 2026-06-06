@@ -36,10 +36,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      /* Suppression de justify-content pour éviter de couper l'écran */
       -webkit-font-smoothing: antialiased;
       position: relative;
-      overflow: hidden;
+      /* Autorise le défilement vertical si l'écran est petit, bloque l'horizontal */
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* ── Grain overlay ── */
@@ -89,7 +91,10 @@
     .wrap {
       position: relative; z-index: 1;
       width: 100%; max-width: 480px;
-      padding: 24px;
+      /* Augmentation du padding pour laisser respirer en haut et en bas */
+      padding: 40px 24px;
+      /* Centre la carte de façon sécurisée sans rogner le contenu */
+      margin: auto;
     }
 
     /* ── Card ── */
@@ -111,16 +116,6 @@
     /* ── State A : Loading ── */
     .state-loading { padding: 52px 40px 48px; text-align: center; }
 
-    /* ─────────────────────────────────────────────────────
-       FIX 1 — Ring spinner
-       Cause du bug : l'attribut SVG transform="rotate(-90 36 36)"
-       entrait en conflit avec l'animation CSS. Au démarrage de
-       chaque cycle, le navigateur remettait la rotation à 0° au
-       lieu de -90°, d'où la moitié basse visible et le saut.
-       Solution : attribut SVG supprimé dans le HTML. La position
-       de départ (-90°) est portée directement par le @keyframes,
-       ce qui garantit une rotation continue, centrée et fluide.
-    ───────────────────────────────────────────────────── */
     .ring-wrap { width: 72px; height: 72px; margin: 0 auto 28px; position: relative; }
     .ring-svg { width: 100%; height: 100%; }
     .ring-track { fill: none; stroke: var(--br); stroke-width: 1.5; }
@@ -132,8 +127,8 @@
       animation: spin 1.4s cubic-bezier(.4,0,.2,1) infinite;
     }
     @keyframes spin {
-      from { transform: rotate(-90deg); }  /* démarre à midi   */
-      to   { transform: rotate(270deg);  } /* un tour complet  */
+      from { transform: rotate(-90deg); }
+      to   { transform: rotate(270deg);  }
     }
 
     .loading-label {
@@ -168,26 +163,14 @@
       display: none;
     }
 
-    /* ─────────────────────────────────────────────────────
-       FIX 2 — Icône check
-       Cause du bug : r="34" dans un viewBox 72×72 laissait
-       seulement 1.4 px de marge avant le bord SVG. L'anti-
-       aliasing et le clip par défaut de l'élément SVG tronquaient
-       la bordure du cercle sur tous les côtés.
-       Solution :
-         • r réduit à 30 (= même rayon que le ring du loader,
-           donne 5.4 px de marge confortable dans le viewBox)
-         • overflow: visible sur le conteneur ET sur l'élément SVG
-           pour neutraliser tout clip résiduel
-    ───────────────────────────────────────────────────── */
     .check-wrap {
       width: 72px; height: 72px;
       margin: 0 auto 28px;
-      overflow: visible; /* annule le clip du conteneur */
+      overflow: visible;
     }
     .check-svg {
       width: 100%; height: 100%;
-      overflow: visible; /* annule le clip du viewport SVG */
+      overflow: visible;
     }
     .check-circle {
       fill: rgba(74,168,122,.08); stroke: rgba(74,168,122,.35); stroke-width: 1.2;
@@ -287,11 +270,6 @@
       text-transform: uppercase; letter-spacing: .1em;
     }
 
-    /* ─────────────────────────────────────────────────────
-       FIX 3 — Note de contact (remplace le bloc spam)
-       Couleurs mises à jour : amber → gold, cohérent avec la DA.
-       Lien mailto ajouté sur l'adresse pour l'UX.
-    ───────────────────────────────────────────────────── */
     .contact-note {
       margin: 0 40px 36px;
       background: rgba(200,169,106,.04);
@@ -324,7 +302,7 @@
     .page-footer a:hover { color: var(--t1); border-color: var(--t2); }
 
     @media (max-width: 520px) {
-      .wrap { padding: 16px; }
+      .wrap { padding: 32px 16px; }
       .state-loading, .state-success { padding: 40px 28px 36px; }
       .card-footer { padding: 14px 28px; }
       .contact-note { margin: 0 28px 28px; }
@@ -349,11 +327,6 @@
         <div class="ring-wrap">
           <svg class="ring-svg" viewBox="0 0 72 72" fill="none">
             <circle class="ring-track" cx="36" cy="36" r="30"/>
-            <!--
-              FIX 1 : l'attribut transform="rotate(-90 36 36)" est supprimé.
-              La rotation initiale (-90°) est désormais gérée uniquement
-              par le @keyframes spin, ce qui évite tout conflit CSS/SVG.
-            -->
             <circle class="ring-fill" cx="36" cy="36" r="30"/>
           </svg>
         </div>
@@ -371,11 +344,6 @@
       <!-- ══ STATE B : SUCCESS ══ -->
       <div class="state-success" id="state-success">
 
-        <!--
-          FIX 2 : r="34" → r="30" (marge confortable dans le viewBox 72×72).
-          overflow="visible" sur le SVG neutralise le clip du viewport SVG.
-          Le conteneur .check-wrap a aussi overflow: visible en CSS.
-        -->
         <div class="check-wrap">
           <svg class="check-svg" viewBox="0 0 72 72" fill="none" overflow="visible">
             <circle class="check-circle" cx="36" cy="36" r="30"/>
@@ -417,10 +385,6 @@
 
       </div>
 
-      <!--
-        FIX 3 : ancien bloc .spam-note remplacé par .contact-note
-        avec le texte exact demandé et un lien mailto sur l'adresse.
-      -->
       <div class="contact-note" id="contact-note" style="display:none">
         Pour toute question relative à la mise en œuvre de votre Framework, vous pouvez me contacter directement à l'adresse dédiée&nbsp;:<br>
         <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>.
