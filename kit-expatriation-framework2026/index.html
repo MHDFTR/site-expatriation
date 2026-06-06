@@ -111,28 +111,29 @@
     /* ── State A : Loading ── */
     .state-loading { padding: 52px 40px 48px; text-align: center; }
 
-    /* Ring spinner */
+    /* ─────────────────────────────────────────────────────
+       FIX 1 — Ring spinner
+       Cause du bug : l'attribut SVG transform="rotate(-90 36 36)"
+       entrait en conflit avec l'animation CSS. Au démarrage de
+       chaque cycle, le navigateur remettait la rotation à 0° au
+       lieu de -90°, d'où la moitié basse visible et le saut.
+       Solution : attribut SVG supprimé dans le HTML. La position
+       de départ (-90°) est portée directement par le @keyframes,
+       ce qui garantit une rotation continue, centrée et fluide.
+    ───────────────────────────────────────────────────── */
     .ring-wrap { width: 72px; height: 72px; margin: 0 auto 28px; position: relative; }
     .ring-svg { width: 100%; height: 100%; }
     .ring-track { fill: none; stroke: var(--br); stroke-width: 1.5; }
-    .ring-fill  {
+    .ring-fill {
       fill: none; stroke: var(--gold); stroke-width: 1.5;
       stroke-linecap: round;
       stroke-dasharray: 80 220;
-      transform-origin: 50% 50%;
+      transform-origin: center;
       animation: spin 1.4s cubic-bezier(.4,0,.2,1) infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .ring-dot {
-      fill: none; stroke: var(--gold-d); stroke-width: 1;
-      stroke-dasharray: 220;
-      stroke-dashoffset: 220;
-      transform-origin: 50% 50%;
-      animation: fillRing 1.8s ease-in-out infinite alternate;
-    }
-    @keyframes fillRing {
-      0%   { stroke-dashoffset: 220; transform: rotate(-90deg); }
-      100% { stroke-dashoffset: 30;  transform: rotate(180deg); }
+    @keyframes spin {
+      from { transform: rotate(-90deg); }  /* démarre à midi   */
+      to   { transform: rotate(270deg);  } /* un tour complet  */
     }
 
     .loading-label {
@@ -167,16 +168,34 @@
       display: none;
     }
 
-    /* Check ring animé */
-    .check-wrap { width: 72px; height: 72px; margin: 0 auto 28px; }
-    .check-svg { width: 100%; height: 100%; }
+    /* ─────────────────────────────────────────────────────
+       FIX 2 — Icône check
+       Cause du bug : r="34" dans un viewBox 72×72 laissait
+       seulement 1.4 px de marge avant le bord SVG. L'anti-
+       aliasing et le clip par défaut de l'élément SVG tronquaient
+       la bordure du cercle sur tous les côtés.
+       Solution :
+         • r réduit à 30 (= même rayon que le ring du loader,
+           donne 5.4 px de marge confortable dans le viewBox)
+         • overflow: visible sur le conteneur ET sur l'élément SVG
+           pour neutraliser tout clip résiduel
+    ───────────────────────────────────────────────────── */
+    .check-wrap {
+      width: 72px; height: 72px;
+      margin: 0 auto 28px;
+      overflow: visible; /* annule le clip du conteneur */
+    }
+    .check-svg {
+      width: 100%; height: 100%;
+      overflow: visible; /* annule le clip du viewport SVG */
+    }
     .check-circle {
       fill: rgba(74,168,122,.08); stroke: rgba(74,168,122,.35); stroke-width: 1.2;
     }
     .check-path {
       fill: none; stroke: var(--green); stroke-width: 2.5;
       stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 30; stroke-dashoffset: 30;
+      stroke-dasharray: 50; stroke-dashoffset: 50;
       transition: stroke-dashoffset .55s cubic-bezier(.16,1,.3,1) .15s;
     }
     .check-path.drawn { stroke-dashoffset: 0; }
@@ -268,16 +287,27 @@
       text-transform: uppercase; letter-spacing: .1em;
     }
 
-    /* ── Spam warning ── */
-    .spam-note {
+    /* ─────────────────────────────────────────────────────
+       FIX 3 — Note de contact (remplace le bloc spam)
+       Couleurs mises à jour : amber → gold, cohérent avec la DA.
+       Lien mailto ajouté sur l'adresse pour l'UX.
+    ───────────────────────────────────────────────────── */
+    .contact-note {
       margin: 0 40px 36px;
-      background: rgba(196,146,74,.04); border: 1px solid rgba(196,146,74,.14);
-      border-left: 3px solid rgba(196,146,74,.4);
+      background: rgba(200,169,106,.04);
+      border: 1px solid rgba(200,169,106,.12);
+      border-left: 3px solid rgba(200,169,106,.35);
       border-radius: 0 6px 6px 0;
       padding: 12px 14px;
-      font-size: 12px; font-weight: 300; color: #B8AA98; line-height: 1.6;
+      font-size: 12px; font-weight: 300; color: var(--t1); line-height: 1.6;
     }
-    .spam-note strong { color: #D4A870; font-weight: 500; }
+    .contact-note a {
+      color: var(--gold-d);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,169,106,.25);
+      transition: color .2s, border-color .2s;
+    }
+    .contact-note a:hover { color: var(--gold); border-color: rgba(200,169,106,.6); }
 
     /* ── Page footer ── */
     .page-footer {
@@ -297,7 +327,7 @@
       .wrap { padding: 16px; }
       .state-loading, .state-success { padding: 40px 28px 36px; }
       .card-footer { padding: 14px 28px; }
-      .spam-note { margin: 0 28px 28px; }
+      .contact-note { margin: 0 28px 28px; }
     }
   </style>
 </head>
@@ -319,7 +349,12 @@
         <div class="ring-wrap">
           <svg class="ring-svg" viewBox="0 0 72 72" fill="none">
             <circle class="ring-track" cx="36" cy="36" r="30"/>
-            <circle class="ring-fill"  cx="36" cy="36" r="30" transform="rotate(-90 36 36)"/>
+            <!--
+              FIX 1 : l'attribut transform="rotate(-90 36 36)" est supprimé.
+              La rotation initiale (-90°) est désormais gérée uniquement
+              par le @keyframes spin, ce qui évite tout conflit CSS/SVG.
+            -->
+            <circle class="ring-fill" cx="36" cy="36" r="30"/>
           </svg>
         </div>
 
@@ -336,9 +371,14 @@
       <!-- ══ STATE B : SUCCESS ══ -->
       <div class="state-success" id="state-success">
 
+        <!--
+          FIX 2 : r="34" → r="30" (marge confortable dans le viewBox 72×72).
+          overflow="visible" sur le SVG neutralise le clip du viewport SVG.
+          Le conteneur .check-wrap a aussi overflow: visible en CSS.
+        -->
         <div class="check-wrap">
-          <svg class="check-svg" viewBox="0 0 72 72" fill="none">
-            <circle class="check-circle" cx="36" cy="36" r="34"/>
+          <svg class="check-svg" viewBox="0 0 72 72" fill="none" overflow="visible">
+            <circle class="check-circle" cx="36" cy="36" r="30"/>
             <path id="check-path" class="check-path" d="M20 36l12 12 20-20"/>
           </svg>
         </div>
@@ -377,9 +417,13 @@
 
       </div>
 
-      <!-- ══ SPAM WARNING ══ -->
-      <div class="spam-note" id="spam-note" style="display:none">
-        <strong>Pensez à vérifier votre boîte mail</strong> — un email de confirmation avec votre lien personnel vient de vous être envoyé. Vérifiez vos <strong>Spams</strong> et l'onglet <strong>Promotions</strong> si vous ne le trouvez pas.
+      <!--
+        FIX 3 : ancien bloc .spam-note remplacé par .contact-note
+        avec le texte exact demandé et un lien mailto sur l'adresse.
+      -->
+      <div class="contact-note" id="contact-note" style="display:none">
+        Pour toute question relative à la mise en œuvre de votre Framework, vous pouvez me contacter directement à l'adresse dédiée&nbsp;:<br>
+        <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>.
       </div>
 
       <div class="card-sep"></div>
@@ -406,17 +450,17 @@
   <script>
   document.addEventListener("DOMContentLoaded", function () {
 
-    var fileUrl   = "../assets/kit-expatriation-framework-2026.pdf";
-    var fileName  = "Kit Expatriation Framework 2026.pdf";
+    var fileUrl     = "../assets/kit-expatriation-framework-2026.pdf";
+    var fileName    = "Kit Expatriation Framework 2026.pdf";
 
     var stateLoad    = document.getElementById("state-loading");
     var stateSuccess = document.getElementById("state-success");
     var checkPath    = document.getElementById("check-path");
     var fallbackTxt  = document.getElementById("fallback-text");
     var fallbackLink = document.getElementById("fallback-link");
-    var spamNote     = document.getElementById("spam-note");
+    var contactNote  = document.getElementById("contact-note");
 
-    fallbackLink.href     = fileUrl;
+    fallbackLink.href = fileUrl;
     fallbackLink.setAttribute("download", fileName);
 
     // ── Déclencher le téléchargement après 1,5 s ──
@@ -432,29 +476,28 @@
       // ── Transition vers l'état succès (500 ms plus tard) ──
       setTimeout(function () {
 
-        // Masquer loading, afficher success
-        stateLoad.style.transition    = "opacity .35s";
-        stateLoad.style.opacity       = "0";
+        stateLoad.style.transition = "opacity .35s";
+        stateLoad.style.opacity    = "0";
 
         setTimeout(function () {
-          stateLoad.style.display     = "none";
-          stateSuccess.style.display  = "block";
-          stateSuccess.style.opacity  = "0";
+          stateLoad.style.display      = "none";
+          stateSuccess.style.display   = "block";
+          stateSuccess.style.opacity   = "0";
           stateSuccess.style.transition = "opacity .45s";
 
           // Forcer reflow
           void stateSuccess.offsetWidth;
-          stateSuccess.style.opacity  = "1";
+          stateSuccess.style.opacity = "1";
 
           // Dessiner le checkmark
           setTimeout(function () {
             checkPath.classList.add("drawn");
           }, 80);
 
-          // Afficher le fallback et la note spam
+          // Afficher le fallback et la note de contact
           setTimeout(function () {
-            fallbackTxt.style.display = "block";
-            spamNote.style.display    = "block";
+            fallbackTxt.style.display  = "block";
+            contactNote.style.display  = "block";
           }, 1800);
 
         }, 350);
