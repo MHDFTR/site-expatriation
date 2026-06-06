@@ -177,7 +177,7 @@
        COL DROITE — ORDER CARD
     ══════════════════════════ */
     .col-right{
-      position:sticky;top:76px;/* nav height + 16px */
+      position:sticky;top:76px;
     }
 
     .order-card{
@@ -266,9 +266,6 @@
     .upsell-check-inp:checked + .upsell-check-box{
       border-color:var(--amber);background:rgba(196,146,74,.12);
     }
-    .upsell-check-ico{display:none}
-    .upsell-check-inp:checked ~ * .upsell-check-ico{display:block}
-    /* simpler approach */
     .upsell-check-box svg{opacity:0;transition:opacity .2s}
     .upsell-check-inp:checked + .upsell-check-box svg{opacity:1}
 
@@ -277,41 +274,9 @@
     .upsell-title span{color:var(--amber)}
     .upsell-desc{font-size:12px;font-weight:300;color:var(--t2);line-height:1.55}
 
-    /* Formulaire coordonnées */
-    .form-section{
-      padding:16px 24px 0;position:relative;z-index:1;
-    }
-    .form-label-row{
-      font-family:var(--fm);font-size:9.5px;color:var(--t3);
-      text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px;
-      display:flex;align-items:center;gap:8px;
-    }
-    .form-label-row::after{content:'';flex:1;height:1px;background:var(--br-0)}
-    .form-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-    .field-wrap{display:flex;flex-direction:column;gap:5px}
-    .field-lbl{
-      font-family:var(--fm);font-size:9px;color:var(--t2);
-      text-transform:uppercase;letter-spacing:.12em;
-    }
-    .field-inp{
-      width:100%;padding:10px 13px;
-      background:var(--bg-1);border:1px solid var(--br-1);
-      border-radius:8px;font-family:var(--fb);font-size:13.5px;
-      color:var(--t0);outline:none;
-      transition:border-color .2s,box-shadow .2s;
-      -webkit-appearance:none;
-    }
-    .field-inp::placeholder{color:var(--t3)}
-    .field-inp:focus{
-      border-color:rgba(200,169,106,.4);
-      box-shadow:0 0 0 3px rgba(200,169,106,.07);
-    }
-
     /* CTA button */
     .cta-wrap{
-      padding:16px 24px 22px;position:relative;z-index:1;
+      padding:20px 24px 22px;position:relative;z-index:1;
     }
     .btn-checkout{
       display:flex;align-items:center;justify-content:center;gap:10px;
@@ -413,40 +378,10 @@
     @media(max-width:600px){
       :root{--gutter:18px}
       .checkout-wrap{padding:32px var(--gutter) 60px}
-      .form-row{grid-template-columns:1fr}
       .price-argument{flex-direction:column;gap:10px}
       .pitch-h1{font-size:clamp(28px,8vw,40px)}
     }
   </style>
-  
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-P0CY674BQD');
-</script>
-  
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1365188762140535');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-  
 </head>
 <body>
 
@@ -655,7 +590,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
               </div>
               <div class="product-info">
                 <div class="product-name">Expatriation Framework 2026</div>
-                <div class="product-desc">PDF interactif · Modèles Word · Checklist · Exit Tax</div>
+                <div class="product-desc">PDF interactif · Courriers préremplis · Checklist · Exit Tax</div>
               </div>
               <div class="product-price">39€</div>
             </div>
@@ -665,7 +600,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <div class="order-totals" role="region" aria-label="Totaux">
             <div class="total-row">
               <span class="total-label">Sous-total</span>
-              <span class="total-val">39,00 €</span>
+              <span class="total-val" id="subtotal-val">39,00 €</span>
             </div>
             <div class="total-row">
               <span class="total-label">TVA (0%)</span>
@@ -674,7 +609,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <div class="total-sep" aria-hidden="true"></div>
             <div class="total-row">
               <span class="total-final">Total à payer</span>
-              <span class="total-final-val">39€</span>
+              <span class="total-final-val" id="total-final-val">39€</span>
             </div>
           </div>
 
@@ -700,31 +635,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             </label>
           </div>
 
-          <!-- Coordonnées -->
-          <div class="form-section">
-            <div class="form-label-row">Vos coordonnées</div>
-            <div class="form-fields">
-              <div class="form-row">
-                <div class="field-wrap">
-                  <label class="field-lbl" for="f-prenom">Prénom *</label>
-                  <input class="field-inp" type="text" id="f-prenom" name="prenom" placeholder="Jean" autocomplete="given-name" required>
-                </div>
-                <div class="field-wrap">
-                  <label class="field-lbl" for="f-nom">Nom *</label>
-                  <input class="field-inp" type="text" id="f-nom" name="nom" placeholder="Dupont" autocomplete="family-name" required>
-                </div>
-              </div>
-              <div class="field-wrap">
-                <label class="field-lbl" for="f-email">Email *</label>
-                <input class="field-inp" type="email" id="f-email" name="email" placeholder="jean.dupont@email.com" autocomplete="email" required>
-              </div>
-            </div>
-          </div>
+          <!-- ══ FORMULAIRE SUPPRIMÉ ══
+               Les coordonnées sont saisies directement
+               sur la passerelle de paiement Systeme.io.
+          ══════════════════════════════════════════════ -->
 
           <!-- CTA -->
           <div class="cta-wrap">
             <a
-              href="https://mehdi-contact04.systeme.io/1a7c3f76"
+              href="https://expatriation-framework.systeme.io/paiement39"
               class="btn-checkout"
               id="btn-cta"
               aria-label="Procéder au paiement sécurisé - 39 euros"
@@ -786,6 +705,13 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <script>
     "use strict";
 
+    // ── Liens de paiement ──
+    const URL_BASE    = 'https://expatriation-framework.systeme.io/paiement39';
+    const URL_UPSELL  = 'https://expatriation-framework.systeme.io/paiement189';
+
+    // Référence unique au bouton CTA
+    const ctaBtn = document.getElementById('btn-cta');
+
     // ── Reveal on scroll ──
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -794,30 +720,40 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     }, { threshold: .06, rootMargin: '0px 0px -16px 0px' });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-    // ── Upsell toggle — met à jour le prix du bouton ──
+    // ── Upsell toggle ──
+    // Met à jour instantanément le lien, le label du bouton et les totaux affichés
     function toggleUpsell(checkbox) {
-      const btn = document.getElementById('btn-label');
-      const chkBox = checkbox.nextElementSibling;
-      const isChecked = checkbox.checked;
+      const isChecked  = checkbox.checked;
+      const chkBox     = checkbox.nextElementSibling;
+      const btnLabel   = document.getElementById('btn-label');
+      const subtotalEl = document.getElementById('subtotal-val');
+      const totalEl    = document.getElementById('total-final-val');
 
+      // Accessibilité
       chkBox.setAttribute('aria-checked', isChecked ? 'true' : 'false');
-      btn.textContent = isChecked ? 'Payer maintenant — 189€' : 'Payer maintenant — 39€';
 
-      // Mettre à jour le total affiché
-      const finalVal = document.querySelector('.total-final-val');
-      if (finalVal) finalVal.textContent = isChecked ? '189€' : '39€';
-
-      const subVal = document.querySelector('.total-val');
-      if (subVal) subVal.textContent = isChecked ? '189,00 €' : '39,00 €';
+      if (isChecked) {
+        ctaBtn.href          = URL_UPSELL;
+        ctaBtn.setAttribute('aria-label', 'Procéder au paiement sécurisé - 189 euros');
+        btnLabel.textContent = 'Payer maintenant — 189€';
+        subtotalEl.textContent = '189,00 €';
+        totalEl.textContent    = '189€';
+      } else {
+        ctaBtn.href          = URL_BASE;
+        ctaBtn.setAttribute('aria-label', 'Procéder au paiement sécurisé - 39 euros');
+        btnLabel.textContent = 'Payer maintenant — 39€';
+        subtotalEl.textContent = '39,00 €';
+        totalEl.textContent    = '39€';
+      }
     }
 
     // ── FAQ mini accordion ──
     function toggleFaqMini(btn) {
-      const item = btn.closest('.faq-mini-item');
+      const item   = btn.closest('.faq-mini-item');
       const isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-mini-item.open').forEach(el => {
         el.classList.remove('open');
-        el.querySelector('.faq-mini-q').setAttribute('aria-expanded','false');
+        el.querySelector('.faq-mini-q').setAttribute('aria-expanded', 'false');
       });
       if (!isOpen) {
         item.classList.add('open');
@@ -832,7 +768,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       });
     });
 
-    // ── Keyboard upsell checkbox ──
+    // Keyboard support upsell checkbox
     document.querySelector('.upsell-check-box').addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -840,17 +776,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         inp.checked = !inp.checked;
         toggleUpsell(inp);
       }
-    });
-
-    // ── Pré-remplir Systeme.io avec email saisi (si supporté par l'URL) ──
-    const emailInput = document.getElementById('f-email');
-    const ctaBtn     = document.getElementById('btn-cta');
-    const baseUrl    = 'https://mehdi-contact04.systeme.io/1a7c3f76';
-
-    emailInput.addEventListener('input', () => {
-      const email = encodeURIComponent(emailInput.value.trim());
-      // Systeme.io accepte ?email= en paramètre pour pré-remplir
-      ctaBtn.href = email ? baseUrl + '?email=' + email : baseUrl;
     });
   </script>
 
