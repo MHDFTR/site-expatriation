@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue — Espace Premium · Expatriation Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+  /* ═══════════════════════════════════════════
+     TOKENS — Design System Expatriation Framework
+  ═══════════════════════════════════════════ */
+  :root {
+    --bg-0:        #060912;
+    --bg-1:        #0A0E1C;
+    --bg-2:        #0E1424;
+    --bg-3:        #131A2E;
+    --border-0:    #111826;
+    --border-1:    #182033;
+    --border-2:    #243554;
+    --border-3:    #2F4570;
+    --gold:        #C8A96A;
+    --gold-bright: #DEC083;
+    --gold-deep:   #9A7B44;
+    --blue:        #3B6FD4;
+    --red:         #C45C5C;
+    --amber:       #C4924A;
+    --green:       #4AA87A;
+    --text-0:      #EDF1FC;
+    --text-1:      #8B9BB8;
+    --text-2:      #495B78;
+    --text-3:      #2B3A54;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.5);
+    --shadow-md:   0 4px 16px rgba(0,0,0,.6);
+    --shadow-lg:   0 8px 40px rgba(0,0,0,.7);
+    --shadow-gold: 0 0 32px rgba(200,169,106,.18);
+    --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 24px;
+    --fd: 'Cormorant Garant', Georgia, serif;
+    --fb: 'Poppins', sans-serif;
+    --fm: 'Space Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--fb);
+    background: var(--bg-1);
+    color: var(--text-0);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── Grain overlay ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+
+  /* ─── Grid ─── */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(24,32,51,.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24,32,51,.35) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 30%, transparent 100%);
+  }
+
+  /* ─── Aurora ─── */
+  .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px); mix-blend-mode: screen;
+  }
+  .b1 { width:700px;height:450px;top:-80px;left:-120px;
+    background: radial-gradient(ellipse,rgba(200,169,106,.07) 0%,transparent 70%);
+    animation: b1m 28s ease-in-out infinite; }
+  .b2 { width:550px;height:450px;bottom:-60px;right:-60px;
+    background: radial-gradient(ellipse,rgba(59,111,212,.06) 0%,transparent 70%);
+    animation: b2m 24s ease-in-out infinite; }
+  .b3 { width:420px;height:320px;top:38%;left:48%;
+    background: radial-gradient(ellipse,rgba(74,168,122,.045) 0%,transparent 70%);
+    animation: b3m 20s ease-in-out infinite; }
+  @keyframes b1m{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(48px,-36px) scale(1.06)}}
+  @keyframes b2m{0%,100%{transform:translate(0,0)}50%{transform:translate(-42px,28px)}}
+  @keyframes b3m{0%,100%{transform:translate(-50%,0) scale(1)}50%{transform:translate(-50%,-22px) scale(1.09)}}
+
+  /* ─── Scroll progress bar ─── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 1px; z-index: 1000; width: 0%;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-bright));
+    transition: width .15s;
+  }
+
+  /* ═══════════════════════════════════════════
+     NAVIGATION
+  ═══════════════════════════════════════════ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    height: 64px;
+    background: rgba(6,9,18,.88);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border-bottom: 1px solid var(--border-0);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(20px, 4vw, 48px);
+    transition: border-color .5s;
+  }
+  nav.scrolled { border-bottom-color: var(--border-1); }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 11px;
+    text-decoration: none;
+  }
+  .nav-mark {
+    width: 34px; height: 34px; border-radius: 7px;
+    background: linear-gradient(145deg, var(--gold-deep), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--fm); font-size: 11px; font-weight: 700; color: #08080f;
+    flex-shrink: 0;
+  }
+  .nav-name {
+    font-family: var(--fb); font-size: 14px; font-weight: 500; color: var(--text-0);
+    letter-spacing: .01em;
+  }
+
+  .nav-badge {
+    display: flex; align-items: center; gap: 7px;
+    font-family: var(--fm); font-size: 9px; font-weight: 700;
+    color: var(--gold); text-transform: uppercase; letter-spacing: .16em;
+    background: rgba(200,169,106,.07);
+    border: 1px solid rgba(200,169,106,.2);
+    padding: 5px 12px; border-radius: var(--r-sm);
+  }
+  .nav-badge-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 6px var(--green)}50%{opacity:.6;box-shadow:0 0 12px var(--green)}}
+
+  /* ═══════════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════════ */
+  .hero {
+    position: relative; z-index: 1;
+    padding: clamp(44px,7vh,80px) clamp(20px,4vw,48px) clamp(36px,5vh,60px);
+    text-align: center; max-width: 760px; margin: 0 auto;
+  }
+
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--fm); font-size: 9px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--green);
+    background: rgba(74,168,122,.08); border: 1px solid rgba(74,168,122,.2);
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 22px;
+    animation: fadeUp .6s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero-chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+  .hero-h1 {
+    font-family: var(--fd);
+    font-size: clamp(38px, 5.5vw, 64px);
+    font-weight: 600; line-height: 1.0; letter-spacing: -.025em;
+    color: var(--text-0); margin-bottom: 10px;
+    animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .1s both;
+  }
+  .hero-h1 em { font-style: italic; font-weight: 400; color: var(--gold); }
+
+  .hero-sub {
+    font-family: var(--fd);
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-weight: 400; font-style: italic;
+    color: var(--text-1); margin-bottom: 0;
+    animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .22s both;
+  }
+
+  /* gold separator */
+  .hero-sep {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto 0;
+    animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══════════════════════════════════════════
+     MAIN LAYOUT
+  ═══════════════════════════════════════════ */
+  .main {
+    position: relative; z-index: 1;
+    max-width: 1160px; margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px) clamp(60px, 10vh, 100px);
+    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .38s both;
+  }
+
+  /* ─── Card principale ─── */
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border-1);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+
+  /* ─── Top bar dorée ─── */
+  .card::before {
+    content: ''; display: none;
+  }
+  .card-top-bar {
+    grid-column: 1/-1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold-deep) 25%, var(--gold) 50%, var(--gold-deep) 75%, transparent 100%);
+    opacity: .6;
+  }
+
+  /* ════ Colonne gauche ════ */
+  .col-left {
+    padding: 40px 38px 40px 44px;
+    border-right: 1px solid var(--border-1);
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  /* ─── Download widget ─── */
+  .dl-widget {
+    background: var(--bg-3);
+    border: 1px solid var(--border-1);
+    border-radius: var(--r-lg);
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    position: relative; overflow: hidden;
+  }
+  .dl-widget::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep) 40%, transparent);
+    opacity: .5;
+  }
+  .dl-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .dl-label {
+    font-family: var(--fm); font-size: 9px; font-weight: 700;
+    color: var(--gold-deep); text-transform: uppercase; letter-spacing: .2em;
+  }
+  .dl-status-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--fm); font-size: 8px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 100px;
+    transition: all .5s;
+  }
+  .dl-status-pill.loading {
+    background: rgba(196,146,74,.08); border: 1px solid rgba(196,146,74,.2); color: var(--amber);
+  }
+  .dl-status-pill.done {
+    background: rgba(74,168,122,.08); border: 1px solid rgba(74,168,122,.2); color: var(--green);
+  }
+  .dl-pill-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    transition: background .5s;
+  }
+  .dl-status-pill.loading .dl-pill-dot { background: var(--amber); animation: pulse 1.6s ease-in-out infinite; }
+  .dl-status-pill.done    .dl-pill-dot { background: var(--green); box-shadow: 0 0 6px var(--green); animation: none; }
+
+  .dl-file-row {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .dl-icon-wrap {
+    width: 42px; height: 42px; border-radius: var(--r-md);
+    background: rgba(200,169,106,.07); border: 1px solid rgba(200,169,106,.14);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .dl-icon-svg { transition: all .5s; }
+  .dl-file-info {}
+  .dl-file-name {
+    font-family: var(--fb); font-size: 13px; font-weight: 500; color: var(--text-0);
+    margin-bottom: 2px;
+  }
+  .dl-file-meta {
+    font-family: var(--fm); font-size: 9px; color: var(--text-2);
+    text-transform: uppercase; letter-spacing: .1em;
+  }
+
+  /* Progress bar */
+  .dl-progress { margin-top: 14px; }
+  .dl-progress-track {
+    height: 2px; background: var(--border-1); border-radius: 2px; overflow: hidden;
+  }
+  .dl-progress-fill {
+    height: 100%; width: 0%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+    transition: width 1.8s cubic-bezier(.4,0,.2,1);
+  }
+  .dl-progress-fill.done { width: 100%; }
+  .dl-progress-label {
+    margin-top: 7px;
+    font-family: var(--fm); font-size: 8px; color: var(--text-2);
+    letter-spacing: .1em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+  }
+  #dl-pct { transition: all .3s; }
+
+  /* Fallback */
+  .dl-fallback {
+    margin-top: 12px; display: none;
+    font-family: var(--fb); font-size: 12px; font-weight: 300; color: var(--text-2);
+  }
+  .dl-fallback a {
+    color: var(--gold-deep); text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,106,.25);
+    transition: color .2s, border-color .2s;
+  }
+  .dl-fallback a:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ─── Section titre gauche ─── */
+  .section-label {
+    font-family: var(--fm); font-size: 9px; font-weight: 700;
+    color: var(--gold-deep); text-transform: uppercase; letter-spacing: .22em;
+    margin-bottom: 8px; display: block;
+  }
+  .col-h2 {
+    font-family: var(--fd); font-size: 22px; font-weight: 600;
+    color: var(--text-0); line-height: 1.15; letter-spacing: -.01em;
+    margin-bottom: 20px;
+  }
+
+  /* ─── Contenu acheté ─── */
+  .purchase-items { list-style: none; margin-bottom: 28px; }
+  .purchase-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--border-0);
+  }
+  .purchase-item:last-child { border-bottom: none; }
+  .pi-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(200,169,106,.06); border: 1px solid rgba(200,169,106,.12);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .pi-title { font-size: 13px; font-weight: 500; color: var(--text-0); margin-bottom: 2px; }
+  .pi-desc  { font-size: 12px; font-weight: 300; color: var(--text-2); line-height: 1.5; }
+
+  /* ─── Préparation session ─── */
+  .prep-block {
+    background: rgba(6,9,18,.5);
+    border: 1px solid var(--border-0);
+    border-left: 2px solid var(--gold-deep);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    padding: 16px 18px;
+    margin-top: auto;
+  }
+  .prep-title {
+    font-family: var(--fm); font-size: 9px; font-weight: 700;
+    color: var(--gold-deep); text-transform: uppercase; letter-spacing: .18em;
+    margin-bottom: 10px;
+  }
+  .prep-list { list-style: none; }
+  .prep-list li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 12.5px; font-weight: 300; color: var(--text-1);
+    line-height: 1.6; margin-bottom: 8px;
+  }
+  .prep-list li:last-child { margin-bottom: 0; }
+  .prep-num {
+    font-family: var(--fm); font-size: 9px; font-weight: 700; color: var(--gold);
+    min-width: 18px; margin-top: 2px;
+  }
+
+  /* ════ Colonne droite ════ */
+  .col-right {
+    padding: 40px 44px 40px 38px;
+    display: flex; flex-direction: column;
+  }
+
+  .cal-header { margin-bottom: 22px; }
+  .cal-tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--fm); font-size: 9px; font-weight: 700;
+    color: var(--blue); text-transform: uppercase; letter-spacing: .16em;
+    background: rgba(59,111,212,.07); border: 1px solid rgba(59,111,212,.18);
+    padding: 4px 12px; border-radius: 100px; margin-bottom: 10px;
+  }
+  .cal-h2 {
+    font-family: var(--fd); font-size: 22px; font-weight: 600;
+    color: var(--text-0); line-height: 1.15; letter-spacing: -.01em;
+    margin-bottom: 8px;
+  }
+  .cal-h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
+  .cal-sub {
+    font-size: 13px; font-weight: 300; color: var(--text-1); line-height: 1.65;
+  }
+
+  /* ─── Iframe container ─── */
+  .cal-frame-wrap {
+    flex: 1;
+    background: var(--bg-3);
+    border: 1px solid var(--border-1);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    position: relative;
+    min-height: 360px;
+    display: flex; flex-direction: column;
+  }
+
+  /* Header de la fenêtre calendrier */
+  .cal-frame-head {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-0);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cal-dots { display: flex; gap: 5px; }
+  .cal-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--border-2);
+  }
+  .cal-frame-url {
+    flex: 1; height: 22px;
+    background: var(--border-0); border-radius: 4px;
+    display: flex; align-items: center; padding: 0 10px;
+    font-family: var(--fm); font-size: 9px; color: var(--text-3);
+    letter-spacing: .04em;
+  }
+
+  /* Zone iframe réelle — à remplacer par votre vrai iframe */
+  .cal-iframe-slot {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0;
+    padding: 32px 28px;
+    position: relative;
+  }
+
+  /* Placeholder visuel quand aucun iframe n'est inséré */
+  .cal-placeholder {
+    text-align: center; width: 100%;
+  }
+  .cal-placeholder-icon {
+    width: 52px; height: 52px; margin: 0 auto 16px;
+    border-radius: var(--r-md);
+    background: rgba(59,111,212,.07); border: 1px solid rgba(59,111,212,.18);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cal-placeholder h3 {
+    font-family: var(--fd); font-size: 18px; font-weight: 600;
+    color: var(--text-0); margin-bottom: 8px;
+  }
+  .cal-placeholder p {
+    font-size: 13px; font-weight: 300; color: var(--text-2);
+    line-height: 1.65; max-width: 280px; margin: 0 auto 20px;
+  }
+  .cal-placeholder-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--fb); font-size: 13px; font-weight: 600;
+    color: #08080f; background: var(--gold);
+    padding: 11px 24px; border-radius: var(--r-md);
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .22s, transform .22s, box-shadow .22s;
+  }
+  .cal-placeholder-btn:hover {
+    background: var(--gold-bright);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Watermark "PLACEHOLDER" */
+  .cal-watermark {
+    position: absolute; bottom: 12px; right: 14px;
+    font-family: var(--fm); font-size: 8px; color: var(--text-3);
+    letter-spacing: .12em; text-transform: uppercase;
+    pointer-events: none; user-select: none;
+  }
+
+  /* ─── Garantie strip ─── */
+  .guarantee-strip {
+    margin-top: 16px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    background: rgba(74,168,122,.04); border: 1px solid rgba(74,168,122,.12);
+    border-radius: var(--r-md);
+    font-size: 12px; font-weight: 300; color: var(--text-2); line-height: 1.5;
+  }
+  .guarantee-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(74,168,122,.08); border: 1px solid rgba(74,168,122,.18);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .guarantee-strip strong { color: var(--green); font-weight: 500; }
+
+  /* ═══════════════════════════════════════════
+     STRIP SPAM
+  ═══════════════════════════════════════════ */
+  .spam-strip {
+    position: relative; z-index: 1;
+    max-width: 1160px; margin: -8px auto 0;
+    padding: 0 clamp(20px, 4vw, 48px);
+    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .48s both;
+  }
+  .spam-inner {
+    border: 1px solid var(--border-0);
+    border-top: none;
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    background: rgba(6,9,18,.6);
+    padding: 14px 28px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  .spam-icon { flex-shrink: 0; opacity: .5; }
+  .spam-text {
+    font-size: 12.5px; font-weight: 300; color: var(--text-2); line-height: 1.55;
+  }
+  .spam-text strong { color: var(--text-1); font-weight: 400; }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════ */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border-0);
+    background: var(--bg-0);
+    margin-top: clamp(40px, 8vh, 80px);
+    padding: clamp(28px, 4vh, 44px) clamp(20px, 4vw, 48px);
+  }
+  .footer-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .footer-logo {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .footer-mark {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: linear-gradient(145deg, var(--gold-deep), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--fm); font-size: 9px; font-weight: 700; color: #08080f;
+  }
+  .footer-name {
+    font-family: var(--fb); font-size: 12px; font-weight: 500; color: var(--text-2);
+  }
+  .footer-mid {
+    font-family: var(--fm); font-size: 9px; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: .1em; text-align: center;
+    max-width: 420px; line-height: 1.7;
+  }
+  .footer-links {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .footer-links a {
+    font-family: var(--fm); font-size: 9px; color: var(--text-3);
+    text-decoration: none; text-transform: uppercase; letter-spacing: .1em;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--text-1); }
+  .footer-sep { width: 1px; height: 12px; background: var(--border-0); }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .card { grid-template-columns: 1fr; }
+    .card-top-bar { grid-column: 1; }
+    .col-left { border-right: none; border-bottom: 1px solid var(--border-1); padding: 36px 28px; }
+    .col-right { padding: 36px 28px; }
+    .nav-badge { display: none; }
+  }
+  @media (max-width: 560px) {
+    .col-left, .col-right { padding: 28px 20px; }
+    .hero { padding: 40px 20px 32px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .footer-links { justify-content: flex-start; }
+    .footer-mid { text-align: left; }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="grid-bg"></div>
+  <div class="aurora">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- ══ NAVIGATION ══ -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-mark">EF</div>
+      <span class="nav-name">Expatriation Framework</span>
+    </a>
+    <div class="nav-badge">
+      <div class="nav-badge-dot"></div>
+      Espace membre premium
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-chip">
+      <div class="hero-chip-dot"></div>
+      Paiement confirmé · Accès immédiat
+    </div>
+    <h1 class="hero-h1">Bienvenue dans<br><em>votre espace.</em></h1>
+    <p class="hero-sub">Votre kit est prêt. Réservez maintenant votre session de déminage.</p>
+    <div class="hero-sep"></div>
+  </section>
+
+  <!-- ══ MAIN CARD ══ -->
+  <div class="main">
+    <div class="card">
+      <div class="card-top-bar"></div>
+
+      <!-- ════ Colonne gauche ════ -->
+      <div class="col-left">
+
+        <!-- Download widget -->
+        <div class="dl-widget">
+          <div class="dl-header">
+            <span class="dl-label">Votre document</span>
+            <div class="dl-status-pill loading" id="dlPill">
+              <div class="dl-pill-dot"></div>
+              <span id="dlPillTxt">Préparation…</span>
+            </div>
+          </div>
+          <div class="dl-file-row">
+            <div class="dl-icon-wrap">
+              <svg class="dl-icon-svg" id="dlIcon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <!-- Loading state: spinner lines -->
+                <circle cx="10" cy="10" r="7" stroke="#9A7B44" stroke-width="1" stroke-opacity=".3"/>
+                <path id="dlIconPath" d="M10 5v6M7 8l3 3 3-3" stroke="#C8A96A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="dl-file-info">
+              <div class="dl-file-name">Kit Expatriation Framework 2026</div>
+              <div class="dl-file-meta" id="dlMeta">PDF · Lancement en cours…</div>
+            </div>
+          </div>
+          <div class="dl-progress">
+            <div class="dl-progress-track">
+              <div class="dl-progress-fill" id="dlFill"></div>
+            </div>
+            <div class="dl-progress-label">
+              <span id="dlPct">0%</span>
+              <span>Guide complet 24 mois</span>
+            </div>
+          </div>
+          <div class="dl-fallback" id="dlFallback">
+            Le fichier ne s'est pas ouvert ?
+            <a href="../assets/kit-expatriation-framework-2026.pdf" download="Kit Expatriation Framework 2026.pdf" id="dlFallbackLink">
+              Télécharger manuellement →
+            </a>
+          </div>
+        </div>
+
+        <!-- Ce qui est inclus -->
+        <span class="section-label">Votre accès premium</span>
+        <h2 class="col-h2">Deux outils,<br>une méthode complète.</h2>
+
+        <ul class="purchase-items">
+          <li class="purchase-item">
+            <div class="pi-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="1" width="12" height="14" rx="2" stroke="#C8A96A" stroke-width="1"/>
+                <path d="M4.5 5h7M4.5 7.5h5M4.5 10h6" stroke="#C8A96A" stroke-width="1" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="pi-title">Kit Expatriation Framework 2026</div>
+              <div class="pi-desc">Guide complet 24 mois · Chronologie chirurgicale · Checklist 6 phases · Modèles de lettres juridiques</div>
+            </div>
+          </li>
+          <li class="purchase-item">
+            <div class="pi-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.5" stroke="#C8A96A" stroke-width="1"/>
+                <path d="M8 5v3.5l2.5 1.5" stroke="#C8A96A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="pi-title">Session de Déminage · 1h</div>
+              <div class="pi-desc">Audit de votre situation personnelle · Identification de vos zones de risque · Brief de consultation prêt à l'emploi</div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Préparation -->
+        <div class="prep-block">
+          <div class="prep-title">Préparez votre session</div>
+          <ul class="prep-list">
+            <li>
+              <span class="prep-num">01</span>
+              <span>Lisez les <strong style="color:var(--text-1);font-weight:500">Parties 1 et 2</strong> du Kit avant votre rendez-vous.</span>
+            </li>
+            <li>
+              <span class="prep-num">02</span>
+              <span>Notez vos <strong style="color:var(--text-1);font-weight:500">revenus français et étrangers</strong> estimés (loyers, dividendes, salaire).</span>
+            </li>
+            <li>
+              <span class="prep-num">03</span>
+              <span>Listez vos <strong style="color:var(--text-1);font-weight:500">structures juridiques</strong> en France (SASU, SCI, assurances-vie…).</span>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /col-left -->
+
+      <!-- ════ Colonne droite ════ -->
+      <div class="col-right">
+
+        <div class="cal-header">
+          <div class="cal-tag">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <circle cx="4" cy="4" r="3.5" stroke="#3B6FD4" stroke-width=".8"/>
+              <path d="M4 2v2.5l1.5.5" stroke="#3B6FD4" stroke-width=".8" stroke-linecap="round"/>
+            </svg>
+            Session de déminage incluse
+          </div>
+          <h2 class="cal-h2">Choisissez votre<br><em>créneau.</em></h2>
+          <p class="cal-sub">Sélectionnez directement le jour et l'heure qui vous conviennent. La confirmation est automatique.</p>
+        </div>
+
+        <!-- ─── Zone calendrier ─── -->
+        <div class="cal-frame-wrap">
+
+          <div class="cal-frame-head">
+            <div class="cal-dots">
+              <div class="cal-dot"></div>
+              <div class="cal-dot"></div>
+              <div class="cal-dot"></div>
+            </div>
+            <div class="cal-frame-url">calendly.com · session-dedeminage</div>
+          </div>
+
+          <div class="cal-iframe-slot">
+
+            <!-- ══ PLACEHOLDER ══
+                 → Remplacez TOUT ce bloc par votre vrai iframe :
+                    <iframe src="https://calendly.com/votre-lien" width="100%" height="100%" frameborder="0"></iframe>
+            ══ -->
+            <div class="cal-placeholder">
+              <div class="cal-placeholder-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="17" rx="2.5" stroke="#3B6FD4" stroke-width="1.2"/>
+                  <path d="M3 9h18" stroke="#3B6FD4" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M8 2v3M16 2v3" stroke="#3B6FD4" stroke-width="1.2" stroke-linecap="round"/>
+                  <rect x="7" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".5"/>
+                  <rect x="11" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".25"/>
+                  <rect x="15" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".25"/>
+                </svg>
+              </div>
+              <h3>Réservez votre créneau</h3>
+              <p>Insérez ici votre lien Calendly, TidyCal ou YouCanBook.me pour afficher le calendrier interactif.</p>
+              <a class="cal-placeholder-btn" href="#" target="_blank">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+                  <path d="M1.5 5.5h11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                  <path d="M4.5 1v2M9.5 1v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                Voir les disponibilités →
+              </a>
+            </div>
+
+            <div class="cal-watermark">Intégrez votre iframe ici</div>
+          </div>
+        </div>
+
+        <!-- Garantie -->
+        <div class="guarantee-strip">
+          <div class="guarantee-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 1.5L2 3.5v4c0 2.8 2.1 5.1 5 5.5 2.9-.4 5-2.7 5-5.5v-4L7 1.5z" stroke="#4AA87A" stroke-width="1" stroke-linejoin="round"/>
+              <path d="M4.5 7l2 2 3-3" stroke="#4AA87A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span>
+            <strong>Confidentialité garantie</strong> · Votre dossier est traité en toute discrétion.
+            Aucune information partagée avec des tiers.
+          </span>
+        </div>
+
+      </div><!-- /col-right -->
+    </div><!-- /card -->
+  </div><!-- /main -->
+
+  <!-- ══ SPAM STRIP ══ -->
+  <div class="spam-strip">
+    <div class="spam-inner">
+      <svg class="spam-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="3" width="14" height="10" rx="2" stroke="#8B9BB8" stroke-width="1"/>
+        <path d="M1 5l7 5 7-5" stroke="#8B9BB8" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      <p class="spam-text">
+        Un email de confirmation contenant votre lien personnel est en cours d'envoi.
+        Vérifiez vos <strong>Spams</strong> et l'onglet <strong>Promotions</strong> si vous ne le trouvez pas dans les 5 minutes.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <a class="footer-logo" href="index.html">
+        <div class="footer-mark">EF</div>
+        <span class="footer-name">Expatriation Framework</span>
+      </a>
+      <div class="footer-mid">
+        Ce document est fourni à titre informatif et ne constitue pas un conseil juridique personnalisé.
+        Consultez un avocat fiscaliste pour votre situation spécifique.
+      </div>
+      <div class="footer-links">
+        <a href="avertissement.html">Avertissement</a>
+        <div class="footer-sep"></div>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <div class="footer-sep"></div>
+        <a href="index.html">Accueil</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script>
+  (function () {
+
+    /* ─── Scroll progress bar ─── */
+    var bar = document.getElementById('progressBar');
+    window.addEventListener('scroll', function () {
+      var h = document.documentElement;
+      var pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+
+    /* ─── Nav glassmorphism ─── */
+    var nav = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    /* ─── Download logic ─── */
+    var fileUrl  = '../assets/kit-expatriation-framework-2026.pdf';
+    var fileName = 'Kit Expatriation Framework 2026.pdf';
+
+    var pill      = document.getElementById('dlPill');
+    var pillTxt   = document.getElementById('dlPillTxt');
+    var fill      = document.getElementById('dlFill');
+    var pct       = document.getElementById('dlPct');
+    var meta      = document.getElementById('dlMeta');
+    var fallback  = document.getElementById('dlFallback');
+    var fLink     = document.getElementById('dlFallbackLink');
+
+    fLink.href = fileUrl;
+    fLink.setAttribute('download', fileName);
+
+    /* Faux progress bar animé */
+    var prog = 0;
+    var progTimer = setInterval(function () {
+      prog = prog < 70 ? prog + Math.random() * 8 : prog + Math.random() * 2;
+      if (prog >= 99) { prog = 99; clearInterval(progTimer); }
+      fill.style.width = prog + '%';
+      pct.textContent  = Math.round(prog) + '%';
+    }, 120);
+
+    /* Déclencher le téléchargement après 1,5 s */
+    setTimeout(function () {
+      var a = document.createElement('a');
+      a.href = fileUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      /* Transition vers l'état "terminé" après 500 ms */
+      setTimeout(function () {
+        clearInterval(progTimer);
+
+        /* Progress à 100% */
+        fill.style.width = '100%';
+        pct.textContent  = '100%';
+
+        /* Mise à jour du pill */
+        pill.classList.replace('loading', 'done');
+        pillTxt.textContent = 'Téléchargé';
+
+        /* Mise à jour meta */
+        meta.textContent = 'PDF · Téléchargement terminé';
+
+        /* Icône → check */
+        document.getElementById('dlIconPath').setAttribute('d', 'M4.5 8.5l3 3 5-5');
+
+        /* Fallback après 2 s */
+        setTimeout(function () { fallback.style.display = 'block'; }, 2000);
+
+      }, 500);
+    }, 1500);
+
+  })();
+  </script>
+
+</body>
+</html>
