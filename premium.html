@@ -748,36 +748,20 @@
           </div>
 
           <div class="cal-iframe-slot">
+            <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-audit-prive"></div>
+            <script type="text/javascript">
+              (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.eu/embed/embed.js", "init");
+            Cal("init", "audit-prive", {origin:"https://app.cal.eu"});
 
-            <!-- ══ PLACEHOLDER ══
-                 → Remplacez TOUT ce bloc par votre vrai iframe :
-                    <iframe src="https://calendly.com/votre-lien" width="100%" height="100%" frameborder="0"></iframe>
-            ══ -->
-            <div class="cal-placeholder">
-              <div class="cal-placeholder-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="17" rx="2.5" stroke="#3B6FD4" stroke-width="1.2"/>
-                  <path d="M3 9h18" stroke="#3B6FD4" stroke-width="1.2" stroke-linecap="round"/>
-                  <path d="M8 2v3M16 2v3" stroke="#3B6FD4" stroke-width="1.2" stroke-linecap="round"/>
-                  <rect x="7" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".5"/>
-                  <rect x="11" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".25"/>
-                  <rect x="15" y="13" width="3" height="3" rx=".8" fill="#3B6FD4" fill-opacity=".25"/>
-                </svg>
-              </div>
-              <h3>Réservez votre créneau</h3>
-              <p>Insérez ici votre lien Calendly, TidyCal ou YouCanBook.me pour afficher le calendrier interactif.</p>
-              <a class="cal-placeholder-btn" href="#" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
-                  <path d="M1.5 5.5h11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                  <path d="M4.5 1v2M9.5 1v2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-                Voir les disponibilités →
-              </a>
+            Cal.ns["audit-prive"]("inline", {
+              elementOrSelector:"#my-cal-inline-audit-prive",
+              config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"dark"},
+              calLink: "expatriation-framework/audit-prive",
+            });
+
+            Cal.ns["audit-prive"]("ui", {"theme":"dark","hideEventTypeDetails":false,"layout":"month_view"});
+            </script>
             </div>
-
-            <div class="cal-watermark">Intégrez votre iframe ici</div>
-          </div>
         </div>
 
         <!-- Garantie -->
