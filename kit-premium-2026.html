@@ -588,6 +588,67 @@
     .footer-mid { text-align: left; }
   }
   </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P0CY674BQD');
+  </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1365188762140535');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- Événement Purchase — 189€ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    gtag('event', 'purchase', {
+      transaction_id: Date.now().toString(),
+      value: 189.00,
+      currency: 'EUR',
+      items: [
+        {
+          item_id: 'kit-expatriation-framework-2026',
+          item_name: 'Kit Expatriation Framework 2026',
+          price: 39.00,
+          quantity: 1
+        },
+        {
+          item_id: 'session-dedeminage-audit',
+          item_name: 'Session de Déminage — Audit Stratégique',
+          price: 150.00,
+          quantity: 1
+        }
+      ]
+    });
+    fbq('track', 'Purchase', {
+      value: 189.00,
+      currency: 'EUR',
+      content_ids: ['kit-expatriation-framework-2026', 'session-dedeminage-audit'],
+      content_name: 'Kit Premium — Framework + Session de Déminage',
+      content_type: 'product',
+      num_items: 2
+    });
+  });
+  </script>
+
 </head>
 <body>
 
