@@ -1068,8 +1068,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       const h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (s / h * 100).toFixed(2) + '%';
       nav.classList.toggle('solid', s > 24);
-      // Sticky CTA visible après le hero
-      stickyCta.classList.toggle('visible', s > window.innerHeight * 0.7);
+      // Sticky CTA visible après le hero — aria-hidden synchronisé
+    const isVisible = s > window.innerHeight * 0.7;
+    stickyCta.classList.toggle('visible', isVisible);
+    stickyCta.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
     }, { passive: true });
  
     // ── Reveal on scroll ──
