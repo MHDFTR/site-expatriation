@@ -10,6 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* ══════════════════════════════════════
+       RESET NUCLÉAIRE — première règle, avant tout
+    ══════════════════════════════════════ */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════════
        TOKENS
     ══════════════════════════════════════ */
     :root {
@@ -26,26 +35,15 @@
       --gutter:clamp(20px,4vw,48px); --max-w:1200px;
     }
 
-    /* Fix 1 : reset total — zéro marge/padding sur html ET body */
-    html {
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: var(--fb);
-      background: var(--bg-1);
-      color: var(--t0);
-      line-height: 1.6;
-      overflow-x: hidden;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:var(--fb); background:var(--bg-1); color:var(--t0);
+      line-height:1.6;
+      overflow-wrap:break-word; word-wrap:break-word;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;border:none;background:none;font:inherit}
@@ -57,41 +55,56 @@
     }
 
     /* ── PROGRESS ──
-       position:fixed, hors du flux — ne crée aucun espace */
+       position:fixed top:0 — hors flux, ne crée aucun espace */
     #prog{
-      position:fixed;top:0;left:0;height:2px;width:0;z-index:9999;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:2px;
+      z-index:10000;
       background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
       transition:width .08s linear;
+      margin:0 !important;
+      padding:0 !important;
     }
 
     /* ══════════════════════════════════════
        NAV
-       Fix 1 : translate3d force le compositing GPU sur iOS Safari
-       ce qui empêche le "jour" résiduel au-dessus de l'élément fixe
+       — padding horizontal transféré sur .nav-i
+         pour que le .nav lui-même ait padding:0
     ══════════════════════════════════════ */
     .nav{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      margin:0;
-      padding:0 var(--gutter);
-      z-index:900;
+      position:fixed !important;
+      top:0 !important;
+      left:0 !important;
+      right:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      z-index:9999;
       height:64px;
       display:flex;align-items:center;justify-content:center;
       border-bottom:1px solid transparent;
       background:rgba(6,9,18,0);
-      /* Force GPU compositing layer — clé de la correction iOS */
-      -webkit-transform:translate3d(0,0,0);
-      transform:translate3d(0,0,0);
+      /* Force GPU compositing layer — élimine le "jour" iOS Safari */
+      -webkit-transform:translate3d(0,0,0) !important;
+      transform:translate3d(0,0,0) !important;
+      will-change:transform;
       transition:background .45s var(--ease),border-color .45s var(--ease);
     }
     .nav.solid{
       background:rgba(6,9,18,.92);
-      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      backdrop-filter:blur(22px) saturate(155%);
+      -webkit-backdrop-filter:blur(22px) saturate(155%);
       border-bottom-color:var(--br-0);
     }
-    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    /* Le padding horizontal est ici, sur .nav-i, pas sur .nav */
+    .nav-i{
+      width:100%;
+      max-width:var(--max-w);
+      padding:0 var(--gutter);
+      display:flex;align-items:center;justify-content:space-between;
+    }
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
     .nav-logo:hover{opacity:.8}
     .nav-mark{
@@ -111,11 +124,13 @@
     .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
 
     /* ══════════════════════════════════════
-       HERO
+       HERO — pas de margin-top, uniquement du padding
     ══════════════════════════════════════ */
     .hero{
       position:relative;min-height:100vh;display:flex;align-items:center;
-      padding:128px var(--gutter) 96px;overflow:hidden;
+      padding:128px var(--gutter) 96px;
+      margin-top:0 !important;
+      overflow:hidden;
     }
     .hero-bg{position:absolute;inset:0;z-index:0}
     .blob{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;pointer-events:none}
@@ -242,14 +257,7 @@
     .check-box{width:18px;height:18px;border-radius:4px;background:rgba(200,169,106,.08);border:1px solid rgba(200,169,106,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
     .diag-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:0}
     .meta-tag{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t2)}
-
-    /* Fix 2 : conteneur centré pour le bouton */
-    .diag-btn-wrap{
-      display:flex;
-      justify-content:flex-start;
-      align-items:center;
-      margin-top:0;
-    }
+    .diag-btn-wrap{display:flex;justify-content:flex-start;align-items:center;margin-top:0;}
 
     /* visual panel */
     .diag-vis{
@@ -377,44 +385,46 @@
     @media(max-width:768px){
       :root{--gutter:20px}
 
-      /* ── Fix 1 : nav toujours opaque + collée, zéro gap ── */
-      .nav {
-        top: 0 !important;
-        margin: 0 !important;
-        /* Opaque en permanence sur mobile —
-           élimine la transparence qui crée l'illusion de vide */
-        background: rgba(6,9,18,.97) !important;
-        backdrop-filter: blur(22px) saturate(155%);
-        -webkit-backdrop-filter: blur(22px) saturate(155%);
-        border-bottom-color: var(--br-0);
-        /* Renforce le compositing GPU sur iOS */
-        -webkit-transform: translate3d(0,0,0) !important;
-        transform: translate3d(0,0,0) !important;
+      /* ── Nav collée pixel-perfect, opaque en permanence ── */
+      .nav{
+        position:fixed !important;
+        top:0 !important;
+        left:0 !important;
+        right:0 !important;
+        margin:0 !important;
+        padding:0 !important;
+        background:rgba(6,9,18,.97) !important;
+        border-bottom-color:var(--br-0) !important;
+        -webkit-transform:translate3d(0,0,0) !important;
+        transform:translate3d(0,0,0) !important;
+        will-change:transform;
       }
 
       .nav-links{display:none}
-      .hero{padding:112px var(--gutter) 80px}
+
+      /* hero — zéro margin-top */
+      .hero{padding:112px var(--gutter) 80px;margin-top:0 !important;}
       .hero-h1{font-size:clamp(40px,10vw,56px)}
 
-      /* Fix 2 : diag body */
+      /* diag body */
       .diag-body{padding:28px 20px}
       .diag-sub{max-width:100%}
       .diag-vis{flex-direction:column}
       .check-row{font-size:13px}
 
-      /* Fix 2 : bouton centré et non rogné ── */
-      .diag-btn-wrap {
-        display: flex;
-        justify-content: center;
-        width: 100%;
+      /* bouton centré, non rogné */
+      .diag-btn-wrap{
+        display:flex;
+        justify-content:center;
+        width:100%;
       }
-      .diag-btn-wrap .btn-p {
-        white-space: normal;
-        text-align: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+      .diag-btn-wrap .btn-p{
+        white-space:normal;
+        text-align:center;
+        justify-content:center;
+        width:100%;
+        max-width:100%;
+        box-sizing:border-box;
       }
 
       /* pillar cards */
@@ -581,7 +591,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </div>
         </div>
 
-        <!-- Fix 2 : bouton enveloppé dans un conteneur flex centré -->
         <div class="diag-btn-wrap">
           <a href="diagnostic.html" class="btn btn-p">
             Commencer le test d'éligibilité
@@ -788,7 +797,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   </footer>
 
   <script>
-    // Progress bar
     const prog = document.getElementById('prog');
     const nav  = document.getElementById('nav');
     window.addEventListener('scroll', () => {
@@ -798,13 +806,11 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       nav.classList.toggle('solid', s > 24);
     }, {passive: true});
 
-    // Reveal observer
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
     }, {threshold:.07, rootMargin:'0px 0px -28px 0px'});
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-    // Pillar card magnetic glow
     document.querySelectorAll('.p-card').forEach(c => {
       c.addEventListener('mousemove', e => {
         const r = c.getBoundingClientRect();
@@ -813,7 +819,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       });
     });
 
-    // Smooth anchor scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const t = document.querySelector(a.getAttribute('href'));
