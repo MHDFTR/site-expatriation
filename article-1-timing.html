@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Pourquoi votre expatriation fiscale se joue 24 mois avant — Expatriation Framework</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +11,57 @@
   <link rel="stylesheet" href="articles-global.css">
 
   <style>
+    /* ══════════════════════════════════════
+       RESET NUCLÉAIRE
+    ══════════════════════════════════════ */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden;
+    }
+    body {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    /* Progress bar — hors flux, aucun décalage */
+    #prog {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100%;
+      height: 2px;
+      z-index: 10000;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Nav — collée, zéro "jour" */
+    .nav {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      -webkit-transform: translate3d(0,0,0) !important;
+      transform: translate3d(0,0,0) !important;
+      will-change: transform;
+      z-index: 9999;
+    }
+    /* Padding horizontal sur nav-i, jamais sur .nav */
+    .nav-i {
+      padding: 0 var(--gutter);
+    }
+
+    /* Nav opaque sur mobile dès le départ */
+    @media(max-width:768px){
+      .nav {
+        background: rgba(6,9,18,.97) !important;
+        border-bottom-color: var(--br-0) !important;
+      }
+    }
+
     /* Gradient décoratif interne des alertes — propre à l'article 1 */
     .alert::before{
       content:'';position:absolute;inset:0;opacity:.04;
@@ -63,6 +114,7 @@
       padding:24px 26px;display:flex;align-items:flex-start;gap:18px;
       position:relative;overflow:hidden;
       transition:border-color .3s,transform .3s var(--slow);
+      min-width:0;
     }
     .profile-card:hover{border-color:var(--br-3);transform:translateX(4px)}
     .profile-card::before{
@@ -99,10 +151,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-P0CY674BQD');
 </script>
-  
+
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -120,12 +171,12 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-  
+
 </head>
 <body>
- 
+
   <div id="prog"></div>
- 
+
   <!-- ══ NAV ══ -->
   <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
@@ -141,14 +192,13 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       </ul>
     </div>
   </nav>
- 
+
   <!-- ══════════════════════════════════
        ARTICLE HERO
   ══════════════════════════════════ -->
   <header class="article-hero" role="banner">
     <div class="article-hero-inner">
- 
-      <!-- Breadcrumb -->
+
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
         <a href="index.html">Accueil</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
@@ -156,24 +206,20 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span class="breadcrumb-current">Chronologie &amp; Timing</span>
       </nav>
- 
-      <!-- Pilier tag -->
+
       <div class="article-tag">
         <div class="article-tag-dot" aria-hidden="true"></div>
         01 · Chronologie &amp; Timing
       </div>
- 
-      <!-- H1 -->
+
       <h1 class="article-h1">
         Pourquoi votre expatriation fiscale se joue 24 mois avant votre vol
       </h1>
- 
-      <!-- Intro -->
+
       <p class="article-intro">
         C'est l'erreur la plus coûteuse de l'entrepreneur français : croire qu'une expatriation fiscale commence le jour où l'on pose ses valises à l'étranger. L'administration ne regarde pas votre passeport — elle audite votre chronologie.
       </p>
- 
-      <!-- Meta -->
+
       <div class="article-meta" role="contentinfo" aria-label="Informations sur l'article">
         <div class="meta-item">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -196,16 +242,16 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           Article de référence
         </div>
       </div>
- 
+
     </div>
   </header>
- 
+
   <!-- ══════════════════════════════════
        CORPS DE L'ARTICLE
   ══════════════════════════════════ -->
   <div class="article-layout">
     <article class="article-body" role="main">
- 
+
       <!-- ─── Mythe des 183 jours ─── -->
       <div class="alert alert-red rv">
         <div class="alert-label">
@@ -216,49 +262,49 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <p><strong>Ce qu'on vous vend :</strong> "Il suffit de passer plus de 6 mois hors de France pour ne plus payer d'impôts."</p>
         <p><strong>La réalité fiscale :</strong> L'administration française se fiche du nombre de jours passés à l'étranger si votre centre d'intérêts économiques — vos clients, vos comptes, la gestion de votre société — est resté, même partiellement, attaché à la France lors de la transition. Cette règle des 183 jours n'existe pas dans le droit fiscal français.</p>
       </div>
- 
+
       <!-- ─── Article 4B ─── -->
       <h2 class="a-h2 rv">La règle implacable de l'Article 4B du CGI</h2>
- 
+
       <p class="a-p rv">Le Code Général des Impôts est binaire. Pour le fisc français, vous restez un résident fiscal — et donc imposable sur vos revenus mondiaux — si vous cochez <strong>un seul</strong> de ces trois critères lors de votre départ :</p>
- 
+
       <ul class="a-ul rv">
         <li>Votre <strong>foyer ou lieu de séjour principal</strong> est en France.</li>
         <li>Vous exercez en France une <strong>activité professionnelle non accessoire</strong>.</li>
         <li>Vous avez en France le <strong>centre de vos intérêts économiques</strong>.</li>
       </ul>
- 
+
       <p class="a-p rv">C'est ce dernier point qui provoque le plus de redressements. Une transition mal préparée déclenche immédiatement des signaux d'alerte. Un départ propre, lui, s'organise selon une chronologie stricte — et cela commence bien avant le vol.</p>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Timeline ─── -->
       <h2 class="a-h2 rv">La chronologie d'un départ sécurisé</h2>
- 
+
       <p class="a-p rv">Voici les trois phases critiques d'un départ structuré. Chaque étape est interdépendante : rater la première rend les suivantes inopérantes.</p>
- 
+
       <div class="v-timeline rv">
- 
+
         <div class="vt-item highlight">
           <div class="vt-date">T − 24 Mois</div>
           <h4 class="vt-h4">L'audit des actifs latents</h4>
           <p class="vt-p">C'est le moment de lister vos plus-values latentes (crypto, actions, parts de société) et de décider du sort de votre structure française. Attendre la dernière minute pour liquider ou transférer déclenche l'imposition immédiate en France — Flat Tax ou Exit Tax selon les montants. Toute décision prise ici a un impact fiscal direct sur votre année de départ.</p>
         </div>
- 
+
         <div class="vt-item highlight">
           <div class="vt-date">T − 12 Mois</div>
           <h4 class="vt-h4">La restructuration opérationnelle</h4>
           <p class="vt-p">Coupure progressive des liens contractuels français. Si vous êtes e-commerçant, c'est la transition de votre logistique et de vos outils de paiement. Si vous êtes freelance, c'est l'anticipation de la facturation avec vos clients historiques pour prouver que l'activité n'est plus gérée depuis la France. Un plan de migration client documenté est indispensable à cette étape.</p>
         </div>
- 
+
         <div class="vt-item">
           <div class="vt-date">T − 6 Mois</div>
           <h4 class="vt-h4">La transition bancaire &amp; administrative</h4>
           <p class="vt-p">Fermeture des comptes non essentiels, changement des adresses de facturation, résiliation des abonnements locaux. Ne laissez aucun "fil à la patte" qui pourrait justifier que votre centre économique est resté en France après votre départ physique. C'est aussi le moment de préparer la déclaration 2042-NR et les formulaires obligatoires liés à votre départ.</p>
         </div>
- 
+
       </div>
- 
+
       <div class="alert alert-amber rv">
         <div class="alert-label">
           <div class="alert-label-dot"></div>
@@ -267,16 +313,16 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <div class="alert-title">L'erreur du "je ferme après"</div>
         <p>La grande majorité des redressements post-départ concernent des entrepreneurs qui ont laissé leur société française "en vie" plusieurs mois après leur départ effectif, pensant la fermer tranquillement depuis l'étranger. Pour le fisc, chaque mois de gérance depuis l'étranger est une preuve que la direction effective — et donc la résidence fiscale — n'a jamais quitté la France.</p>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Profils ─── -->
       <h2 class="a-h2 rv">Dans quel profil vous reconnaissez-vous&nbsp;?</h2>
- 
+
       <p class="a-p rv">Trois archétypes concentrent l'essentiel des redressements observés. Identifiez votre situation — les erreurs associées sont systématiquement exploitées par l'administration.</p>
- 
+
       <div class="profile-cards">
- 
+
         <div class="profile-card rv d1">
           <div class="profile-ico" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -290,7 +336,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <p>Vous louez un appartement à l'étranger. Mais vous avez gardé votre SASU ouverte en France quelques mois "le temps de voir", ou 100% de vos clients sont restés français. Le fisc considère que votre <strong>centre d'intérêt économique n'a jamais bougé</strong> — peu importe l'adresse étrangère sur votre bail.</p>
           </div>
         </div>
- 
+
         <div class="profile-card rv d2">
           <div class="profile-ico" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -304,7 +350,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <p>Vous créez une LLC étrangère. Mais vos entrepôts ou votre compte Stripe sont restés attachés à une adresse française jusqu'à la dernière minute. Aux yeux de l'administration, vous gérez une <strong>société étrangère depuis la France de manière occulte</strong> — un montage qui justifie la requalification de l'ensemble des revenus.</p>
           </div>
         </div>
- 
+
         <div class="profile-card rv d3">
           <div class="profile-ico" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -317,9 +363,9 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <p>Vous encaissez vos plus-values quelques semaines seulement après votre arrivée dans le nouveau pays. L'administration considèrera que la <strong>création de valeur s'est faite sur le sol français</strong> avant votre départ effectif — et taxera l'intégralité de la plus-value comme si vous étiez encore résident.</p>
           </div>
         </div>
- 
+
       </div>
- 
+
       <div class="alert alert-green rv">
         <div class="alert-label">
           <div class="alert-label-dot"></div>
@@ -328,7 +374,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <div class="alert-title">Ce que fait l'entrepreneur qui s'en sort</div>
         <p>Il documente chaque étape de sa transition. Il a des preuves de la réalité de son départ : bail signé dans le pays d'accueil, comptes locaux ouverts, clients informés par écrit, société française liquidée dans les formes. En cas de contrôle, son dossier répond à chaque question avant qu'elle soit posée.</p>
       </div>
- 
+
       <!-- ─── CTA ─── -->
       <div class="article-cta rv">
         <div class="article-cta-inner">
@@ -347,10 +393,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </div>
         </div>
       </div>
- 
+
     </article>
   </div>
- 
+
   <!-- ══ NAV ARTICLES ══ -->
   <nav class="articles-nav" aria-label="Navigation entre les articles">
     <a href="index.html#articles" class="articles-nav-back">
@@ -366,7 +412,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       </svg>
     </a>
   </nav>
- 
+
   <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
     <div class="disc-i">
@@ -379,8 +425,8 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       <p class="disc-txt"><strong>Avertissement :</strong> Cet article est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision d'expatriation.</p>
     </div>
   </div>
- 
-  <!-- ── FOOTER ── -->
+
+  <!-- ── FOOTER — structure identique à l'accueil, zéro doublon ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -407,11 +453,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <li><a href="index.html">Accueil</a></li>
             <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
             <li><a href="vente.html">Le Framework — 39€</a></li>
-            <li><a href="a-propos.html">À Propos</a></li>
-            <li><a href="mentions-legales.html">Mentions Légales</a></li>
           </ul>
         </div>
       </div>
+      <!-- Une seule ligne de liens légaux — identique à l'accueil -->
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
@@ -422,12 +467,11 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       </div>
     </div>
   </footer>
- 
+
   <!-- ══ SCRIPTS ══ -->
   <script>
     "use strict";
- 
-    // Progress + nav
+
     const prog = document.getElementById('prog');
     const nav  = document.getElementById('nav');
     window.addEventListener('scroll', () => {
@@ -436,15 +480,14 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       prog.style.width = (s / h * 100).toFixed(2) + '%';
       nav.classList.toggle('solid', s > 24);
     }, { passive: true });
- 
-    // Reveal observer
+
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: .07, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
- 
+
     // Lecture estimée dynamique
     const body = document.querySelector('.article-body');
     if (body) {
@@ -454,6 +497,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       if (metaEl) metaEl.innerHTML = metaEl.innerHTML.replace(/\d+ min/, mins + ' min');
     }
   </script>
- 
+
 </body>
 </html>
