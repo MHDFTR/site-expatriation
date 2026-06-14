@@ -2,14 +2,23 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Avertissement (Disclaimer) — Expatriation Framework</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
- 
+
   <style>
+    /* ══════════════════════════════════════
+       RESET NUCLÉAIRE — avant tout le reste
+    ══════════════════════════════════════ */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden;
+    }
+
     :root {
       --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
       --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
@@ -25,40 +34,64 @@
       --sharp:cubic-bezier(.4,0,.2,1);
       --gutter:clamp(20px,4vw,48px);
       --max-w:1200px;
-      --content-w:680px;
+      --content-w:720px;
     }
- 
+
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
       font-family:var(--fb);background:var(--bg-1);color:var(--t0);
-      line-height:1.6;overflow-x:hidden;
+      line-height:1.6;
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      overflow-wrap:break-word;word-wrap:break-word;
     }
     a{color:inherit;text-decoration:none}
- 
+
     body::after{
       content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
- 
-    #prog{position:fixed;top:0;left:0;height:1px;width:0;z-index:9999;
+
+    /* Progress bar — fixed top:0, hors flux */
+    #prog{
+      position:fixed;top:0;left:0;width:100%;height:2px;z-index:10000;
+      margin:0 !important;padding:0 !important;
       background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
-      transition:width .08s linear}
- 
-    /* ── NAV ── */
+      transition:width .08s linear;
+    }
+
+    /* ══════════════════════════════════════
+       NAV — verrouillée, zéro "jour"
+    ══════════════════════════════════════ */
     .nav{
-      position:fixed;top:0;left:0;right:0;z-index:900;height:64px;
-      padding:0 var(--gutter);display:flex;align-items:center;justify-content:center;
+      position:fixed !important;
+      top:0 !important;
+      left:0 !important;
+      right:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      z-index:9999;
+      height:64px;
+      display:flex;align-items:center;justify-content:center;
       border-bottom:1px solid transparent;
+      background:rgba(6,9,18,0);
+      -webkit-transform:translate3d(0,0,0) !important;
+      transform:translate3d(0,0,0) !important;
+      will-change:transform;
       transition:background .45s var(--ease),border-color .45s;
     }
     .nav.solid{
       background:rgba(6,9,18,.92);
-      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      backdrop-filter:blur(22px) saturate(155%);
+      -webkit-backdrop-filter:blur(22px) saturate(155%);
       border-bottom-color:var(--br-0);
     }
-    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    /* padding horizontal sur nav-i, pas sur nav */
+    .nav-i{
+      width:100%;max-width:var(--max-w);
+      padding:0 var(--gutter);
+      display:flex;align-items:center;justify-content:space-between;
+    }
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
     .nav-logo:hover{opacity:.8}
     .nav-mark{
@@ -76,17 +109,18 @@
       border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
     }
     .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
- 
+
     /* ── REVEAL ── */
     .rv{opacity:0;transform:translateY(20px);transition:opacity .65s var(--slow),transform .65s var(--slow)}
     .rv.in{opacity:1;transform:translateY(0)}
     .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}
     .rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
- 
+
     /* ── PAGE HERO ── */
     .page-hero{
       padding:120px var(--gutter) 60px;
       position:relative;overflow:hidden;
+      margin-top:0 !important;
     }
     .page-hero::before{
       content:'';position:absolute;inset:0;
@@ -103,12 +137,16 @@
       background:radial-gradient(ellipse,rgba(196,146,74,.05) 0%,transparent 70%);
       filter:blur(40px);pointer-events:none;
     }
+    /* Conteneur centré — Fix lisibilité mobile et PC */
     .page-hero-inner{
-      max-width:var(--content-w);margin:0 auto;position:relative;z-index:1;
+      max-width:var(--content-w);
+      margin:0 auto;
+      position:relative;z-index:1;
+      width:100%;
     }
- 
+
     @keyframes up{to{opacity:1;transform:translateY(0)}}
- 
+
     .breadcrumb{
       display:flex;align-items:center;gap:10px;
       font-family:var(--fm);font-size:10px;color:var(--t2);
@@ -119,7 +157,7 @@
     .breadcrumb a:hover{color:var(--t1)}
     .breadcrumb-sep{color:var(--t3)}
     .breadcrumb-current{color:var(--gold-d)}
- 
+
     .page-eyebrow{
       display:inline-flex;align-items:center;gap:8px;
       font-family:var(--fm);font-size:10px;color:var(--amber);
@@ -130,29 +168,32 @@
       opacity:0;transform:translateY(10px);animation:up .55s var(--slow) .18s forwards;
     }
     .page-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--amber)}
- 
+
     .page-h1{
-      font-family:var(--fd);font-size:clamp(36px,5.5vw,56px);
+      font-family:var(--fd);font-size:clamp(34px,5.5vw,56px);
       font-weight:600;line-height:1.04;letter-spacing:-.025em;color:var(--t0);
       margin-bottom:20px;
       opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .28s forwards;
     }
- 
+
     .page-intro{
       font-family:var(--fd);font-size:clamp(15px,2vw,18px);
       font-weight:400;font-style:italic;color:var(--t1);
-      line-height:1.7;max-width:560px;
+      line-height:1.7;
       opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .4s forwards;
     }
- 
-    /* ── LAYOUT ── */
+
+    /* ── LAYOUT — centré, aéré, lisible ── */
     .page-layout{
       display:grid;
       grid-template-columns:1fr min(var(--content-w),100%) 1fr;
       padding:0 var(--gutter) 80px;
     }
-    .page-body{grid-column:2}
- 
+    .page-body{
+      grid-column:2;
+      min-width:0;
+    }
+
     /* ── Table des matières ── */
     .toc-card{
       background:var(--bg-2);border:1px solid var(--br-1);
@@ -175,11 +216,11 @@
       font-family:var(--fm);font-size:9.5px;color:var(--t3);
       letter-spacing:.08em;min-width:24px;
     }
- 
+
     /* ── Sections légales ── */
     .legal-section{margin-top:48px}
     .legal-section:first-of-type{margin-top:36px}
- 
+
     .ls-header{
       display:flex;align-items:center;gap:14px;
       margin-bottom:18px;padding-bottom:16px;
@@ -192,10 +233,10 @@
       border-radius:6px;padding:4px 10px;flex-shrink:0;
     }
     .ls-title{
-      font-family:var(--fd);font-size:clamp(20px,3vw,26px);font-weight:600;
+      font-family:var(--fd);font-size:clamp(19px,3vw,26px);font-weight:600;
       line-height:1.15;letter-spacing:-.01em;color:var(--t0);
     }
- 
+
     .ls-p{
       font-size:15px;font-weight:300;line-height:1.78;color:var(--t1);margin-bottom:18px;
     }
@@ -207,8 +248,7 @@
       transition:color .2s;
     }
     .ls-p a:hover{color:var(--gold)}
- 
-    /* Bloc de mise en évidence */
+
     .highlight-block{
       background:var(--bg-2);border:1px solid var(--br-1);
       border-left:3px solid var(--amber);
@@ -220,15 +260,14 @@
     }
     .highlight-block p strong{color:var(--t0);font-weight:500}
     .highlight-block p + p{margin-top:10px}
- 
-    /* Section séparateur */
+
     .section-sep{
       height:1px;
       background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);
       margin:48px 0;
     }
- 
-    /* ── Summary card — récapitulatif final ── */
+
+    /* ── Summary card ── */
     .summary-card{
       background:var(--bg-2);border:1px solid var(--br-1);
       border-radius:16px;padding:28px;margin-top:48px;
@@ -263,7 +302,7 @@
       font-family:var(--fm);font-size:11px;color:var(--amber);
       flex-shrink:0;margin-top:2px;opacity:.7;
     }
- 
+
     /* ── Back button ── */
     .back-row{margin-top:52px}
     .back-btn{
@@ -273,14 +312,14 @@
       transition:all .2s;
     }
     .back-btn:hover{color:var(--t1);border-color:var(--br-2)}
- 
+
     /* ── DISCLAIMER + FOOTER ── */
     .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter);margin-top:64px}
     .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
     .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
     .disc-txt strong{color:var(--t1);font-weight:500}
- 
+
     .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
     .footer-i{max-width:var(--max-w);margin:0 auto}
     .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
@@ -293,31 +332,51 @@
     .f-nav a:hover{color:var(--t0)}
     .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
+    /* f-legal — une seule ligne claire, identique à l'accueil */
     .f-legal{display:flex;align-items:center;gap:20px}
     .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
     .f-legal a:hover{color:var(--t1)}
- 
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
     @media(max-width:768px){
       :root{--gutter:20px}
+
+      /* Nav opaque, collée, zéro "jour" */
+      .nav{
+        background:rgba(6,9,18,.97) !important;
+        border-bottom-color:var(--br-0) !important;
+        -webkit-transform:translate3d(0,0,0) !important;
+        transform:translate3d(0,0,0) !important;
+      }
       .nav-links{display:none}
-      .page-layout{grid-template-columns:1fr;padding:0 var(--gutter) 60px}
+
+      .page-hero{padding:100px var(--gutter) 48px}
+
+      /* Layout — colonne unique pleine largeur */
+      .page-layout{
+        grid-template-columns:1fr;
+        padding:0 var(--gutter) 60px;
+      }
       .page-body{grid-column:1}
+
+      /* Footer */
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
       .f-legal{justify-content:center}
     }
   </style>
-  
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-P0CY674BQD');
 </script>
-  
+
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -335,12 +394,12 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-  
+
 </head>
 <body>
- 
+
   <div id="prog"></div>
- 
+
   <!-- ══ NAV ══ -->
   <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
@@ -355,39 +414,39 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       </ul>
     </div>
   </nav>
- 
+
   <!-- ══════════════════════════════════
        PAGE HERO
   ══════════════════════════════════ -->
   <header class="page-hero" role="banner">
     <div class="page-hero-inner">
- 
+
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
         <a href="index.html">Accueil</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span class="breadcrumb-current">Avertissement</span>
       </nav>
- 
+
       <div class="page-eyebrow">
         <div class="page-eyebrow-dot" aria-hidden="true"></div>
         Disclaimer · Limitation de responsabilité
       </div>
- 
+
       <h1 class="page-h1">Avertissement</h1>
- 
+
       <p class="page-intro">
         Ce document précise les conditions d'utilisation du site et du Framework. Sa lecture est indispensable avant tout usage du contenu publié.
       </p>
- 
+
     </div>
   </header>
- 
+
   <!-- ══════════════════════════════════
        CORPS
   ══════════════════════════════════ -->
   <div class="page-layout">
     <main class="page-body" role="main">
- 
+
       <!-- Table des matières -->
       <div class="toc-card rv" aria-label="Table des matières">
         <div class="toc-label">Sommaire</div>
@@ -418,89 +477,89 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </li>
         </ol>
       </div>
- 
+
       <!-- ─── Section 1 ─── -->
       <div class="legal-section rv" id="section-1">
         <div class="ls-header">
           <div class="ls-num" aria-label="Section 1">01</div>
           <h2 class="ls-title">Objectif éducatif et informatif</h2>
         </div>
- 
+
         <p class="ls-p">
           Le contenu proposé sur le site <strong>expatriation-framework.fr</strong>, ainsi que les documents, modèles et guides vendus (ci-après "le Framework"), sont fournis à des fins <strong>strictement éducatives et informatives</strong>.
         </p>
- 
+
         <p class="ls-p">
           L'auteur de ce site, Mehdi Fitour, n'est ni avocat, ni expert-comptable, ni conseiller fiscal diplômé. Le Framework est le résultat de recherches personnelles, d'expériences pratiques et de la compilation de données publiques, visant à aider les entrepreneurs dans leurs démarches d'expatriation.
         </p>
- 
+
         <div class="highlight-block">
           <p>Ce site a été conçu pour combler un manque documentaire réel : l'absence de feuille de route claire et accessible pour les entrepreneurs français envisageant une expatriation fiscale. Il ne prétend en aucun cas remplacer l'expertise d'un professionnel du droit ou de la fiscalité.</p>
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Section 2 ─── -->
       <div class="legal-section rv" id="section-2">
         <div class="ls-header">
           <div class="ls-num" aria-label="Section 2">02</div>
           <h2 class="ls-title">Absence de conseil juridique personnalisé</h2>
         </div>
- 
+
         <p class="ls-p">
           L'achat et l'utilisation du Framework ne créent en aucun cas une <strong>relation avocat-client</strong> ou conseiller-client. Les informations fournies ne constituent pas des conseils juridiques, fiscaux ou financiers personnalisés et ne doivent pas être interprétées comme tels.
         </p>
- 
+
         <p class="ls-p">
           La législation fiscale — notamment <strong>l'Article 4B du Code Général des Impôts français</strong> — est complexe et sujette à interprétation ainsi qu'à des évolutions fréquentes. Chaque situation patrimoniale et professionnelle étant unique, il est fortement recommandé à l'utilisateur de consulter un professionnel du droit (avocat fiscaliste ou notaire) pour valider l'application de ces stratégies à sa situation personnelle.
         </p>
- 
+
         <div class="highlight-block">
           <p><strong>Recommandation :</strong> Le Framework est conçu pour être utilisé <em>avant</em> une consultation professionnelle, non à la place. Son objectif est de vous permettre d'arriver préparé, avec un dossier structuré, afin d'optimiser le temps passé avec votre conseiller juridique.</p>
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Section 3 ─── -->
       <div class="legal-section rv" id="section-3">
         <div class="ls-header">
           <div class="ls-num" aria-label="Section 3">03</div>
           <h2 class="ls-title">Limitation de responsabilité</h2>
         </div>
- 
+
         <p class="ls-p">
           En utilisant ce site et en acquérant le Framework, l'utilisateur accepte la <strong>pleine responsabilité de ses actes</strong>. L'éditeur du site ne saurait être tenu responsable des conséquences directes ou indirectes, qu'elles soient financières, juridiques ou fiscales — notamment en cas de contrôle ou de redressement fiscal — résultant de l'utilisation, de la mauvaise utilisation ou de l'interprétation des informations contenues dans le Framework.
         </p>
- 
+
         <p class="ls-p">
           Les modèles de lettres et de documents sont fournis à titre d'exemple et doivent <strong>impérativement être adaptés</strong> par l'utilisateur à sa situation spécifique, idéalement avec le concours d'un professionnel qualifié.
         </p>
- 
+
         <div class="highlight-block">
           <p><strong>Important :</strong> Ce Framework ne saurait constituer un bouclier juridique en cas de contrôle fiscal. Son utilisation correcte réduit les risques d'erreurs grossières, mais ne garantit pas l'absence de redressement dans des situations complexes ou atypiques. Chaque dossier d'expatriation est unique.</p>
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Section 4 ─── -->
       <div class="legal-section rv" id="section-4">
         <div class="ls-header">
           <div class="ls-num" aria-label="Section 4">04</div>
           <h2 class="ls-title">Mise à jour des informations</h2>
         </div>
- 
+
         <p class="ls-p">
           Bien que nous nous efforcions de maintenir les informations à jour en fonction des <strong>dernières lois de finances et jurisprudences</strong>, nous ne garantissons pas l'exhaustivité, l'exactitude absolue ou la validité intemporelle du contenu fourni.
         </p>
- 
+
         <p class="ls-p">
           La fiscalité internationale évolue régulièrement. Des conventions fiscales peuvent être modifiées, des seuils révisés, et des jurisprudences inverser des pratiques établies. Il appartient à l'utilisateur de vérifier la validité des informations au moment de leur application, auprès de sources officielles (DGFiP, Legifrance, Bofip) ou d'un professionnel du droit.
         </p>
       </div>
- 
+
       <!-- ─── Récapitulatif ─── -->
       <div class="summary-card rv">
         <div class="summary-head">
@@ -538,7 +597,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </div>
         </div>
       </div>
- 
+
       <!-- Retour -->
       <div class="back-row rv">
         <a href="index.html" class="back-btn">
@@ -548,10 +607,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           Retour à l'accueil
         </a>
       </div>
- 
+
     </main>
   </div>
- 
+
   <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
     <div class="disc-i">
@@ -564,8 +623,8 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision.</p>
     </div>
   </div>
- 
-  <!-- ── FOOTER ── -->
+
+  <!-- ── FOOTER — structure identique à l'accueil ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -580,10 +639,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <div>
           <div class="f-nav-lbl">Méthodologie</div>
           <ul class="f-nav">
-            <li><a href="article-1-timing.html">01 · Chronologie &amp; Timing</a></li>
-            <li><a href="article-2-residence.html">02 · Critères de Résidence</a></li>
-            <li><a href="article-3-erreurs.html">03 · Erreurs Fréquentes</a></li>
-            <li><a href="article-4-preparation.html">04 · Préparation &amp; Experts</a></li>
+            <li><a href="article-1-timing.html">Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html">Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
           </ul>
         </div>
         <div>
@@ -593,22 +652,21 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
             <li><a href="vente.html">Le Framework — 39€</a></li>
             <li><a href="a-propos.html">À Propos</a></li>
-            <li><a href="avertissement.html" style="color:var(--gold-d)">Avertissement</a></li>
-            <li><a href="mentions-legales.html">Mentions Légales</a></li>
           </ul>
         </div>
       </div>
+      <!-- f-btm : une seule ligne de liens légaux, identique à l'accueil -->
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
           <a href="mentions-legales.html">Mentions Légales</a>
-          <a href="avertissement.html">Avertissement</a>
+          <a href="avertissement.html" style="color:var(--gold-d)">Avertissement</a>
           <a href="a-propos.html">À Propos</a>
         </nav>
       </div>
     </div>
   </footer>
- 
+
   <script>
     "use strict";
     const prog = document.getElementById('prog');
@@ -624,7 +682,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     }, { threshold: .07, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
   </script>
- 
+
 </body>
 </html>
- 
