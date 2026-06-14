@@ -2,14 +2,23 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>À Propos — Expatriation Framework</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
- 
+
   <style>
+    /* ══════════════════════════════════════
+       RESET NUCLÉAIRE — avant tout le reste
+    ══════════════════════════════════════ */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden;
+    }
+
     /* ══════════════════════════════════════
        TOKENS
     ══════════════════════════════════════ */
@@ -28,43 +37,65 @@
       --sharp:cubic-bezier(.4,0,.2,1);
       --gutter:clamp(20px,4vw,48px);
       --max-w:1200px;
-      --content-w:680px;
+      --content-w:720px;
     }
- 
+
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
       font-family:var(--fb);background:var(--bg-1);color:var(--t0);
-      line-height:1.6;overflow-x:hidden;
+      line-height:1.6;
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      overflow-wrap:break-word;word-wrap:break-word;
     }
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;border:none;background:none;font:inherit}
- 
+
     body::after{
       content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
- 
-    #prog{position:fixed;top:0;left:0;height:1px;width:0;z-index:9999;
+
+    /* Progress bar — position fixed top:0, hors flux */
+    #prog{
+      position:fixed;top:0;left:0;width:100%;height:2px;z-index:10000;
+      margin:0 !important;padding:0 !important;
       background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
-      transition:width .08s linear}
- 
+      transition:width .08s linear;
+    }
+
     /* ══════════════════════════════════════
-       NAV
+       NAV — verrouillée pixel-perfect
     ══════════════════════════════════════ */
     .nav{
-      position:fixed;top:0;left:0;right:0;z-index:900;height:64px;
-      padding:0 var(--gutter);display:flex;align-items:center;justify-content:center;
+      position:fixed !important;
+      top:0 !important;
+      left:0 !important;
+      right:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      z-index:9999;
+      height:64px;
+      display:flex;align-items:center;justify-content:center;
       border-bottom:1px solid transparent;
+      background:rgba(6,9,18,0);
+      -webkit-transform:translate3d(0,0,0) !important;
+      transform:translate3d(0,0,0) !important;
+      will-change:transform;
       transition:background .45s var(--ease),border-color .45s;
     }
     .nav.solid{
       background:rgba(6,9,18,.92);
-      backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);
+      backdrop-filter:blur(22px) saturate(155%);
+      -webkit-backdrop-filter:blur(22px) saturate(155%);
       border-bottom-color:var(--br-0);
     }
-    .nav-i{width:100%;max-width:var(--max-w);display:flex;align-items:center;justify-content:space-between}
+    /* padding horizontal sur nav-i, jamais sur .nav */
+    .nav-i{
+      width:100%;max-width:var(--max-w);
+      padding:0 var(--gutter);
+      display:flex;align-items:center;justify-content:space-between;
+    }
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
     .nav-logo:hover{opacity:.8}
     .nav-mark{
@@ -82,7 +113,7 @@
       border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
     }
     .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
- 
+
     /* ══════════════════════════════════════
        BOUTON
     ══════════════════════════════════════ */
@@ -99,7 +130,7 @@
     .btn-g:hover{border-color:var(--br-3);color:var(--t0);background:rgba(255,255,255,.025)}
     .btn-ic{transition:transform .2s var(--spring)}
     .btn:hover .btn-ic{transform:translateX(4px)}
- 
+
     /* ══════════════════════════════════════
        REVEAL
     ══════════════════════════════════════ */
@@ -107,13 +138,14 @@
     .rv.in{opacity:1;transform:translateY(0)}
     .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}
     .rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
- 
+
     /* ══════════════════════════════════════
        PAGE HERO
     ══════════════════════════════════════ */
     .page-hero{
       padding:120px var(--gutter) 64px;
       position:relative;overflow:hidden;
+      margin-top:0 !important;
     }
     .page-hero::before{
       content:'';position:absolute;inset:0;
@@ -130,12 +162,16 @@
       background:radial-gradient(ellipse,rgba(200,169,106,.055) 0%,transparent 70%);
       filter:blur(40px);pointer-events:none;
     }
+    /* Conteneur centré — Fix lisibilité mobile et PC */
     .page-hero-inner{
-      max-width:var(--content-w);margin:0 auto;position:relative;z-index:1;
+      max-width:var(--content-w);
+      margin:0 auto;
+      position:relative;z-index:1;
+      width:100%;
     }
- 
+
     @keyframes up{to{opacity:1;transform:translateY(0)}}
- 
+
     .breadcrumb{
       display:flex;align-items:center;gap:10px;
       font-family:var(--fm);font-size:10px;color:var(--t2);
@@ -146,7 +182,7 @@
     .breadcrumb a:hover{color:var(--t1)}
     .breadcrumb-sep{color:var(--t3)}
     .breadcrumb-current{color:var(--gold-d)}
- 
+
     .page-eyebrow{
       display:inline-flex;align-items:center;gap:8px;
       font-family:var(--fm);font-size:10px;color:var(--gold-d);
@@ -157,38 +193,41 @@
       opacity:0;transform:translateY(10px);animation:up .55s var(--slow) .18s forwards;
     }
     .page-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-d)}
- 
+
     .page-h1{
-      font-family:var(--fd);font-size:clamp(40px,6vw,64px);
+      font-family:var(--fd);font-size:clamp(36px,6vw,64px);
       font-weight:600;line-height:1.02;letter-spacing:-.03em;color:var(--t0);
       margin-bottom:20px;
       opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .28s forwards;
     }
     .page-h1 em{font-style:italic;font-weight:400;color:var(--gold-b)}
- 
+
     .page-intro{
-      font-family:var(--fd);font-size:clamp(16px,2.2vw,20px);
+      font-family:var(--fd);font-size:clamp(15px,2.2vw,20px);
       font-weight:400;font-style:italic;color:var(--t1);
       line-height:1.7;
       opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .4s forwards;
     }
- 
+
     /* ══════════════════════════════════════
-       LAYOUT PRINCIPAL
+       LAYOUT PRINCIPAL — centré, aéré
     ══════════════════════════════════════ */
     .page-layout{
       display:grid;
       grid-template-columns:1fr min(var(--content-w),100%) 1fr;
       padding:0 var(--gutter) 80px;
     }
-    .page-body{grid-column:2}
- 
+    .page-body{
+      grid-column:2;
+      min-width:0;
+    }
+
     .section-sep{
       height:1px;
       background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);
       margin:52px 0;
     }
- 
+
     /* ══════════════════════════════════════
        PROFIL AUTEUR
     ══════════════════════════════════════ */
@@ -213,17 +252,14 @@
       display:flex;align-items:center;justify-content:center;
       position:relative;overflow:hidden;
     }
-    /* Initiales stylisées */
     .author-avatar-txt{
       font-family:var(--fd);font-size:28px;font-weight:600;
       color:var(--gold-d);letter-spacing:-.02em;
     }
-    /* Subtle gradient overlay */
     .author-avatar::after{
       content:'';position:absolute;inset:0;
       background:radial-gradient(ellipse at 30% 30%,rgba(200,169,106,.1) 0%,transparent 70%);
     }
-    .author-info{}
     .author-name{
       font-family:var(--fd);font-size:26px;font-weight:600;
       letter-spacing:-.01em;color:var(--t0);margin-bottom:4px;
@@ -265,12 +301,12 @@
       font-family:var(--fm);font-size:9px;color:var(--t2);
       text-transform:uppercase;letter-spacing:.1em;line-height:1.4;
     }
- 
+
     /* ══════════════════════════════════════
        SECTIONS DE TEXTE
     ══════════════════════════════════════ */
     .s-h2{
-      font-family:var(--fd);font-size:clamp(24px,3.5vw,34px);font-weight:600;
+      font-family:var(--fd);font-size:clamp(22px,3.5vw,34px);font-weight:600;
       line-height:1.12;letter-spacing:-.015em;color:var(--t0);
       margin-top:52px;margin-bottom:18px;padding-bottom:16px;
       border-bottom:1px solid var(--br-0);
@@ -280,7 +316,7 @@
     .s-p em{font-style:italic}
     .s-p a{color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;transition:color .2s}
     .s-p a:hover{color:var(--gold)}
- 
+
     /* ══════════════════════════════════════
        PARCOURS TIMELINE
     ══════════════════════════════════════ */
@@ -288,7 +324,6 @@
       border-left:1px solid var(--br-2);padding-left:28px;
       margin:28px 0 36px;position:relative;
     }
-    /* gradient de ligne */
     .journey-track::before{
       content:'';position:absolute;left:-1px;top:12px;bottom:12px;
       width:1px;
@@ -320,9 +355,9 @@
     }
     .jt-desc{font-size:14px;font-weight:300;color:var(--t1);line-height:1.7;margin:0}
     .jt-desc strong{color:var(--t0);font-weight:500}
- 
+
     /* ══════════════════════════════════════
-       TRANSPARENCE MÉTHODE
+       MÉTHODE
     ══════════════════════════════════════ */
     .method-card{
       background:var(--bg-2);border:1px solid var(--br-1);
@@ -359,9 +394,9 @@
       line-height:1.6;letter-spacing:.02em;
     }
     .method-disclaimer strong{color:var(--t1);font-weight:700}
- 
+
     /* ══════════════════════════════════════
-       VALEURS — ce que n'est pas le framework
+       VALEURS
     ══════════════════════════════════════ */
     .values-grid{
       display:grid;grid-template-columns:1fr 1fr;gap:12px;
@@ -371,12 +406,8 @@
       padding:18px;border-radius:12px;border:1px solid;
       display:flex;align-items:flex-start;gap:12px;
     }
-    .value-yes{
-      background:rgba(74,168,122,.05);border-color:rgba(74,168,122,.15);
-    }
-    .value-no{
-      background:rgba(196,92,92,.05);border-color:rgba(196,92,92,.12);
-    }
+    .value-yes{background:rgba(74,168,122,.05);border-color:rgba(74,168,122,.15)}
+    .value-no{background:rgba(196,92,92,.05);border-color:rgba(196,92,92,.12)}
     .value-ico{
       width:22px;height:22px;flex-shrink:0;margin-top:2px;
       display:flex;align-items:center;justify-content:center;border-radius:5px;
@@ -389,7 +420,7 @@
     .value-text strong{font-weight:500}
     .value-yes .value-text strong{color:#C0D8C0}
     .value-no .value-text strong{color:#D0B0B0}
- 
+
     /* ══════════════════════════════════════
        CONTACT CARD
     ══════════════════════════════════════ */
@@ -399,7 +430,6 @@
       display:flex;align-items:center;justify-content:space-between;gap:24px;
       flex-wrap:wrap;
     }
-    .contact-left{}
     .contact-label{
       font-family:var(--fm);font-size:9.5px;color:var(--gold-d);
       text-transform:uppercase;letter-spacing:.13em;margin-bottom:6px;
@@ -417,7 +447,7 @@
       transition:color .2s;
     }
     .contact-email a:hover{color:var(--gold)}
- 
+
     /* ══════════════════════════════════════
        BACK BUTTON
     ══════════════════════════════════════ */
@@ -429,7 +459,7 @@
       transition:all .2s;
     }
     .back-btn:hover{color:var(--t1);border-color:var(--br-2)}
- 
+
     /* ══════════════════════════════════════
        DISCLAIMER + FOOTER
     ══════════════════════════════════════ */
@@ -438,7 +468,7 @@
     .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
     .disc-txt strong{color:var(--t1);font-weight:500}
- 
+
     .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
     .footer-i{max-width:var(--max-w);margin:0 auto}
     .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
@@ -451,42 +481,65 @@
     .f-nav a:hover{color:var(--t0)}
     .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
+    /* f-legal — une seule ligne propre, identique à l'accueil */
     .f-legal{display:flex;align-items:center;gap:20px}
     .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
     .f-legal a:hover{color:var(--t1)}
- 
+
     /* ══════════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════════ */
     @media(max-width:768px){
       :root{--gutter:20px}
+
+      /* Nav opaque, collée, zéro "jour" */
+      .nav{
+        background:rgba(6,9,18,.97) !important;
+        border-bottom-color:var(--br-0) !important;
+        -webkit-transform:translate3d(0,0,0) !important;
+        transform:translate3d(0,0,0) !important;
+      }
       .nav-links{display:none}
+
+      /* Hero */
+      .page-hero{padding:100px var(--gutter) 48px}
+
+      /* Layout — colonne unique */
       .page-layout{grid-template-columns:1fr;padding:0 var(--gutter) 60px}
       .page-body{grid-column:1}
+
+      /* Author card */
       .author-card-top{flex-direction:column;align-items:flex-start;gap:16px}
-      .author-card-stats{grid-template-columns:1fr;border-top:1px solid var(--br-0)}
+      .author-card-stats{grid-template-columns:1fr}
       .author-stat{border-right:none;border-bottom:1px solid var(--br-0);text-align:left;padding:16px 24px}
       .author-stat:last-child{border-bottom:none}
+
+      /* Values */
       .values-grid{grid-template-columns:1fr}
+
+      /* Contact */
       .contact-card{flex-direction:column;align-items:flex-start}
+
+      /* Timeline */
+      .journey-track{padding-left:22px}
+      .jt-item::before{left:-29px}
+
+      /* Footer */
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
       .f-legal{justify-content:center}
-      .journey-track{padding-left:22px}
-      .jt-item::before{left:-29px}
     }
   </style>
-  
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-P0CY674BQD');
 </script>
-  
+
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -504,12 +557,12 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-  
+
 </head>
 <body>
- 
+
   <div id="prog"></div>
- 
+
   <!-- ══ NAV ══ -->
   <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
@@ -524,41 +577,41 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       </ul>
     </div>
   </nav>
- 
+
   <!-- ══════════════════════════════════
        PAGE HERO
   ══════════════════════════════════ -->
   <header class="page-hero" role="banner">
     <div class="page-hero-inner">
- 
+
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
         <a href="index.html">Accueil</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span class="breadcrumb-current">À Propos</span>
       </nav>
- 
+
       <div class="page-eyebrow">
         <div class="page-eyebrow-dot" aria-hidden="true"></div>
         La personne derrière le Framework
       </div>
- 
+
       <h1 class="page-h1">
         Ni avocat,<br><em>ni expert-comptable.</em>
       </h1>
- 
+
       <p class="page-intro">
         Avant tout, un professionnel en pleine transition — comme vous. Ce Framework est l'outil que j'aurais voulu avoir quand j'ai commencé à chercher.
       </p>
- 
+
     </div>
   </header>
- 
+
   <!-- ══════════════════════════════════
        CORPS DE LA PAGE
   ══════════════════════════════════ -->
   <div class="page-layout">
     <main class="page-body" role="main">
- 
+
       <!-- ─── Carte auteur ─── -->
       <div class="author-card rv">
         <div class="author-card-top">
@@ -595,18 +648,18 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </div>
         </div>
       </div>
- 
+
       <!-- ─── Qui suis-je ─── -->
       <h2 class="s-h2 rv">Qui suis-je&nbsp;?</h2>
- 
+
       <p class="s-p rv">
         Je ne suis ni avocat fiscaliste, ni expert-comptable. Je suis avant tout un professionnel en pleine transition, tout comme vous l'êtes peut-être en lisant ces lignes.
       </p>
- 
+
       <p class="s-p rv">
         Actuellement salarié et installé en Suisse, j'ai déjà franchi la première étape de la sortie du système français. Aujourd'hui, je prépare ma prochaine expatriation à l'international d'ici un à deux ans. En anticipant ce futur départ, je me suis heurté au même mur que la majorité des entrepreneurs et indépendants : <strong>la complexité redoutable de l'administration fiscale française et le manque cruel de feuilles de route claires.</strong>
       </p>
- 
+
       <!-- Timeline parcours -->
       <div class="journey-track rv">
         <div class="jt-item highlight">
@@ -625,20 +678,20 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <p class="jt-desc">Le Framework que j'aurais voulu avoir dès le début. Pas un conseil juridique — un outil d'audit préparatoire pour arriver prêt face aux professionnels.</p>
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Pourquoi ce Framework ─── -->
       <h2 class="s-h2 rv">Pourquoi ce Framework&nbsp;?</h2>
- 
+
       <p class="s-p rv">
         En préparant mon propre dossier, j'ai constaté que l'information disponible en ligne était fragmentée, souvent contradictoire, ou noyée dans un jargon juridique incompréhensible. Les vidéos YouTube promettent des solutions miracles basées sur la "règle des 183 jours" — qui n'existe pas dans le droit fiscal français. Les forums regorgent de témoignages incomplets ou de situations non généralisables.
       </p>
- 
+
       <p class="s-p rv">
         Ce qui manquait, c'était <strong>un plan d'action chronologique pur</strong> : quoi faire, dans quel ordre, avec quels documents, pour éviter les drapeaux rouges évidents qui déclenchent les redressements. Pas un traité de droit fiscal — un outil opérationnel pour des entrepreneurs intelligents qui ont besoin de structure, pas de jargon.
       </p>
- 
+
       <!-- Ce que c'est / ce que ce n'est pas -->
       <div class="values-grid rv">
         <div class="value-item value-yes">
@@ -674,16 +727,16 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <p class="value-text"><strong>Pas un traité de droit fiscal</strong> ni une garantie de résultat pour votre situation spécifique</p>
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Méthode et transparence ─── -->
       <h2 class="s-h2 rv">La méthode — transparence totale</h2>
- 
+
       <p class="s-p rv">
         Plutôt que de prétendre avoir épluché personnellement des décennies de jurisprudence, j'ai fait le choix de la transparence et de l'efficacité moderne.
       </p>
- 
+
       <div class="method-card rv">
         <div class="method-head">
           <div class="method-ico" aria-hidden="true">
@@ -705,16 +758,16 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <strong>Limitation importante :</strong> La législation fiscale est complexe et sujette à évolution. Ce Framework est fourni à titre informatif et ne saurait se substituer à un conseil professionnel adapté à votre situation personnelle. Consultez toujours un avocat fiscaliste ou un expert-comptable qualifié avant de prendre toute décision d'expatriation.
         </div>
       </div>
- 
+
       <div class="section-sep rv" aria-hidden="true"></div>
- 
+
       <!-- ─── Contact ─── -->
       <h2 class="s-h2 rv">Une question&nbsp;?</h2>
- 
+
       <p class="s-p rv">
         Ce site est maintenu à titre personnel. Si vous avez une question sur le contenu du Framework ou une remarque sur son contenu, vous pouvez me contacter directement. Je réponds dans la mesure du possible, mais je ne fournis pas de conseil fiscal individualisé.
       </p>
- 
+
       <div class="contact-card rv">
         <div class="contact-left">
           <div class="contact-label">Contact direct</div>
@@ -734,7 +787,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </svg>
         </a>
       </div>
- 
+
       <!-- ─── Retour accueil ─── -->
       <div class="back-row rv">
         <a href="index.html" class="back-btn">
@@ -744,10 +797,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           Retour à l'accueil
         </a>
       </div>
- 
+
     </main>
   </div>
- 
+
   <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
     <div class="disc-i">
@@ -760,8 +813,8 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale. Il ne constitue pas un conseil juridique, fiscal ou patrimonial personnalisé. Consultez un professionnel qualifié avant toute décision.</p>
     </div>
   </div>
- 
-  <!-- ── FOOTER ── -->
+
+  <!-- ── FOOTER — structure identique à l'accueil ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -776,10 +829,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <div>
           <div class="f-nav-lbl">Méthodologie</div>
           <ul class="f-nav">
-            <li><a href="article-1-timing.html">01 · Chronologie &amp; Timing</a></li>
-            <li><a href="article-2-residence.html">02 · Critères de Résidence</a></li>
-            <li><a href="article-3-erreurs.html">03 · Erreurs Fréquentes</a></li>
-            <li><a href="article-4-preparation.html">04 · Préparation &amp; Experts</a></li>
+            <li><a href="article-1-timing.html">Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html">Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
           </ul>
         </div>
         <div>
@@ -788,36 +841,32 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <li><a href="index.html">Accueil</a></li>
             <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
             <li><a href="vente.html">Le Framework — 39€</a></li>
-            <li><a href="a-propos.html" style="color:var(--gold-d)">À Propos</a></li>
-            <li><a href="mentions-legales.html">Mentions Légales</a></li>
           </ul>
         </div>
       </div>
+      <!-- f-btm : une seule ligne de liens légaux, identique à l'accueil -->
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
           <a href="mentions-legales.html">Mentions Légales</a>
           <a href="avertissement.html">Avertissement</a>
-          <a href="a-propos.html">À Propos</a>
+          <a href="a-propos.html" style="color:var(--gold-d)">À Propos</a>
         </nav>
       </div>
     </div>
   </footer>
- 
+
   <!-- ══ SCRIPTS ══ -->
   <script>
     "use strict";
- 
     const prog = document.getElementById('prog');
     const nav  = document.getElementById('nav');
- 
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (s / h * 100).toFixed(2) + '%';
       nav.classList.toggle('solid', s > 24);
     }, { passive: true });
- 
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -825,7 +874,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     }, { threshold: .07, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
   </script>
- 
+
 </body>
 </html>
- 
