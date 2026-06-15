@@ -1,9 +1,11 @@
+Voici le code que Claude m'a rendu :
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Mentions Légales — Expatriation Framework</title>
+  <title>Les 3 critères de requalification fiscale — Expatriation Framework</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,19 +13,18 @@
 
   <style>
     /* ══════════════════════════════════════
-       RESET NUCLÉAIRE — avant tout le reste
+       RESET NUCLÉAIRE — PRIORITÉ ABSOLUE
     ══════════════════════════════════════ */
-    html, body {
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-x: hidden;
-    }
+    html, body { margin: 0 !important; padding: 0 !important; overflow-x: hidden; }
+    body { overflow-wrap: break-word; word-wrap: break-word; }
 
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
     :root {
       --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
       --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
       --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
-      --blue:#3B6FD4; --blue-d:#2A5099;
       --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
       --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
       --fd:'Cormorant Garant',serif;
@@ -35,27 +36,35 @@
       --sharp:cubic-bezier(.4,0,.2,1);
       --gutter:clamp(20px,4vw,48px);
       --max-w:1200px;
-      --content-w:720px;
+      --article-w:680px;
     }
 
+    /* ══════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════ */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
       font-family:var(--fb);background:var(--bg-1);color:var(--t0);
-      line-height:1.6;
+      line-height:1.6;overflow-x:hidden;
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-      overflow-wrap:break-word;word-wrap:break-word;
     }
     a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font:inherit}
 
+    /* ══════════════════════════════════════
+       GRAIN OVERLAY
+    ══════════════════════════════════════ */
     body::after{
       content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* Progress bar — fixed top:0, hors flux, aucun décalage */
+    /* ══════════════════════════════════════
+       PROGRESS BAR — verrouillée top:0, hors flux
+    ══════════════════════════════════════ */
     #prog{
-      position:fixed;top:0;left:0;width:100%;height:2px;z-index:10000;
+      position:fixed;top:0;left:0;width:0;height:2px;z-index:10000;
       margin:0 !important;padding:0 !important;
       background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
       transition:width .08s linear;
@@ -93,7 +102,10 @@
       padding:0 var(--gutter);
       display:flex;align-items:center;justify-content:space-between;
     }
-    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
+    .nav-logo{
+      display:flex;align-items:center;gap:10px;
+      font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s;
+    }
     .nav-logo:hover{opacity:.8}
     .nav-mark{
       width:30px;height:30px;border-radius:7px;
@@ -107,44 +119,71 @@
     .nav-cta{
       font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;
       background:rgba(200,169,106,.08);color:var(--gold);
-      border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
+      border:1px solid rgba(200,169,106,.2);
+      transition:background .2s,border-color .2s;
     }
-    .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
+    .nav-cta:hover{
+      background:rgba(200,169,106,.15);
+      border-color:rgba(200,169,106,.35);
+      color:var(--gold);
+    }
 
-    /* ── REVEAL ── */
-    .rv{opacity:0;transform:translateY(20px);transition:opacity .65s var(--slow),transform .65s var(--slow)}
+    /* ══════════════════════════════════════
+       BOUTONS
+    ══════════════════════════════════════ */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;
+      border-radius:10px;cursor:pointer;transition:all .22s var(--sharp);
+      white-space:nowrap;border:none;outline:none;text-decoration:none;
+    }
+    .btn-p{padding:13px 28px;background:var(--gold);color:#08080f;font-weight:600}
+    .btn-p:hover{
+      background:var(--gold-b);transform:translateY(-2px);
+      box-shadow:0 0 32px rgba(200,169,106,.2),0 0 12px rgba(200,169,106,.12);
+      color:#08080f;
+    }
+    .btn-p:active{transform:translateY(0)}
+    .btn-g{padding:12px 22px;background:transparent;color:var(--t1);border:1px solid var(--br-2)}
+    .btn-g:hover{border-color:var(--br-3);color:var(--t0);background:rgba(255,255,255,.025)}
+    .btn-ic{transition:transform .2s var(--spring)}
+    .btn:hover .btn-ic{transform:translateX(4px)}
+
+    /* ══════════════════════════════════════
+       REVEAL ON SCROLL
+    ══════════════════════════════════════ */
+    .rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--slow),transform .7s var(--slow)}
     .rv.in{opacity:1;transform:translateY(0)}
-    .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}
-    .rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+    .rv.d1{transition-delay:.1s}
+    .rv.d2{transition-delay:.2s}
+    .rv.d3{transition-delay:.3s}
+    .rv.d4{transition-delay:.4s}
 
-    /* ── PAGE HERO ── */
-    .page-hero{
-      padding:120px var(--gutter) 60px;
+    /* ══════════════════════════════════════
+       ARTICLE HERO
+    ══════════════════════════════════════ */
+    .article-hero{
+      padding:120px var(--gutter) 64px;
       position:relative;overflow:hidden;
-      margin-top:0 !important;
     }
-    .page-hero::before{
+    .article-hero::before{
       content:'';position:absolute;inset:0;
-      background-image:linear-gradient(rgba(24,32,51,.2) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(24,32,51,.2) 1px,transparent 1px);
+      background-image:
+        linear-gradient(rgba(24,32,51,.22) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(24,32,51,.22) 1px,transparent 1px);
       background-size:64px 64px;
-      -webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,black 20%,transparent 80%);
-      mask-image:radial-gradient(ellipse 70% 85% at 50% 0%,black 20%,transparent 80%);
+      -webkit-mask-image:radial-gradient(ellipse 70% 90% at 50% 0%,black 20%,transparent 80%);
+      mask-image:radial-gradient(ellipse 70% 90% at 50% 0%,black 20%,transparent 80%);
       pointer-events:none;
     }
-    .page-hero::after{
-      content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
-      width:480px;height:320px;border-radius:50%;
-      background:radial-gradient(ellipse,rgba(59,111,212,.05) 0%,transparent 70%);
+    .article-hero::after{
+      content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+      width:600px;height:400px;border-radius:50%;
+      background:radial-gradient(ellipse,rgba(200,169,106,.06) 0%,transparent 70%);
       filter:blur(40px);pointer-events:none;
     }
-    /* Conteneur centré — Fix lisibilité sur mobile et PC */
-    .page-hero-inner{
-      max-width:var(--content-w);
-      margin:0 auto;
-      position:relative;z-index:1;
-      padding:0;
-      width:100%;
+    .article-hero-inner{
+      max-width:var(--article-w);margin:0 auto;position:relative;z-index:1;
     }
 
     @keyframes up{to{opacity:1;transform:translateY(0)}}
@@ -152,198 +191,290 @@
     .breadcrumb{
       display:flex;align-items:center;gap:10px;
       font-family:var(--fm);font-size:10px;color:var(--t2);
-      letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;
-      opacity:0;transform:translateY(10px);animation:up .5s var(--slow) .1s forwards;
+      letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;
+      opacity:0;transform:translateY(10px);
+      animation:up .5s var(--slow) .1s forwards;
     }
     .breadcrumb a{color:var(--t2);transition:color .2s}
     .breadcrumb a:hover{color:var(--t1)}
     .breadcrumb-sep{color:var(--t3)}
     .breadcrumb-current{color:var(--gold-d)}
 
-    .page-eyebrow{
+    .article-tag{
       display:inline-flex;align-items:center;gap:8px;
-      font-family:var(--fm);font-size:10px;color:var(--blue);
+      font-family:var(--fm);font-size:10px;color:var(--gold-d);
       text-transform:uppercase;letter-spacing:.14em;
       padding:5px 12px 5px 10px;border-radius:100px;
-      background:rgba(59,111,212,.07);border:1px solid rgba(59,111,212,.18);
+      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.18);
       margin-bottom:22px;
-      opacity:0;transform:translateY(10px);animation:up .55s var(--slow) .18s forwards;
+      opacity:0;transform:translateY(10px);
+      animation:up .55s var(--slow) .18s forwards;
     }
-    .page-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--blue)}
+    .article-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--gold-d)}
 
-    .page-h1{
-      font-family:var(--fd);font-size:clamp(34px,5.5vw,56px);
+    .article-h1{
+      font-family:var(--fd);font-size:clamp(34px,5.5vw,58px);
       font-weight:600;line-height:1.04;letter-spacing:-.025em;color:var(--t0);
-      margin-bottom:20px;
-      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .28s forwards;
+      margin-bottom:24px;
+      opacity:0;transform:translateY(20px);
+      animation:up .75s var(--slow) .28s forwards;
     }
-
-    .page-intro{
-      font-family:var(--fd);font-size:clamp(15px,2vw,18px);
+    .article-intro{
+      font-family:var(--fd);font-size:clamp(16px,2.2vw,20px);
       font-weight:400;font-style:italic;color:var(--t1);
-      line-height:1.7;
-      opacity:0;transform:translateY(20px);animation:up .75s var(--slow) .4s forwards;
+      line-height:1.7;margin-bottom:32px;
+      opacity:0;transform:translateY(20px);
+      animation:up .75s var(--slow) .4s forwards;
     }
-
-    .date-badge{
-      display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-      font-family:var(--fm);font-size:10px;color:var(--t3);
+    .article-meta{
+      display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+      padding-top:24px;border-top:1px solid var(--br-0);
+      opacity:0;transform:translateY(10px);
+      animation:up .6s var(--slow) .52s forwards;
+    }
+    .meta-item{
+      display:flex;align-items:center;gap:7px;
+      font-family:var(--fm);font-size:10px;color:var(--t2);
       letter-spacing:.1em;text-transform:uppercase;
-      opacity:0;transform:translateY(10px);animation:up .5s var(--slow) .52s forwards;
     }
-    .date-badge-line{width:20px;height:1px;background:var(--t3)}
+    .meta-item svg{opacity:.6}
 
-    /* ── LAYOUT — centré, aéré, lisible ── */
-    .page-layout{
+    /* ══════════════════════════════════════
+       ARTICLE LAYOUT & TYPOGRAPHIE
+    ══════════════════════════════════════ */
+    .article-layout{
       display:grid;
-      grid-template-columns:1fr min(var(--content-w),100%) 1fr;
+      grid-template-columns:1fr min(var(--article-w),100%) 1fr;
       padding:0 var(--gutter) 80px;
     }
-    .page-body{
-      grid-column:2;
-      min-width:0;
-    }
+    .article-body{grid-column:2}
 
-    /* ── TOC ── */
-    .toc-card{
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:14px;padding:22px 24px;margin-bottom:48px;
-    }
-    .toc-label{
-      font-family:var(--fm);font-size:9.5px;color:var(--t3);
-      text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px;
-      display:flex;align-items:center;gap:8px;
-    }
-    .toc-label::after{content:'';flex:1;height:1px;background:var(--br-0)}
-    .toc-list{list-style:none;display:flex;flex-direction:column;gap:7px}
-    .toc-list li a{
-      display:flex;align-items:center;gap:10px;
-      font-size:13.5px;font-weight:300;color:var(--t2);
-      transition:color .2s;padding:4px 0;
-    }
-    .toc-list li a:hover{color:var(--t1)}
-    .toc-num{
-      font-family:var(--fm);font-size:9.5px;color:var(--t3);
-      letter-spacing:.08em;min-width:24px;
-    }
-
-    /* ── LEGAL SECTIONS ── */
-    .legal-section{margin-top:52px}
-    .ls-header{
-      display:flex;align-items:center;gap:14px;
-      margin-bottom:20px;padding-bottom:16px;
+    .a-h2{
+      font-family:var(--fd);font-size:clamp(24px,3.5vw,34px);font-weight:600;
+      line-height:1.12;letter-spacing:-.015em;color:var(--t0);
+      margin-top:56px;margin-bottom:18px;padding-bottom:16px;
       border-bottom:1px solid var(--br-0);
     }
-    .ls-num{
-      font-family:var(--fm);font-size:11px;font-weight:700;
-      color:var(--blue);letter-spacing:.08em;
-      background:rgba(59,111,212,.07);border:1px solid rgba(59,111,212,.15);
-      border-radius:6px;padding:4px 10px;flex-shrink:0;
+    .a-p{font-size:15.5px;font-weight:300;line-height:1.8;color:var(--t1);margin-bottom:22px}
+    .a-p strong{color:var(--t0);font-weight:500}
+    .a-p em{font-style:italic}
+    .a-ul{list-style:none;padding:0;margin-bottom:24px}
+    .a-ul li{
+      font-size:15.5px;font-weight:300;line-height:1.75;color:var(--t1);
+      margin-bottom:10px;padding-left:22px;position:relative;
     }
-    .ls-title{
-      font-family:var(--fd);font-size:clamp(19px,3vw,26px);font-weight:600;
-      line-height:1.15;letter-spacing:-.01em;color:var(--t0);
-    }
-    .ls-p{
-      font-size:15px;font-weight:300;line-height:1.78;color:var(--t1);margin-bottom:18px;
-    }
-    .ls-p:last-child{margin-bottom:0}
-    .ls-p strong{color:var(--t0);font-weight:500}
-    .ls-p em{font-style:italic}
-    .ls-p a{
-      color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;
-      transition:color .2s;
-    }
-    .ls-p a:hover{color:var(--gold)}
-
-    .info-block{
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:12px;padding:20px 22px;margin:20px 0;
-    }
-    .info-row{
-      display:flex;align-items:flex-start;gap:0;
-      padding:10px 0;border-bottom:1px solid var(--br-0);
-    }
-    .info-row:first-child{padding-top:0}
-    .info-row:last-child{border-bottom:none;padding-bottom:0}
-    .info-key{
-      font-family:var(--fm);font-size:10px;color:var(--t2);
-      text-transform:uppercase;letter-spacing:.1em;
-      min-width:180px;flex-shrink:0;padding-top:2px;
-    }
-    .info-val{
-      font-size:14px;font-weight:300;color:var(--t1);line-height:1.55;min-width:0;
-    }
-    .info-val strong{color:var(--t0);font-weight:500}
-    .info-val a{
-      color:var(--gold-d);text-decoration:underline;text-underline-offset:3px;
-      transition:color .2s;
-    }
-    .info-val a:hover{color:var(--gold)}
-
-    .highlight-block{
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-left:3px solid var(--blue);
-      border-radius:0 10px 10px 0;
-      padding:18px 20px;margin:22px 0;
-    }
-    .highlight-block p{
-      font-size:14px;font-weight:300;line-height:1.72;color:var(--t1);margin:0;
-    }
-    .highlight-block p + p{margin-top:10px}
-    .highlight-block strong{color:var(--t0);font-weight:500}
+    .a-ul li::before{content:'—';position:absolute;left:0;color:var(--gold-d);font-size:13px;top:3px}
+    .a-ul li strong{color:var(--t0);font-weight:500}
 
     .section-sep{
       height:1px;
       background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);
-      margin:48px 0;
+      margin:52px 0;
     }
 
-    .rights-grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:10px;
-      margin:22px 0;
+    /* ══════════════════════════════════════
+       ALERT BOXES
+    ══════════════════════════════════════ */
+    .alert{
+      border-radius:12px;padding:24px 26px 24px 22px;
+      border-left:3px solid;margin:32px 0;
+      position:relative;overflow:hidden;
     }
-    .right-item{
+    .alert-label{
+      font-family:var(--fm);font-size:10px;font-weight:700;
+      text-transform:uppercase;letter-spacing:.12em;
+      margin-bottom:10px;display:flex;align-items:center;gap:8px;
+    }
+    .alert-label-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+    .alert-title{
+      font-family:var(--fd);font-size:18px;font-weight:600;
+      line-height:1.2;margin-bottom:12px;
+    }
+    .alert p{font-size:14px;font-weight:300;line-height:1.72;margin:0}
+    .alert p+p{margin-top:10px}
+    .alert strong{font-weight:500}
+    .alert em{font-style:italic}
+
+    .alert-red{border-color:var(--red);background:rgba(196,92,92,.06)}
+    .alert-red .alert-label{color:var(--red)}
+    .alert-red .alert-title{color:#D98080}
+    .alert-red p{color:#B8A0A0}
+
+    .alert-amber{border-color:var(--amber);background:rgba(196,146,74,.06)}
+    .alert-amber .alert-label{color:var(--amber)}
+    .alert-amber .alert-title{color:#D4A870}
+    .alert-amber p{color:#B8AA98}
+
+    .alert-green{border-color:var(--green);background:rgba(74,168,122,.06)}
+    .alert-green .alert-label{color:var(--green)}
+    .alert-green .alert-title{color:#72C49A}
+    .alert-green p{color:#A0BEA8}
+    .alert-green strong{color:#A0D8BC}
+
+    .alert-gold{border-color:var(--gold-d);background:rgba(200,169,106,.05)}
+    .alert-gold .alert-label{color:var(--gold-d)}
+    .alert-gold .alert-title{color:var(--gold)}
+    .alert-gold p{color:var(--t1)}
+
+    /* ══════════════════════════════════════
+       CASE STUDY
+    ══════════════════════════════════════ */
+    .case-study{
       background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:10px;padding:16px 18px;
-      display:flex;align-items:flex-start;gap:12px;
-      transition:border-color .25s;
+      border-radius:14px;padding:28px 28px 28px 26px;
+      margin:32px 0;position:relative;overflow:hidden;
     }
-    .right-item:hover{border-color:var(--br-2)}
-    .right-ico{
-      width:30px;height:30px;border-radius:7px;flex-shrink:0;
-      background:rgba(59,111,212,.07);border:1px solid rgba(59,111,212,.14);
-      display:flex;align-items:center;justify-content:center;
+    .case-study::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,var(--amber),rgba(196,146,74,.2));
+      border-radius:3px 0 0 3px;
     }
-    .right-title{font-size:13px;font-weight:500;color:var(--t0);margin-bottom:3px;line-height:1.3}
-    .right-desc{font-size:12px;font-weight:300;color:var(--t2);line-height:1.5}
+    .case-study-label{
+      font-family:var(--fm);font-size:10px;color:var(--amber);
+      text-transform:uppercase;letter-spacing:.13em;
+      display:flex;align-items:center;gap:8px;margin-bottom:12px;
+    }
+    .case-study-label-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+    .case-study h4{
+      font-family:var(--fd);font-size:19px;font-weight:600;
+      color:var(--t0);margin-bottom:10px;line-height:1.25;
+    }
+    .case-study p{font-size:14px;font-weight:300;color:var(--t1);line-height:1.72;margin:0}
+    .case-study p+p{margin-top:10px}
+    .case-study p strong{color:var(--t0);font-weight:500}
 
-    .back-row{margin-top:52px}
-    .back-btn{
+    /* ══════════════════════════════════════
+       ARTICLE CTA
+    ══════════════════════════════════════ */
+    .article-cta{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:24px;padding:48px 40px;margin-top:64px;
+      text-align:center;position:relative;overflow:hidden;
+    }
+    .article-cta::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold-d) 35%,var(--gold) 50%,var(--gold-d) 65%,transparent);
+      opacity:.6;
+    }
+    .article-cta::after{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 55% at 50% 0%,rgba(200,169,106,.045) 0%,transparent 70%);
+    }
+    .article-cta-inner{position:relative;z-index:1}
+    .article-cta h3{
+      font-family:var(--fd);font-size:clamp(22px,3.5vw,32px);font-weight:600;
+      color:var(--t0);margin-bottom:14px;line-height:1.12;
+    }
+    .article-cta p{
+      font-size:14.5px;font-weight:300;color:var(--t1);
+      line-height:1.72;max-width:460px;margin:0 auto 28px;
+    }
+    .cta-badges{
+      display:flex;align-items:center;justify-content:center;gap:12px;
+      flex-wrap:wrap;margin-top:16px;
+    }
+    .cta-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      font-family:var(--fm);font-size:9.5px;color:var(--green);
+      background:rgba(74,168,122,.08);border:1px solid rgba(74,168,122,.18);
+      padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.1em;
+    }
+    .cta-badge-dot{width:4px;height:4px;border-radius:50%;background:currentColor}
+
+    /* ══════════════════════════════════════
+       NAVIGATION INTER-ARTICLES
+    ══════════════════════════════════════ */
+    .articles-nav{
+      max-width:var(--article-w);margin:48px auto 0;
+      padding:0 var(--gutter);
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      flex-wrap:wrap;
+    }
+    .articles-nav-back{
       display:inline-flex;align-items:center;gap:8px;
       font-size:13px;color:var(--t2);padding:10px 16px;
       border-radius:8px;border:1px solid var(--br-1);transition:all .2s;
     }
-    .back-btn:hover{color:var(--t1);border-color:var(--br-2)}
+    .articles-nav-back:hover{color:var(--t1);border-color:var(--br-2)}
+    .articles-nav-next{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;color:var(--t1);padding:10px 16px;
+      border-radius:8px;border:1px solid var(--br-1);
+      background:var(--bg-2);transition:all .2s;
+    }
+    .articles-nav-next:hover{color:var(--t0);border-color:var(--br-2)}
+    .nav-next-ic, .nav-ic{transition:transform .2s var(--spring)}
+    .articles-nav-next:hover .nav-next-ic,
+    .articles-nav-next:hover .nav-ic{transform:translateX(3px)}
+    .articles-nav-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:500;color:var(--gold);padding:10px 18px;
+      border-radius:8px;border:1px solid rgba(200,169,106,.22);
+      background:rgba(200,169,106,.07);transition:all .2s;
+    }
+    .articles-nav-cta:hover{
+      background:rgba(200,169,106,.13);
+      border-color:rgba(200,169,106,.35);
+      color:var(--gold-b);
+    }
+    .articles-nav-cta:hover .nav-ic{transform:translateX(3px)}
 
-    /* ── DISCLAIMER + FOOTER ── */
-    .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter);margin-top:64px}
-    .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
-    .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    /* ══════════════════════════════════════
+       DISCLAIMER STRIP
+    ══════════════════════════════════════ */
+    .disc-strip{
+      background:var(--bg-0);border-top:1px solid var(--br-0);
+      padding:10px var(--gutter);margin-top:64px;
+    }
+    .disc-i{
+      max-width:var(--max-w);margin:0 auto;
+      display:flex;align-items:flex-start;gap:14px;padding:12px 0;
+    }
+    .disc-ico{
+      width:30px;height:30px;border-radius:6px;
+      background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
     .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
     .disc-txt strong{color:var(--t1);font-weight:500}
 
-    .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    .footer{
+      border-top:1px solid var(--br-0);
+      padding:60px var(--gutter) 36px;
+      background:var(--bg-0);
+    }
     .footer-i{max-width:var(--max-w);margin:0 auto}
-    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
-    .f-logo-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px}
-    .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:14px;line-height:1.5}
-    .f-disc-box{font-size:11.5px;color:var(--t2);line-height:1.6;padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0)}
-    .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
+    .f-grid{
+      display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;
+      padding-bottom:44px;border-bottom:1px solid var(--br-0);
+    }
+    .f-logo-row{
+      display:flex;align-items:center;gap:10px;
+      font-size:14px;font-weight:600;margin-bottom:14px;
+    }
+    .f-tag{
+      font-family:var(--fd);font-size:15px;font-style:italic;
+      color:var(--t1);margin-bottom:14px;line-height:1.5;
+    }
+    .f-disc{
+      font-size:11.5px;color:var(--t2);line-height:1.6;
+      padding:12px 13px;border-radius:10px;
+      background:rgba(255,255,255,.014);border:1px solid var(--br-0);
+    }
+    .f-nav-lbl{
+      font-family:var(--fm);font-size:10px;text-transform:uppercase;
+      letter-spacing:.14em;color:var(--t3);margin-bottom:14px;
+    }
     .f-nav{list-style:none;display:flex;flex-direction:column;gap:10px}
     .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
     .f-nav a:hover{color:var(--t0)}
-    .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .f-btm{
+      padding-top:28px;display:flex;align-items:center;
+      justify-content:space-between;gap:16px;flex-wrap:wrap;
+    }
     .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
     /* f-legal — une seule ligne propre, identique à la page d'accueil */
     .f-legal{display:flex;align-items:center;gap:20px}
@@ -351,12 +482,12 @@
     .f-legal a:hover{color:var(--t1)}
 
     /* ══════════════════════════════════════
-       RESPONSIVE
+       RESPONSIVE GLOBAL
     ══════════════════════════════════════ */
     @media(max-width:768px){
       :root{--gutter:20px}
 
-      /* Nav opaque, collée, zéro "jour" */
+      /* Nav opaque, collée, zéro "jour" sur mobile */
       .nav{
         background:rgba(6,9,18,.97) !important;
         border-bottom-color:var(--br-0) !important;
@@ -365,28 +496,92 @@
       }
       .nav-links{display:none}
 
-      /* Hero */
-      .page-hero{padding:100px var(--gutter) 48px}
-
-      /* Layout — colonne unique pleine largeur */
-      .page-layout{
-        grid-template-columns:1fr;
-        padding:0 var(--gutter) 60px;
-      }
-      .page-body{grid-column:1}
-
-      /* Info block — labels plus courts */
-      .info-key{min-width:120px;font-size:9px}
-      .info-row{flex-wrap:wrap;gap:4px}
-      .info-val{min-width:0;width:100%}
-
-      /* Droits RGPD — 1 colonne */
-      .rights-grid{grid-template-columns:1fr}
-
-      /* Footer */
+      .article-layout{grid-template-columns:1fr;padding:0 var(--gutter) 60px}
+      .article-body{grid-column:1}
+      .article-cta{padding:32px 22px}
+      .articles-nav{flex-direction:column;align-items:stretch}
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
       .f-legal{justify-content:center}
+    }
+
+    /* ══════════════════════════════════════
+       CRITERIA CARDS — spécifique article 2
+    ══════════════════════════════════════ */
+    .criteria-stack{
+      display:flex;flex-direction:column;gap:14px;
+      margin:32px 0;
+    }
+
+    .crit-card{
+      background:var(--bg-2);border:1px solid var(--br-1);
+      border-radius:16px;padding:0;overflow:hidden;
+      transition:border-color .35s,transform .35s var(--slow),box-shadow .35s;
+      position:relative;
+    }
+    .crit-card:hover{
+      border-color:var(--br-3);
+      transform:translateX(4px);
+      box-shadow:0 6px 32px rgba(0,0,0,.5);
+    }
+    .crit-card::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,var(--gold) 0%,var(--gold-d) 60%,rgba(200,169,106,.1) 100%);
+      border-radius:3px 0 0 3px;
+      opacity:.7;
+      transition:opacity .3s;
+    }
+    .crit-card:hover::before{opacity:1}
+
+    .crit-card-inner{padding:28px 28px 28px 32px}
+
+    .crit-header{
+      display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;
+    }
+    .crit-num{
+      font-family:var(--fm);font-size:11px;font-weight:700;
+      color:var(--gold-d);letter-spacing:.1em;
+      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.15);
+      border-radius:6px;padding:4px 9px;flex-shrink:0;margin-top:3px;
+      transition:background .3s,border-color .3s;
+    }
+    .crit-card:hover .crit-num{background:rgba(200,169,106,.13);border-color:rgba(200,169,106,.28)}
+
+    .crit-overline{
+      font-family:var(--fm);font-size:9.5px;color:var(--t2);
+      text-transform:uppercase;letter-spacing:.13em;margin-bottom:5px;
+    }
+    .crit-title{
+      font-family:var(--fd);font-size:22px;font-weight:600;
+      color:var(--t0);line-height:1.2;
+    }
+
+    .crit-body{font-size:14px;font-weight:300;color:var(--t1);line-height:1.72}
+    .crit-body strong{color:var(--t0);font-weight:500}
+
+    .crit-danger{
+      display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+      font-family:var(--fm);font-size:9.5px;color:var(--red);
+      background:rgba(196,92,92,.07);border:1px solid rgba(196,92,92,.18);
+      padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.1em;
+    }
+    .crit-danger-dot{width:4px;height:4px;border-radius:50%;background:currentColor}
+
+    .crit-note{
+      background:var(--bg-3);border-top:1px solid var(--br-0);
+      padding:14px 32px;display:flex;align-items:flex-start;gap:10px;
+    }
+    .crit-note-ico{flex-shrink:0;margin-top:2px;opacity:.5}
+    .crit-note p{
+      font-size:12.5px;font-weight:300;color:var(--t2);line-height:1.6;margin:0;font-style:italic;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE — surcharges article 2
+    ══════════════════════════════════════ */
+    @media(max-width:768px){
+      .crit-card-inner{padding:22px 22px 22px 26px}
+      .crit-note{padding:12px 22px 12px 26px}
     }
   </style>
 
@@ -430,6 +625,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         Expatriation Framework
       </a>
       <ul class="nav-links" role="list">
+        <li><a href="index.html#articles">Articles</a></li>
         <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
         <li><a href="a-propos.html">À Propos</a></li>
         <li><a href="vente.html" class="nav-cta">Le Framework — 39€</a></li>
@@ -438,302 +634,266 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   </nav>
 
   <!-- ══════════════════════════════════
-       PAGE HERO
+       ARTICLE HERO
   ══════════════════════════════════ -->
-  <header class="page-hero" role="banner">
-    <div class="page-hero-inner">
+  <header class="article-hero" role="banner">
+    <div class="article-hero-inner">
 
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
         <a href="index.html">Accueil</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
-        <span class="breadcrumb-current">Mentions Légales</span>
+        <a href="index.html#articles">Articles</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="breadcrumb-current">Critères de Résidence</span>
       </nav>
 
-      <div class="page-eyebrow">
-        <div class="page-eyebrow-dot" aria-hidden="true"></div>
-        Informations légales · Art. 6 Loi n° 2004-575
+      <div class="article-tag">
+        <div class="article-tag-dot" aria-hidden="true"></div>
+        02 · Critères de Résidence
       </div>
 
-      <h1 class="page-h1">Mentions Légales</h1>
+      <h1 class="article-h1">
+        Le fisc ne regarde pas votre passeport — les 3 critères de requalification
+      </h1>
 
-      <p class="page-intro">
-        Conformément aux dispositions de la loi pour la confiance dans l'économie numérique du 21 juin 2004, voici les informations légales relatives au site expatriation-framework.fr.
+      <p class="article-intro">
+        L'administration fiscale française est l'une des plus performantes au monde. Elle ne base pas ses redressements sur des ressentis, mais sur une lecture implacable de l'Article 4B du Code Général des Impôts.
       </p>
 
-      <div class="date-badge">
-        <div class="date-badge-line" aria-hidden="true"></div>
-        Dernière mise à jour · 2026
+      <div class="article-meta" role="contentinfo" aria-label="Informations sur l'article">
+        <div class="meta-item">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M6.5 4v3l2 1.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          Lecture : 9 min
+        </div>
+        <div class="meta-item">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <rect x="1.5" y="2.5" width="10" height="9" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M4 1.5v2M9 1.5v2M1.5 5.5h10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          Mis à jour 2026
+        </div>
+        <div class="meta-item">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M6.5 1.5L8.4 5.4 12.5 6 9.5 8.9 10.3 13 6.5 10.9 2.7 13 3.5 8.9 0.5 6 4.6 5.4Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+          </svg>
+          Article de référence
+        </div>
       </div>
 
     </div>
   </header>
 
   <!-- ══════════════════════════════════
-       CORPS
+       CORPS DE L'ARTICLE
   ══════════════════════════════════ -->
-  <div class="page-layout">
-    <main class="page-body" role="main">
+  <div class="article-layout">
+    <article class="article-body" role="main">
 
-      <!-- Table des matières -->
-      <div class="toc-card rv" aria-label="Table des matières">
-        <div class="toc-label">Sommaire</div>
-        <ol class="toc-list" role="list">
-          <li>
-            <a href="#section-1">
-              <span class="toc-num">01</span>
-              Édition du site
-            </a>
-          </li>
-          <li>
-            <a href="#section-2">
-              <span class="toc-num">02</span>
-              Hébergement
-            </a>
-          </li>
-          <li>
-            <a href="#section-3">
-              <span class="toc-num">03</span>
-              Propriété intellectuelle
-            </a>
-          </li>
-          <li>
-            <a href="#section-4">
-              <span class="toc-num">04</span>
-              Données personnelles &amp; RGPD
-            </a>
-          </li>
-        </ol>
+      <!-- ─── Intro ─── -->
+      <p class="a-p rv">
+        Trop d'entrepreneurs pensent qu'avoir une adresse à Dubaï ou une résidence au Portugal suffit à couper les ponts avec le fisc français. C'est une erreur d'appréciation dramatique de la loi. Pour le Trésor Public, <strong>la résidence physique et la résidence fiscale sont deux notions totalement différentes.</strong>
+      </p>
+
+      <!-- Jurisprudence famille -->
+      <div class="case-study rv">
+        <div class="case-study-label">
+          <div class="case-study-label-dot"></div>
+          Cas de jurisprudence · Le piège de la famille
+        </div>
+        <h4>Un dirigeant à Londres, sa famille à Paris — résultat : requalification totale</h4>
+        <p>Un dirigeant part vivre à Londres pour développer sa société. Il y passe plus de 200 jours par an. Cependant, sa femme et ses enfants scolarisés sont restés vivre dans la maison familiale en région parisienne. Résultat : <strong>requalification fiscale complète.</strong> L'administration a considéré que son "Foyer" était resté en France — ce seul critère suffisait, indépendamment de tout le reste.</p>
       </div>
 
-      <!-- ─── Section 1 — Édition ─── -->
-      <div class="legal-section rv" id="section-1">
-        <div class="ls-header">
-          <div class="ls-num" aria-label="Section 1">01</div>
-          <h2 class="ls-title">Édition du site</h2>
-        </div>
+      <p class="a-p rv">
+        Le fisc utilise un système de filtres successifs. Si vous êtes "pris" dans un seul de ces trois filets, vous restez imposable en France sur <strong>l'intégralité de vos revenus mondiaux.</strong> Voici comment l'administration les analyse en cas de contrôle.
+      </p>
 
-        <p class="ls-p">
-          En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site internet <strong>expatriation-framework.fr</strong> l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi.
-        </p>
+      <div class="section-sep rv" aria-hidden="true"></div>
 
-        <div class="info-block" role="region" aria-label="Informations de l'éditeur">
-          <div class="info-row">
-            <div class="info-key">Propriétaire</div>
-            <div class="info-val"><strong>Mehdi Fitour</strong></div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Directeur de publication</div>
-            <div class="info-val">Mehdi Fitour</div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Statut</div>
-            <div class="info-val">Éditeur à titre non professionnel (Particulier)</div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Contact email</div>
-            <div class="info-val">
-              <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>
+      <!-- ─── Les 3 critères ─── -->
+      <h2 class="a-h2 rv">Les 3 critères de l'Article 4B du CGI</h2>
+
+      <p class="a-p rv">
+        Ces trois critères sont analysés de manière indépendante. Il n'existe pas de règle de compensation — un seul critère positif suffit. L'administration ne cherche pas à prouver les trois simultanément.
+      </p>
+
+      <div class="criteria-stack">
+
+        <!-- Critère 1 -->
+        <div class="crit-card rv d1">
+          <div class="crit-card-inner">
+            <div class="crit-header">
+              <div class="crit-num">01</div>
+              <div class="crit-titles">
+                <div class="crit-overline">Critère personnel</div>
+                <div class="crit-title">Le Foyer d'habitation</div>
+              </div>
+            </div>
+            <p class="crit-body">
+              Ce n'est pas l'endroit où vous dormez le plus souvent — c'est le lieu de résidence habituelle de <strong>votre famille restreinte</strong> (conjoint et enfants mineurs). Si vous partez seul sous les cocotiers mais que votre famille reste en France, vous êtes fiscalement français, quelle que soit votre adresse déclarée à l'étranger.
+            </p>
+            <p class="crit-body" style="margin-top:12px">
+              Le fisc vérifiera les inscriptions scolaires des enfants, les factures d'énergie locales, les relevés bancaires de votre conjoint et les billets d'avion. <strong>Chaque document est une preuve.</strong>
+            </p>
+            <div class="crit-danger">
+              <div class="crit-danger-dot"></div>
+              Critère le plus redressé · Jurisprudence abondante
             </div>
           </div>
-          <div class="info-row">
-            <div class="info-key">Site internet</div>
-            <div class="info-val">
-              <a href="https://www.expatriation-framework.fr" target="_blank" rel="noopener noreferrer">www.expatriation-framework.fr</a>
-            </div>
+          <div class="crit-note">
+            <svg class="crit-note-ico" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="#495B78" stroke-width="1.1"/>
+              <path d="M7 5v3M7 9.5v.5" stroke="#495B78" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <p>Un départ "en solo" suivi du regroupement familial 6 ou 12 mois plus tard est systématiquement scruté. La date d'installation effective de toute la famille dans le pays d'accueil constitue souvent la vraie date de départ fiscal.</p>
           </div>
         </div>
 
-        <div class="highlight-block">
-          <p>L'éditeur de ce site agit à titre personnel et non professionnel. Le contenu publié relève de recherches et d'expériences personnelles, et ne constitue pas un service de conseil juridique, fiscal ou financier. Pour tout conseil personnalisé, consultez un professionnel qualifié.</p>
+        <!-- Critère 2 -->
+        <div class="crit-card rv d2">
+          <div class="crit-card-inner">
+            <div class="crit-header">
+              <div class="crit-num">02</div>
+              <div class="crit-titles">
+                <div class="crit-overline">Critère professionnel</div>
+                <div class="crit-title">L'Activité professionnelle principale</div>
+              </div>
+            </div>
+            <p class="crit-body">
+              Où s'exerce réellement le travail qui génère la majorité de vos revenus ? Le piège classique : un "Digital Nomad" qui monte une LLC américaine depuis Bali, mais qui gère en réalité tout son business avec des prestataires, des serveurs et des clients <strong>majoritairement situés en France.</strong>
+            </p>
+            <p class="crit-body" style="margin-top:12px">
+              Le fisc peut caractériser une "activité occulte" gérée depuis — ou à destination de — la France. La nationalité de la structure juridique ne compte pas : ce qui compte, c'est la localisation réelle de la direction et de la clientèle.
+            </p>
+            <div class="crit-danger">
+              <div class="crit-danger-dot"></div>
+              Piège fréquent chez les freelances et e-commerçants
+            </div>
+          </div>
+          <div class="crit-note">
+            <svg class="crit-note-ico" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="#495B78" stroke-width="1.1"/>
+              <path d="M7 5v3M7 9.5v.5" stroke="#495B78" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <p>Une activité accessoire (moins de 10% des revenus) exercée depuis la France ne déclenche pas ce critère. C'est l'activité principale et ses flux financiers qui sont analysés.</p>
+          </div>
         </div>
+
+        <!-- Critère 3 -->
+        <div class="crit-card rv d3">
+          <div class="crit-card-inner">
+            <div class="crit-header">
+              <div class="crit-num">03</div>
+              <div class="crit-titles">
+                <div class="crit-overline">Critère économique</div>
+                <div class="crit-title">Le Centre des intérêts économiques</div>
+              </div>
+            </div>
+            <p class="crit-body">
+              C'est le critère le plus redoutable et le plus subjectif. Il désigne le lieu où vous avez vos principaux investissements, le siège de vos affaires, ou d'où vous tirez la majorité de vos revenus.
+            </p>
+            <p class="crit-body" style="margin-top:12px">
+              Garder des <strong>SCPI importantes</strong>, des biens locatifs lourds, ou des contrats de prestation exclusivement avec des entreprises françaises sont des marqueurs forts de rattachement économique — même si vous vivez à l'autre bout du monde depuis plusieurs années.
+            </p>
+            <div class="crit-danger">
+              <div class="crit-danger-dot"></div>
+              Critère le plus difficile à neutraliser sur le court terme
+            </div>
+          </div>
+          <div class="crit-note">
+            <svg class="crit-note-ico" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.5" stroke="#495B78" stroke-width="1.1"/>
+              <path d="M7 5v3M7 9.5v.5" stroke="#495B78" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <p>Ce critère nécessite une stratégie patrimoniale anticipée à T−24 mois minimum. Une restructuration précipitée des actifs dans les derniers mois peut elle-même constituer un signal d'alerte pour l'administration.</p>
+          </div>
+        </div>
+
       </div>
 
       <div class="section-sep rv" aria-hidden="true"></div>
 
-      <!-- ─── Section 2 — Hébergement ─── -->
-      <div class="legal-section rv" id="section-2">
-        <div class="ls-header">
-          <div class="ls-num" aria-label="Section 2">02</div>
-          <h2 class="ls-title">Hébergement</h2>
-        </div>
+      <!-- ─── Mythe convention fiscale ─── -->
+      <h2 class="a-h2 rv">Le mythe de la convention fiscale "bouclier"</h2>
 
-        <p class="ls-p">
-          Le site internet <strong>expatriation-framework.fr</strong> est hébergé par la société <strong>GitHub Inc.</strong>, via le service GitHub Pages.
-        </p>
-
-        <div class="info-block" role="region" aria-label="Informations de l'hébergeur">
-          <div class="info-row">
-            <div class="info-key">Hébergeur</div>
-            <div class="info-val"><strong>GitHub Inc.</strong></div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Adresse</div>
-            <div class="info-val">88 Colin P. Kelly Jr. St, San Francisco, CA 94107, États-Unis</div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Site internet</div>
-            <div class="info-val">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">https://github.com</a>
-            </div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Support</div>
-            <div class="info-val">
-              <a href="https://support.github.com" target="_blank" rel="noopener noreferrer">https://support.github.com</a>
-            </div>
-          </div>
-          <div class="info-row">
-            <div class="info-key">Service utilisé</div>
-            <div class="info-val">GitHub Pages — hébergement statique gratuit</div>
-          </div>
+      <div class="alert alert-red rv">
+        <div class="alert-label">
+          <div class="alert-label-dot"></div>
+          Idée reçue dangereuse
         </div>
+        <div class="alert-title">La convention fiscale ne vous protège pas si vos fondations sont mauvaises</div>
+        <p><strong>Ce qu'on entend souvent :</strong> "Pas de problème, il y a une convention fiscale entre la France et mon nouveau pays — je suis protégé contre la double imposition."</p>
+        <p><strong>La réalité :</strong> La convention fiscale ne s'applique <em>qu'après</em> avoir déterminé votre résidence. Si le fisc français prouve que votre centre d'intérêts économiques n'a jamais quitté la France, il dénoncera l'application de la convention pour fraude ou évasion fiscale. La convention n'est pas un bouclier — c'est un arbitrage de second niveau qui suppose que le premier niveau (la résidence) soit déjà correctement établi.</p>
+      </div>
+
+      <!-- ─── Cas concret convention ─── -->
+      <div class="case-study rv">
+        <div class="case-study-label">
+          <div class="case-study-label-dot"></div>
+          Cas pratique · Convention franco-émiratie
+        </div>
+        <h4>La convention avec Dubaï : mal comprise, mal utilisée</h4>
+        <p>La convention fiscale franco-émiratie prévoit effectivement l'élimination de la double imposition. Mais l'administration française a développé une doctrine très agressive sur ce point : si votre départ vers les Émirats est qualifié d'évasion fiscale (notamment via la procédure de l'article L64 du LPF), la convention est <strong>écartée d'office.</strong> Des dizaines d'entrepreneurs français installés à Dubaï ont été redressés sur cette base entre 2021 et 2024.</p>
       </div>
 
       <div class="section-sep rv" aria-hidden="true"></div>
 
-      <!-- ─── Section 3 — Propriété intellectuelle ─── -->
-      <div class="legal-section rv" id="section-3">
-        <div class="ls-header">
-          <div class="ls-num" aria-label="Section 3">03</div>
-          <h2 class="ls-title">Propriété intellectuelle</h2>
+      <!-- ─── Ce qu'il faut faire ─── -->
+      <h2 class="a-h2 rv">Ne laissez pas l'administration interpréter votre situation</h2>
+
+      <p class="a-p rv">
+        Avant d'engager des frais d'avocat ou de création de structure à l'étranger, vous devez savoir exactement comment le fisc français va scanner votre dossier lors de votre départ. Chaque critère peut être neutralisé — mais cela demande du temps et une méthode.
+      </p>
+
+      <div class="alert alert-gold rv">
+        <div class="alert-label">
+          <div class="alert-label-dot"></div>
+          La règle d'or
         </div>
-
-        <p class="ls-p">
-          L'ensemble des contenus présents sur le site <strong>expatriation-framework.fr</strong> — textes, graphismes, logos, images, structure des pages et documents téléchargeables — est la propriété exclusive de <strong>Mehdi Fitour</strong>, sauf mention contraire explicite.
-        </p>
-
-        <p class="ls-p">
-          Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces différents éléments est <strong>strictement interdite sans accord préalable écrit</strong> de l'auteur. Toute violation de ces droits pourra faire l'objet de poursuites judiciaires.
-        </p>
-
-        <div class="highlight-block">
-          <p>Le Framework (document PDF et Courriers préremplis) est un contenu protégé par le droit d'auteur. L'achat du Framework vous confère une <strong>licence d'utilisation personnelle, non exclusive et non transférable</strong>. La redistribution, la revente ou la mise à disposition de tiers, sous quelque forme que ce soit, est interdite.</p>
-        </div>
-
-        <p class="ls-p">
-          Les marques et logos mentionnés sur le site appartiennent à leurs propriétaires respectifs. Leur présence sur ce site ne saurait être interprétée comme conférant une quelconque licence d'utilisation.
-        </p>
+        <div class="alert-title">Documentez chaque rupture</div>
+        <p>Un départ sécurisé est un départ où chaque rupture de lien fiscal est <strong>prouvée par un document daté.</strong> Bail signé dans le pays d'accueil, comptes bancaires locaux ouverts avant le départ, preuve de résiliation des services français, mise en location ou vente du logement principal : chaque action doit laisser une trace écrite et datée que vous conservez pendant au minimum 6 ans.</p>
       </div>
 
-      <div class="section-sep rv" aria-hidden="true"></div>
-
-      <!-- ─── Section 4 — RGPD ─── -->
-      <div class="legal-section rv" id="section-4">
-        <div class="ls-header">
-          <div class="ls-num" aria-label="Section 4">04</div>
-          <h2 class="ls-title">Données personnelles &amp; RGPD</h2>
-        </div>
-
-        <p class="ls-p">
-          Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés, les données collectées via ce site sont traitées dans le respect de la vie privée des utilisateurs.
-        </p>
-
-        <p class="ls-p">
-          Les données susceptibles d'être collectées sont les suivantes : <strong>adresse email et informations de paiement</strong> lors d'un achat du Framework (traitées via notre prestataire de paiement Stripe, soumis à sa propre politique de confidentialité), et <strong>données de navigation anonymisées</strong> à des fins statistiques. Aucune donnée personnelle identifiante n'est collectée sans votre consentement explicite.
-        </p>
-
-        <div class="highlight-block">
-          <p><strong>Finalités du traitement :</strong> Les données collectées lors d'un achat sont utilisées uniquement pour le traitement de la commande et la délivrance du produit numérique. Elles ne sont ni vendues, ni cédées à des tiers à des fins commerciales.</p>
-        </div>
-
-        <p class="ls-p" style="margin-top:28px;margin-bottom:14px">
-          Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :
-        </p>
-
-        <div class="rights-grid" role="list" aria-label="Droits RGPD">
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <circle cx="7" cy="5" r="2.5" stroke="#3B6FD4" stroke-width="1.1"/>
-                <path d="M2 12c0-2.8 2.2-4 5-4s5 1.2 5 4" stroke="#3B6FD4" stroke-width="1.1" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit d'accès</div>
-              <div class="right-desc">Obtenir une copie de vos données personnelles détenues</div>
-            </div>
-          </div>
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8.5 3.5 12 7l-3.5 3.5" stroke="#3B6FD4" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit de rectification</div>
-              <div class="right-desc">Corriger vos données inexactes ou incomplètes</div>
-            </div>
-          </div>
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 3.5h10M5.5 3.5V2.5h3v1M5 5.5v5M7 5.5v5M9 5.5v5" stroke="#3B6FD4" stroke-width="1.1" stroke-linecap="round"/>
-                <rect x="2.5" y="3.5" width="9" height="8.5" rx="1" stroke="#3B6FD4" stroke-width="1.1"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit à l'effacement</div>
-              <div class="right-desc">Demander la suppression de vos données personnelles</div>
-            </div>
-          </div>
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M1.5 7a5.5 5.5 0 1 0 11 0 5.5 5.5 0 0 0-11 0z" stroke="#3B6FD4" stroke-width="1.1"/>
-                <path d="M7 4.5V7l2 2" stroke="#3B6FD4" stroke-width="1.1" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit à la portabilité</div>
-              <div class="right-desc">Recevoir vos données dans un format structuré et lisible</div>
-            </div>
-          </div>
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <rect x="2" y="6.5" width="10" height="6" rx="1.5" stroke="#3B6FD4" stroke-width="1.1"/>
-                <path d="M4.5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#3B6FD4" stroke-width="1.1" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit d'opposition</div>
-              <div class="right-desc">Vous opposer au traitement de vos données personnelles</div>
-            </div>
-          </div>
-          <div class="right-item" role="listitem">
-            <div class="right-ico" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M7 2L12 5v4c0 2.5-5 5-5 5S2 11.5 2 9V5L7 2z" stroke="#3B6FD4" stroke-width="1.1" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="right-title">Droit à la limitation</div>
-              <div class="right-desc">Limiter le traitement de vos données dans certains cas</div>
-            </div>
+      <!-- ─── CTA ─── -->
+      <div class="article-cta rv">
+        <div class="article-cta-inner">
+          <h3>Passez votre situation au crible avant votre départ</h3>
+          <p>Le Framework contient le tableau d'auto-évaluation exact des critères de l'Article 4B pour mesurer votre risque de requalification — avec un niveau Faible, Modéré ou Critique, et les actions correctives associées.</p>
+          <a href="vente.html" class="btn btn-p" aria-label="Obtenir le Framework à 39 euros">
+            Obtenir le Framework Complet — 39€
+            <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <div class="cta-badges">
+            <div class="cta-badge"><div class="cta-badge-dot"></div>Téléchargement immédiat</div>
+            <div class="cta-badge"><div class="cta-badge-dot"></div>Format PDF interactif</div>
+            <div class="cta-badge"><div class="cta-badge-dot"></div>39€ · Accès à vie</div>
           </div>
         </div>
-
-        <p class="ls-p" style="margin-top:24px">
-          Pour exercer l'un de ces droits, vous pouvez adresser votre demande par email à : <a href="mailto:contact@expatriation-framework.fr">contact@expatriation-framework.fr</a>. Nous nous engageons à répondre dans un délai d'un mois.
-        </p>
-
-        <p class="ls-p">
-          Si vous estimez que vos droits ne sont pas respectés, vous avez la possibilité d'introduire une réclamation auprès de la <strong>Commission Nationale de l'Informatique et des Libertés (CNIL)</strong> — <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>.
-        </p>
       </div>
 
-      <!-- Retour -->
-      <div class="back-row rv">
-        <a href="index.html" class="back-btn">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M11 7H3M6.5 3.5 3 7l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Retour à l'accueil
-        </a>
-      </div>
-
-    </main>
+    </article>
   </div>
+
+  <!-- ══ NAV ARTICLES ══ -->
+  <nav class="articles-nav" aria-label="Navigation entre les articles">
+    <a href="article-1-timing.html" class="articles-nav-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M11 7H3M6.5 3.5 3 7l3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      01 · Chronologie &amp; Timing
+    </a>
+    <a href="article-3-erreurs.html" class="articles-nav-next">
+      03 · Erreurs Fréquentes
+      <svg class="nav-ic" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </nav>
 
   <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
@@ -744,7 +904,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/>
         </svg>
       </div>
-      <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision.</p>
+      <p class="disc-txt"><strong>Avertissement :</strong> Cet article est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision d'expatriation.</p>
     </div>
   </div>
 
@@ -758,15 +918,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             Expatriation Framework
           </div>
           <p class="f-tag">Valider, Anticiper, Décider.</p>
-          <p class="f-disc-box">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié avant toute décision.</p>
+          <p class="f-disc">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié avant toute décision.</p>
         </div>
         <div>
-          <div class="f-nav-lbl">Méthodologie</div>
+          <div class="f-nav-lbl">Articles</div>
           <ul class="f-nav">
-            <li><a href="article-1-timing.html">Chronologie &amp; Timing</a></li>
-            <li><a href="article-2-residence.html">Critères de Résidence</a></li>
-            <li><a href="article-3-erreurs.html">Erreurs Fréquentes</a></li>
-            <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
+            <li><a href="article-1-timing.html">01 · Chronologie &amp; Timing</a></li>
+            <li><a href="article-2-residence.html" style="color:var(--gold-d)">02 · Critères de Résidence</a></li>
+            <li><a href="article-3-erreurs.html">03 · Erreurs Fréquentes</a></li>
+            <li><a href="article-4-preparation.html">04 · Préparation &amp; Experts</a></li>
           </ul>
         </div>
         <div>
@@ -791,16 +951,20 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </footer>
 
+  <!-- ══ SCRIPTS ══ -->
   <script>
     "use strict";
+
     const prog = document.getElementById('prog');
     const nav  = document.getElementById('nav');
+
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (s / h * 100).toFixed(2) + '%';
       nav.classList.toggle('solid', s > 24);
     }, { passive: true });
+
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
