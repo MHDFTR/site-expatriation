@@ -11,20 +11,7 @@
   <link rel="stylesheet" href="articles-global.css">
 
   <style>
-    /* ══════════════════════════════════════
-       STYLES SPÉCIFIQUES — article-1-timing
-       (nav, prog bar et reset sont dans articles-global.css)
-    ══════════════════════════════════════ */
-
-    /* Gradient décoratif interne des alertes — propre à l'article 1 */
-    .alert::before{
-      content:'';position:absolute;inset:0;opacity:.04;
-      background:linear-gradient(135deg,currentColor 0%,transparent 100%);
-    }
-
-    /* ══════════════════════════════════════
-       TIMELINE VERTICALE
-    ══════════════════════════════════════ */
+    /* Styles structurels spécifiques à l'Article 1 */
     .v-timeline{
       border-left:1px solid var(--br-2);padding-left:32px;
       margin:36px 0;position:relative;
@@ -59,9 +46,6 @@
     }
     .vt-p{font-size:14px;font-weight:300;color:var(--t1);line-height:1.7;margin:0}
 
-    /* ══════════════════════════════════════
-       PROFILE CARDS
-    ══════════════════════════════════════ */
     .profile-cards{display:flex;flex-direction:column;gap:12px;margin:28px 0}
     .profile-card{
       background:var(--bg-2);border:1px solid var(--br-1);border-radius:14px;
@@ -90,16 +74,12 @@
     .profile-card p{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.65;margin:0}
     .profile-card p strong{color:var(--t0);font-weight:500}
 
-    /* ══════════════════════════════════════
-       RESPONSIVE — surcharges article 1
-    ══════════════════════════════════════ */
     @media(max-width:768px){
       .v-timeline{padding-left:24px}
       .vt-item::before{left:-31px}
     }
   </style>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -108,7 +88,6 @@
   gtag('config', 'G-P0CY674BQD');
 </script>
 
-<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -124,14 +103,11 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code -->
-
 </head>
 <body>
 
   <div id="prog"></div>
 
-  <!-- ══ NAV ══ -->
   <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
       <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
@@ -147,9 +123,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </nav>
 
-  <!-- ══════════════════════════════════
-       ARTICLE HERO
-  ══════════════════════════════════ -->
   <header class="article-hero" role="banner">
     <div class="article-hero-inner">
 
@@ -200,13 +173,9 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </header>
 
-  <!-- ══════════════════════════════════
-       CORPS DE L'ARTICLE
-  ══════════════════════════════════ -->
   <div class="article-layout">
     <article class="article-body" role="main">
 
-      <!-- ─── Mythe des 183 jours ─── -->
       <div class="alert alert-red rv">
         <div class="alert-label">
           <div class="alert-label-dot"></div>
@@ -217,7 +186,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <p><strong>La réalité fiscale :</strong> L'administration française se fiche du nombre de jours passés à l'étranger si votre centre d'intérêts économiques — vos clients, vos comptes, la gestion de votre société — est resté, même partiellement, attaché à la France lors de la transition. Cette règle des 183 jours n'existe pas dans le droit fiscal français.</p>
       </div>
 
-      <!-- ─── Article 4B ─── -->
       <h2 class="a-h2 rv">La règle implacable de l'Article 4B du CGI</h2>
 
       <p class="a-p rv">Le Code Général des Impôts est binaire. Pour le fisc français, vous restez un résident fiscal — et donc imposable sur vos revenus mondiaux — si vous cochez <strong>un seul</strong> de ces trois critères lors de votre départ :</p>
@@ -232,7 +200,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 
       <div class="section-sep rv" aria-hidden="true"></div>
 
-      <!-- ─── Timeline ─── -->
       <h2 class="a-h2 rv">La chronologie d'un départ sécurisé</h2>
 
       <p class="a-p rv">Voici les trois phases critiques d'un départ structuré. Chaque étape est interdépendante : rater la première rend les suivantes inopérantes.</p>
@@ -270,7 +237,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 
       <div class="section-sep rv" aria-hidden="true"></div>
 
-      <!-- ─── Profils ─── -->
       <h2 class="a-h2 rv">Dans quel profil vous reconnaissez-vous&nbsp;?</h2>
 
       <p class="a-p rv">Trois archétypes concentrent l'essentiel des redressements observés. Identifiez votre situation — les erreurs associées sont systématiquement exploitées par l'administration.</p>
@@ -329,7 +295,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <p>Il documente chaque étape de sa transition. Il a des preuves de la réalité de son départ : bail signé dans le pays d'accueil, comptes locaux ouverts, clients informés par écrit, société française liquidée dans les formes. En cas de contrôle, son dossier répond à chaque question avant qu'elle soit posée.</p>
       </div>
 
-      <!-- ─── CTA ─── -->
       <div class="article-cta rv">
         <div class="article-cta-inner">
           <h3>L'irréversible se prépare en amont</h3>
@@ -351,7 +316,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </article>
   </div>
 
-  <!-- ══ NAV ARTICLES ══ -->
   <nav class="articles-nav" aria-label="Navigation entre les articles">
     <a href="index.html#articles" class="articles-nav-back">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -367,7 +331,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </a>
   </nav>
 
-  <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
     <div class="disc-i">
       <div class="disc-ico" aria-hidden="true">
@@ -380,7 +343,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- ── FOOTER — structure identique à l'accueil ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -410,11 +372,10 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </ul>
         </div>
       </div>
-      <!-- f-btm : une seule ligne de liens légaux, identique à l'accueil -->
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
-          <a href="mentions-legales.html" style="color:var(--gold-d)">Mentions Légales</a>
+          <a href="mentions-legales.html">Mentions Légales</a>
           <a href="avertissement.html">Avertissement</a>
           <a href="a-propos.html">À Propos</a>
         </nav>
@@ -422,17 +383,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </footer>
 
-  <!-- ══ SCRIPTS ══ -->
   <script>
     "use strict";
-
     const prog = document.getElementById('prog');
     const nav  = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (s / h * 100).toFixed(2) + '%';
-      nav.classList.toggle('solid', s > 30);
+      nav.classList.toggle('solid', s > 24);
     }, { passive: true });
 
     const io = new IntersectionObserver(entries => {
