@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Commander — Expatriation Framework · 39€</title>
+  <title>Expatriation Framework | Valider, Anticiper, Décider</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
   <style>
     /* ══════════════════════════════════════
-       RESET NUCLÉAIRE — avant tout le reste
+       RESET NUCLÉAIRE — première règle, avant tout
     ══════════════════════════════════════ */
     html, body {
       margin: 0 !important;
@@ -19,368 +18,424 @@
       overflow-x: hidden;
     }
 
+    /* ══════════════════════════════════════
+       TOKENS
+    ══════════════════════════════════════ */
     :root {
       --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
       --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
       --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
-      --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
+      --blue:#3B6FD4; --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
       --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
-      --fd:'Cormorant Garant',serif;
-      --fb:'Figtree',sans-serif;
-      --fm:'Space Mono',monospace;
+      --fd:'Cormorant Garant',serif; --fb:'Figtree',sans-serif; --fm:'Space Mono',monospace;
       --ease:cubic-bezier(.25,.46,.45,.94);
       --spring:cubic-bezier(.34,1.56,.64,1);
       --slow:cubic-bezier(.16,1,.3,1);
       --sharp:cubic-bezier(.4,0,.2,1);
-      --gutter:clamp(20px,4vw,48px);
-      --max-w:1200px;
+      --gutter:clamp(20px,4vw,48px); --max-w:1200px;
     }
 
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
     html{scroll-behavior:smooth}
+
     body{
-      font-family:var(--fb);background:var(--bg-1);color:var(--t0);
-      line-height:1.6;overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-      min-height:100vh;overflow-wrap:break-word;word-wrap:break-word;
+      font-family:var(--fb); background:var(--bg-1); color:var(--t0);
+      line-height:1.6;
+      overflow-wrap:break-word; word-wrap:break-word;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
     a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font:inherit}
 
-    /* Grain */
+    /* grain */
     body::after{
       content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* ══ PROGRESS BAR ══ */
+    /* ── PROGRESS ──
+       position:fixed top:0 — hors flux, ne crée aucun espace */
     #prog{
-      position:fixed;top:0;left:0;width:0;height:1px;z-index:10000;
-      margin:0 !important;padding:0 !important;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:2px;
+      z-index:10000;
       background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
       transition:width .08s linear;
+      margin:0 !important;
+      padding:0 !important;
     }
 
-    /* ══ REVEAL ══ */
-    .rv{opacity:0;transform:translateY(20px);transition:opacity .65s var(--slow),transform .65s var(--slow)}
-    .rv.in{opacity:1;transform:translateY(0)}
-    .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}
-    .rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
-
-    /* ══ NAV — verrouillée, zéro "jour" ══ */
+    /* ══════════════════════════════════════
+       NAV
+       — padding horizontal transféré sur .nav-i
+         pour que le .nav lui-même ait padding:0
+    ══════════════════════════════════════ */
     .nav{
       position:fixed !important;
-      top:0 !important; left:0 !important; right:0 !important;
-      margin:0 !important; padding:0 !important;
-      height:60px; z-index:9999;
+      top:0 !important;
+      left:0 !important;
+      right:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      z-index:9999;
+      height:64px;
       display:flex;align-items:center;justify-content:center;
-      border-bottom:1px solid var(--br-0);
-      background:rgba(6,9,18,.92);
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid transparent;
+      background:rgba(6,9,18,0);
+      /* Force GPU compositing layer — élimine le "jour" iOS Safari */
       -webkit-transform:translate3d(0,0,0) !important;
       transform:translate3d(0,0,0) !important;
       will-change:transform;
+      transition:background .45s var(--ease),border-color .45s var(--ease);
     }
+    .nav.solid{
+      background:rgba(6,9,18,.92);
+      backdrop-filter:blur(22px) saturate(155%);
+      -webkit-backdrop-filter:blur(22px) saturate(155%);
+      border-bottom-color:var(--br-0);
+    }
+    /* Le padding horizontal est ici, sur .nav-i, pas sur .nav */
     .nav-i{
-      width:100%;max-width:var(--max-w);
+      width:100%;
+      max-width:var(--max-w);
       padding:0 var(--gutter);
       display:flex;align-items:center;justify-content:space-between;
     }
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
     .nav-logo:hover{opacity:.8}
     .nav-mark{
-      width:28px;height:28px;border-radius:6px;
+      width:30px;height:30px;border-radius:7px;
       background:linear-gradient(145deg,var(--gold-d),var(--gold));
       display:flex;align-items:center;justify-content:center;
-      font-family:var(--fm);font-size:9.5px;font-weight:700;color:#08080f;flex-shrink:0;
+      font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;
     }
-    .nav-secure{
-      display:flex;align-items:center;gap:7px;
-      font-family:var(--fm);font-size:9.5px;color:var(--t3);
-      text-transform:uppercase;letter-spacing:.12em;white-space:nowrap;
+    .nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+    .nav-links a{font-size:13.5px;color:var(--t1);transition:color .2s}
+    .nav-links a:hover{color:var(--t0)}
+    .nav-cta{
+      font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;
+      background:rgba(200,169,106,.08);color:var(--gold);
+      border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;cursor:pointer;
     }
-    .nav-back{
-      display:flex;align-items:center;gap:7px;
-      font-family:var(--fm);font-size:9.5px;color:var(--t2);
-      text-transform:uppercase;letter-spacing:.12em;white-space:nowrap;
-      transition:color .2s;
+    .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
+
+    /* ══════════════════════════════════════
+       HERO — pas de margin-top, uniquement du padding
+    ══════════════════════════════════════ */
+    .hero{
+      position:relative;min-height:100vh;display:flex;align-items:center;
+      padding:128px var(--gutter) 96px;
+      margin-top:0 !important;
+      overflow:hidden;
     }
-    .nav-back:hover{color:var(--t1)}
-
-    /* ── Mobile : masquer les textes qui débordent ── */
-    @media(max-width:768px){
-      .nav-back{display:none}
-      .nav-secure{display:none}
+    .hero-bg{position:absolute;inset:0;z-index:0}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;pointer-events:none}
+    .b1{width:900px;height:600px;top:-180px;left:-80px;
+        background:radial-gradient(ellipse,rgba(59,111,212,.13) 0%,transparent 68%);
+        animation:d1 22s ease-in-out infinite}
+    .b2{width:700px;height:480px;top:15%;right:-60px;
+        background:radial-gradient(ellipse,rgba(200,169,106,.08) 0%,transparent 70%);
+        animation:d2 28s ease-in-out infinite}
+    .b3{width:580px;height:380px;bottom:-80px;left:28%;
+        background:radial-gradient(ellipse,rgba(59,111,212,.07) 0%,transparent 70%);
+        animation:d3 32s ease-in-out infinite}
+    @keyframes d1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(55px,-38px) scale(1.04)}66%{transform:translate(-28px,52px) scale(.97)}}
+    @keyframes d2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-72px,28px) scale(1.07)}}
+    @keyframes d3{0%,100%{transform:translate(0,0)}40%{transform:translate(44px,-26px)}70%{transform:translate(-36px,18px)}}
+    .hero-grid{
+      position:absolute;inset:0;
+      background-image:linear-gradient(rgba(24,32,51,.3) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(24,32,51,.3) 1px,transparent 1px);
+      background-size:72px 72px;
+      -webkit-mask-image:radial-gradient(ellipse 76% 76% at 50% 50%,black 20%,transparent 75%);
+      mask-image:radial-gradient(ellipse 76% 76% at 50% 50%,black 20%,transparent 75%);
     }
-
-    /* Main — offset pour nav fixe */
-    main{padding-top:60px}
-
-    /* ══ LAYOUT 2 COL ══ */
-    .checkout-wrap{
-      max-width:var(--max-w);margin:0 auto;
-      padding:48px var(--gutter) 40px;
-      display:grid;
-      grid-template-columns:1fr 380px;
-      gap:40px;
-      align-items:start;
+    .hero-c{position:relative;z-index:1;width:100%;max-width:var(--max-w);margin:0 auto}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 10px;
+      border-radius:100px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.18);
+      margin-bottom:32px;opacity:0;transform:translateY(10px);
+      animation:up .6s var(--slow) .1s forwards;
     }
-
-    /*
-      col-right est PREMIER dans le DOM (meilleur pour mobile et conversion),
-      mais placé visuellement à droite sur desktop via grid-column explicite.
-    */
-    .col-right{grid-column:2;grid-row:1;position:sticky;top:76px}
-    .col-left{grid-column:1;grid-row:1}
-
-    /* ══════════════════════════
-       COL GAUCHE — PITCH
-    ══════════════════════════ */
-    .trust-path{
-      display:flex;align-items:center;gap:8px;
-      font-family:var(--fm);font-size:10px;color:var(--t3);
-      letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;
+    .badge-dot{
+      width:6px;height:6px;border-radius:50%;background:var(--gold);
+      box-shadow:0 0 8px var(--gold);animation:blink 2.4s ease-in-out infinite;flex-shrink:0;
     }
-    .trust-path-sep{color:var(--t3);opacity:.4}
-    .trust-path-cur{color:var(--gold-d)}
-
-    .pitch-h1{
-      font-family:var(--fd);font-size:clamp(32px,4.5vw,50px);font-weight:600;
-      line-height:1.06;letter-spacing:-.025em;color:var(--t0);margin-bottom:14px;
+    @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 8px var(--gold)}50%{opacity:.4;box-shadow:0 0 3px var(--gold)}}
+    .badge-txt{font-family:var(--fm);font-size:10.5px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase}
+    .hero-h1{
+      font-family:var(--fd);font-size:clamp(48px,7.5vw,88px);font-weight:600;
+      line-height:1.0;letter-spacing:-.02em;color:var(--t0);max-width:820px;
+      margin-bottom:24px;opacity:0;transform:translateY(22px);
+      animation:up .8s var(--slow) .22s forwards;
     }
-    .pitch-h1 em{font-style:italic;font-weight:400;color:var(--gold-b)}
-
-    .pitch-lead{
-      font-family:var(--fd);font-size:clamp(15px,2vw,18px);
-      font-weight:400;font-style:italic;color:var(--t1);
-      line-height:1.72;margin-bottom:36px;max-width:520px;
+    .hero-h1 em{font-style:italic;font-weight:400;color:var(--gold-b)}
+    .hero-sub{
+      font-size:clamp(15px,2vw,18px);font-weight:300;line-height:1.72;color:var(--t1);
+      max-width:520px;margin-bottom:48px;opacity:0;transform:translateY(22px);
+      animation:up .8s var(--slow) .38s forwards;
     }
+    .hero-btns{
+      display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+      opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .52s forwards;
+    }
+    @keyframes up{to{opacity:1;transform:translateY(0)}}
+    .scroll-cue{
+      position:absolute;bottom:40px;left:var(--gutter);display:flex;align-items:center;gap:12px;
+      opacity:0;animation:up .6s var(--slow) 1.2s forwards;
+    }
+    .scroll-lines{display:flex;flex-direction:column;gap:2px}
+    .scroll-lines span{display:block;width:20px;height:1px;background:var(--gold-d);transform-origin:left;animation:scl 2s ease-in-out infinite}
+    .scroll-lines span:nth-child(2){animation-delay:.2s}
+    .scroll-lines span:nth-child(3){animation-delay:.4s}
+    @keyframes scl{0%,100%{transform:scaleX(1);opacity:.4}50%{transform:scaleX(1.5);opacity:1}}
+    .scroll-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--t2)}
 
-    .included-card{
+    /* ══════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════ */
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;
+      border-radius:10px;cursor:pointer;transition:all .22s var(--sharp);
+      white-space:nowrap;border:none;outline:none;text-decoration:none;
+    }
+    .btn-p{padding:13px 26px;background:var(--gold);color:#08080f;font-weight:600}
+    .btn-p:hover{background:var(--gold-b);transform:translateY(-2px);box-shadow:0 0 32px rgba(200,169,106,.2),0 0 12px rgba(200,169,106,.12);color:#08080f}
+    .btn-p:active{transform:translateY(0)}
+    .btn-g{padding:12px 22px;background:transparent;color:var(--t1);border:1px solid var(--br-2)}
+    .btn-g:hover{border-color:var(--br-3);color:var(--t0);background:rgba(255,255,255,.025)}
+    .btn-ic{transition:transform .2s var(--spring)}
+    .btn:hover .btn-ic{transform:translateX(4px)}
+
+    /* ══════════════════════════════════════
+       STAT RIBBON
+    ══════════════════════════════════════ */
+    .ribbon{border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0);background:var(--bg-2)}
+    .ribbon-i{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter);display:grid;grid-template-columns:repeat(3,1fr)}
+    .ribbon-cell{padding:40px 32px;border-right:1px solid var(--br-0)}
+    .ribbon-cell:last-child{border-right:none}
+    .r-num{font-family:var(--fd);font-size:clamp(38px,5vw,54px);font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--t0);margin-bottom:8px}
+    .r-unit{font-family:var(--fm);font-size:13px;color:var(--gold-d);letter-spacing:.05em}
+    .r-lbl{font-size:13px;color:var(--t2);line-height:1.45}
+
+    /* ══════════════════════════════════════
+       DIAGNOSTIC CARD
+    ══════════════════════════════════════ */
+    .diag-wrap{padding:24px var(--gutter) 80px}
+    .diag-card{
+      max-width:var(--max-w);margin:0 auto;border-radius:32px;
       background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:18px;overflow:hidden;margin-bottom:28px;
+      position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 280px;
+      width:100%;box-sizing:border-box;
     }
-    .included-head{
-      padding:18px 22px;border-bottom:1px solid var(--br-0);
-      display:flex;align-items:center;gap:10px;
-    }
-    .included-head-lbl{
-      font-family:var(--fm);font-size:9.5px;color:var(--gold-d);
-      text-transform:uppercase;letter-spacing:.13em;
-    }
-    .included-head-lbl::before{content:'';display:inline-block;width:14px;height:1px;background:var(--gold-d);margin-right:8px;vertical-align:middle;opacity:.5}
-    .included-list{padding:4px 0}
-    .incl-row{
-      display:flex;align-items:flex-start;gap:14px;
-      padding:14px 22px;border-bottom:1px solid var(--br-0);
-      transition:background .2s;
-    }
-    .incl-row:last-child{border-bottom:none}
-    .incl-row:hover{background:rgba(255,255,255,.02)}
-    .incl-ico{
-      width:34px;height:34px;border-radius:8px;flex-shrink:0;
-      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.14);
-      display:flex;align-items:center;justify-content:center;margin-top:1px;
-    }
-    .incl-title{font-size:14px;font-weight:500;color:var(--t0);margin-bottom:2px;line-height:1.3}
-    .incl-desc{font-size:12.5px;font-weight:300;color:var(--t2);line-height:1.5}
-
-    .price-argument{
-      display:flex;align-items:center;gap:20px;
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-left:3px solid var(--gold-d);
-      border-radius:0 12px 12px 0;
-      padding:16px 20px;margin-bottom:28px;
-    }
-    .pa-left{flex-shrink:0;text-align:center}
-    .pa-crossed{
-      font-family:var(--fd);font-size:22px;font-weight:600;
-      color:var(--red);text-decoration:line-through;opacity:.7;
-      line-height:1;display:block;
-    }
-    .pa-crossed-sub{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase}
-    .pa-right{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.6}
-    .pa-right strong{color:var(--t0);font-weight:500}
-
-    .guarantees{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .guarantee-item{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:300;color:var(--t2)}
-    .g-dot{width:4px;height:4px;border-radius:50%;background:var(--t3)}
-
-    /* ══════════════════════════
-       COL DROITE — ORDER CARD
-    ══════════════════════════ */
-    .order-card{
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:20px;overflow:hidden;position:relative;
-    }
-    .order-card::before{
+    .diag-card::before{
       content:'';position:absolute;top:0;left:0;right:0;height:1px;
-      background:linear-gradient(90deg,transparent,var(--gold-d) 30%,var(--gold) 50%,var(--gold-d) 70%,transparent);
+      background:linear-gradient(90deg,transparent,var(--gold-d) 38%,var(--gold) 50%,var(--gold-d) 62%,transparent);
       opacity:.6;
     }
-    .order-head{padding:22px 24px 18px;border-bottom:1px solid var(--br-0);position:relative;z-index:1}
-    .order-head-label{font-family:var(--fm);font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:14px}
-    .product-line{display:flex;align-items:flex-start;gap:12px}
-    .product-thumb{
-      width:40px;height:40px;border-radius:9px;flex-shrink:0;
-      background:rgba(200,169,106,.08);border:1px solid rgba(200,169,106,.16);
-      display:flex;align-items:center;justify-content:center;
+    .diag-card::after{
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 55% 85% at 82% 50%,rgba(200,169,106,.04) 0%,transparent 65%);
     }
-    .product-name{font-size:13.5px;font-weight:500;color:var(--t0);margin-bottom:3px;line-height:1.3}
-    .product-desc{font-size:12px;font-weight:300;color:var(--t2);line-height:1.45}
-    .product-price{font-family:var(--fd);font-size:22px;font-weight:600;color:var(--t0);margin-left:auto;flex-shrink:0}
+    .diag-body{padding:60px;position:relative;z-index:1;min-width:0;overflow-wrap:break-word;word-wrap:break-word;}
+    .diag-free{
+      display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:4px;
+      background:rgba(74,168,122,.08);border:1px solid rgba(74,168,122,.18);
+      font-family:var(--fm);font-size:10px;color:var(--green);letter-spacing:.12em;text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .diag-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+    .diag-h2{font-family:var(--fd);font-size:clamp(26px,3.5vw,38px);font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--t0);margin-bottom:14px}
+    .diag-sub{font-size:15px;font-weight:300;color:var(--t1);line-height:1.72;max-width:440px;margin-bottom:28px;overflow-wrap:break-word;word-wrap:break-word;}
+    .checklist{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+    .check-row{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--t1);line-height:1.5;overflow-wrap:break-word;word-wrap:break-word;min-width:0;}
+    .check-box{width:18px;height:18px;border-radius:4px;background:rgba(200,169,106,.08);border:1px solid rgba(200,169,106,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .diag-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:0}
+    .meta-tag{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t2)}
+    .diag-btn-wrap{display:flex;justify-content:flex-start;align-items:center;margin-top:0;}
 
-    .order-totals{
-      padding:16px 24px;border-bottom:1px solid var(--br-0);
-      display:flex;flex-direction:column;gap:8px;position:relative;z-index:1;
+    /* visual panel */
+    .diag-vis{
+      border-left:1px solid var(--br-0);background:var(--bg-3);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:48px 28px;gap:24px;position:relative;z-index:1;
     }
-    .total-row{display:flex;align-items:center;justify-content:space-between}
-    .total-label{font-size:13px;font-weight:300;color:var(--t2)}
-    .total-val{font-size:13px;font-weight:400;color:var(--t1)}
-    .total-sep{height:1px;background:var(--br-0);margin:4px 0}
-    .total-final{font-size:15px;font-weight:600;color:var(--t0)}
-    .total-final-val{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--t0);letter-spacing:-.01em}
+    .risk-ring{position:relative;width:140px;height:140px;flex-shrink:0;}
+    .risk-ring svg{width:100%;height:100%;animation:rot 40s linear infinite}
+    @keyframes rot{to{transform:rotate(360deg)}}
+    .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+    .ring-num{font-family:var(--fd);font-size:44px;font-weight:600;line-height:1;color:var(--t0)}
+    .ring-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t2)}
+    .risk-levels{display:flex;flex-direction:column;gap:8px;width:100%}
+    .rl{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;border-radius:6px;border:1px solid;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+    .rl-low{background:rgba(74,168,122,.06);border-color:rgba(74,168,122,.18);color:var(--green)}
+    .rl-med{background:rgba(196,146,74,.06);border-color:rgba(196,146,74,.18);color:var(--amber)}
+    .rl-hi {background:rgba(196,92,92,.06);border-color:rgba(196,92,92,.18);color:var(--red)}
+    .rl-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
 
-    .upsell-wrap{padding:16px 24px;border-bottom:1px solid var(--br-0);position:relative;z-index:1}
-    .upsell-label{
-      display:flex;align-items:center;gap:7px;
-      font-family:var(--fm);font-size:9px;color:var(--amber);
-      text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;
+    /* ══════════════════════════════════════
+       TIMELINE
+    ══════════════════════════════════════ */
+    .tl-section{background:var(--bg-2);border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0);padding:80px var(--gutter)}
+    .tl-inner{max-width:var(--max-w);margin:0 auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:10.5px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px}
+    .eyebrow::before{content:'';width:24px;height:1px;background:var(--gold-d);opacity:.5}
+    .s-h2{font-family:var(--fd);font-size:clamp(28px,4vw,46px);font-weight:600;line-height:1.08;letter-spacing:-.02em;color:var(--t0);margin-bottom:12px}
+    .s-lead{font-size:15.5px;font-weight:300;color:var(--t1);line-height:1.7;max-width:500px;margin-bottom:52px}
+    .tl-track{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .tl-track::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--br-2) 20%,var(--br-2) 80%,transparent)}
+    .t-item{display:flex;flex-direction:column;align-items:center;gap:14px}
+    .t-dot{
+      width:56px;height:56px;border-radius:50%;border:1px solid var(--br-2);background:var(--bg-1);
+      display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;
+      font-weight:700;color:var(--t2);position:relative;z-index:1;flex-shrink:0;
+      transition:border-color .3s,color .3s,box-shadow .3s;
     }
-    .upsell-dot{width:4px;height:4px;border-radius:50%;background:currentColor}
-    .upsell-toggle{display:flex;align-items:flex-start;gap:14px;cursor:pointer}
-    .upsell-check-wrap{flex-shrink:0;margin-top:2px}
-    .upsell-check-inp{display:none}
-    .upsell-check-box{
-      width:20px;height:20px;border-radius:5px;
-      border:1.5px solid var(--br-2);background:var(--bg-1);
-      display:flex;align-items:center;justify-content:center;
-      transition:border-color .2s,background .2s;cursor:pointer;
-    }
-    .upsell-check-inp:checked + .upsell-check-box{border-color:var(--amber);background:rgba(196,146,74,.12)}
-    .upsell-check-box svg{opacity:0;transition:opacity .2s}
-    .upsell-check-inp:checked + .upsell-check-box svg{opacity:1}
-    .upsell-title{font-size:13.5px;font-weight:500;color:var(--t0);margin-bottom:4px;line-height:1.35}
-    .upsell-title span{color:var(--amber)}
-    .upsell-desc{font-size:12px;font-weight:300;color:var(--t2);line-height:1.55}
+    .t-item.act .t-dot{border-color:var(--gold-d);color:var(--gold);box-shadow:0 0 20px rgba(200,169,106,.1)}
+    .t-lbl{font-size:12px;color:var(--t2);line-height:1.4;text-align:center;overflow-wrap:break-word;word-wrap:break-word;}
+    .t-item.act .t-lbl{color:var(--t1)}
 
-    .cta-wrap{padding:20px 24px 22px;position:relative;z-index:1}
-    .btn-checkout{
-      display:flex;align-items:center;justify-content:center;gap:10px;
-      width:100%;padding:16px 24px;
-      background:var(--gold);color:#08080f;
-      border:none;border-radius:12px;cursor:pointer;
-      font-family:var(--fb);font-size:15px;font-weight:700;
-      letter-spacing:.01em;text-decoration:none;
-      transition:background .22s var(--sharp),transform .22s var(--sharp),box-shadow .22s;
-      position:relative;overflow:hidden;
+    /* ══════════════════════════════════════
+       PILLAR CARDS
+    ══════════════════════════════════════ */
+    .pillars-s{padding:80px var(--gutter)}
+    .pillars-hd{max-width:var(--max-w);margin:0 auto 52px;display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+    .pillars-grid{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .p-card{
+      background:var(--bg-2);border:1px solid var(--br-1);border-radius:24px;
+      padding:40px;position:relative;overflow:hidden;cursor:pointer;
+      transition:border-color .35s var(--ease),transform .35s var(--slow),box-shadow .35s var(--ease);
+      text-decoration:none;display:block;
+      box-sizing:border-box;min-width:0;overflow-wrap:break-word;word-wrap:break-word;
     }
-    .btn-checkout::after{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.1) 50%,transparent 100%);
-      transform:translateX(-100%);transition:transform .6s var(--ease);
+    .p-glow{
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(circle 300px at var(--mx,50%) var(--my,50%),rgba(200,169,106,.06) 0%,transparent 70%);
+      opacity:0;transition:opacity .4s;
     }
-    .btn-checkout:hover::after{transform:translateX(100%)}
-    .btn-checkout:hover{
-      background:var(--gold-b);transform:translateY(-2px);
-      box-shadow:0 0 40px rgba(200,169,106,.28),0 0 16px rgba(200,169,106,.16);
-      color:#08080f;
-    }
-    .btn-checkout:active{transform:translateY(0)}
-    .btn-ic{transition:transform .2s var(--spring)}
-    .btn-checkout:hover .btn-ic{transform:translateX(4px)}
+    .p-card:hover .p-glow{opacity:1}
+    .p-card:hover{border-color:var(--br-3);transform:translateY(-4px);box-shadow:0 8px 40px rgba(0,0,0,.55)}
+    .p-num{font-family:var(--fm);font-size:11px;color:var(--t3);letter-spacing:.14em;display:flex;align-items:center;gap:12px;margin-bottom:28px}
+    .p-num::after{content:'';flex:1;height:1px;background:var(--br-0)}
+    .p-icon{width:46px;height:46px;border-radius:11px;background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;flex-shrink:0;transition:background .3s,border-color .3s}
+    .p-card:hover .p-icon{background:rgba(200,169,106,.13);border-color:rgba(200,169,106,.26)}
+    .p-title{font-family:var(--fd);font-size:24px;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:var(--t0);margin-bottom:10px;overflow-wrap:break-word;word-wrap:break-word;}
+    .p-desc{font-size:14px;font-weight:300;color:var(--t1);line-height:1.65;overflow-wrap:break-word;word-wrap:break-word;}
+    .p-link{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--gold-d);margin-top:22px;transition:color .2s,gap .2s var(--spring)}
+    .p-card:hover .p-link{color:var(--gold);gap:11px}
 
-    .cta-trust{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .ct-badge{display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.09em}
-    .ct-sep{color:var(--t3);opacity:.3}
-
-    .order-foot{
-      padding:14px 24px;background:var(--bg-3);border-top:1px solid var(--br-0);
-      display:flex;align-items:center;gap:8px;position:relative;z-index:1;
-    }
-    .of-text{font-size:11.5px;font-weight:300;color:var(--t2);line-height:1.5}
-    .of-text a{color:var(--t2);text-decoration:underline;text-underline-offset:2px;transition:color .2s}
-    .of-text a:hover{color:var(--t1)}
-
-    /* ══ FAQ MINI ══ */
-    .section-sep{height:1px;background:linear-gradient(90deg,transparent,var(--br-1) 20%,var(--br-1) 80%,transparent);margin:32px 0}
-    .faq-mini-item{border-bottom:1px solid var(--br-0)}
-    .faq-mini-item:first-child{border-top:1px solid var(--br-0)}
-    .faq-mini-q{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:14px 0;cursor:pointer;
-      font-size:14px;font-weight:500;color:var(--t1);transition:color .2s;
-    }
-    .faq-mini-q:hover{color:var(--t0)}
-    .faq-mini-arrow{flex-shrink:0;color:var(--t3);transition:transform .3s var(--slow)}
-    .faq-mini-item.open .faq-mini-arrow{transform:rotate(45deg);color:var(--gold-d)}
-    .faq-mini-item.open .faq-mini-q{color:var(--t0)}
-    .faq-mini-a{max-height:0;overflow:hidden;transition:max-height .35s var(--slow),padding .35s;padding-bottom:0}
-    .faq-mini-item.open .faq-mini-a{max-height:200px;padding-bottom:14px}
-    .faq-mini-a p{font-size:13.5px;font-weight:300;color:var(--t2);line-height:1.65}
-    .faq-mini-a strong{color:var(--t1);font-weight:500}
-
-    /* ══ DISCLAIMER STRIP ══ */
-    .disc-strip{
-      background:var(--bg-0);border-top:1px solid var(--br-0);
-      padding:10px var(--gutter);margin-top:40px;
-    }
-    .disc-i{
-      max-width:var(--max-w);margin:0 auto;
-      display:flex;align-items:flex-start;gap:14px;padding:12px 0;
-    }
-    .disc-ico{
-      width:30px;height:30px;border-radius:6px;
-      background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    }
+    /* ══════════════════════════════════════
+       DISCLAIMER
+    ══════════════════════════════════════ */
+    .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter)}
+    .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
+    .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .disc-txt{font-size:11.5px;color:var(--t2);line-height:1.55}
     .disc-txt strong{color:var(--t1);font-weight:500}
 
-    /* ══ FOOTER — DA identique au reste du site ══ */
-    .footer{
-      border-top:1px solid var(--br-0);
-      padding:60px var(--gutter) 36px;
-      background:var(--bg-0);
-    }
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
     .footer-i{max-width:var(--max-w);margin:0 auto}
-    .f-grid{
-      display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;
-      padding-bottom:44px;border-bottom:1px solid var(--br-0);
-    }
+    .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:44px;border-bottom:1px solid var(--br-0)}
     .f-logo-row{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px}
     .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:14px;line-height:1.5}
-    .f-disc-box{
-      font-size:11.5px;color:var(--t2);line-height:1.6;
-      padding:12px 13px;border-radius:10px;
-      background:rgba(255,255,255,.014);border:1px solid var(--br-0);
-    }
+    .f-disc{font-size:11.5px;color:var(--t2);line-height:1.6;padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0)}
     .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
     .f-nav{list-style:none;display:flex;flex-direction:column;gap:10px}
     .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
     .f-nav a:hover{color:var(--t0)}
-    .f-btm{
-      padding-top:28px;display:flex;align-items:center;
-      justify-content:space-between;gap:16px;flex-wrap:wrap;
-    }
+    .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
     .f-legal{display:flex;align-items:center;gap:20px}
     .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
     .f-legal a:hover{color:var(--t1)}
 
-    /* ══ RESPONSIVE ══ */
-    @media(max-width:900px){
-      .checkout-wrap{grid-template-columns:1fr;gap:28px;padding:32px var(--gutter) 40px}
-      /* Mobile : order card en premier (row 1), pitch en second (row 2) */
-      .col-right{grid-column:1;grid-row:1;position:static}
-      .col-left{grid-column:1;grid-row:2}
+    /* ══════════════════════════════════════
+       REVEAL
+    ══════════════════════════════════════ */
+    .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--slow),transform .7s var(--slow)}
+    .rv.in{opacity:1;transform:translateY(0)}
+    .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media(max-width:1024px){
+      .diag-card{grid-template-columns:1fr}
+      .diag-vis{border-left:none;border-top:1px solid var(--br-0);flex-direction:row;justify-content:flex-start;padding:28px}
+      .pillars-grid{grid-template-columns:1fr}
+      .ribbon-i{grid-template-columns:1fr}
+      .ribbon-cell{border-right:none;border-bottom:1px solid var(--br-0);padding:28px}
+      .ribbon-cell:last-child{border-bottom:none}
+      .tl-track{grid-template-columns:1fr;gap:20px}
+      .tl-track::before{display:none}
+      .t-item{flex-direction:row;align-items:center;gap:16px}
+      .t-lbl{text-align:left}
+      .pillars-hd{flex-direction:column;align-items:flex-start}
+      .f-grid{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:768px){
+      :root{--gutter:20px}
+
+      /* ── Nav collée pixel-perfect, opaque en permanence ── */
+      .nav{
+        position:fixed !important;
+        top:0 !important;
+        left:0 !important;
+        right:0 !important;
+        margin:0 !important;
+        padding:0 !important;
+        background:rgba(6,9,18,.97) !important;
+        border-bottom-color:var(--br-0) !important;
+        -webkit-transform:translate3d(0,0,0) !important;
+        transform:translate3d(0,0,0) !important;
+        will-change:transform;
+      }
+
+      .nav-links{display:none}
+
+      /* hero — zéro margin-top */
+      .hero{padding:112px var(--gutter) 80px;margin-top:0 !important;}
+      .hero-h1{font-size:clamp(40px,10vw,56px)}
+
+      /* diag body */
+      .diag-body{padding:28px 20px}
+      .diag-sub{max-width:100%}
+      .diag-vis{flex-direction:column}
+      .check-row{font-size:13px}
+
+      /* bouton centré, non rogné */
+      .diag-btn-wrap{
+        display:flex;
+        justify-content:center;
+        width:100%;
+      }
+      .diag-btn-wrap .btn-p{
+        white-space:normal;
+        text-align:center;
+        justify-content:center;
+        width:100%;
+        max-width:100%;
+        box-sizing:border-box;
+      }
+
+      /* pillar cards */
+      .p-card{padding:24px 18px}
+      .p-title{font-size:20px}
+      .t-lbl{font-size:12px;max-width:calc(100% - 72px)}
+
+      /* footer */
+      .f-legal{display:none}
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
-      .f-legal{justify-content:center}
-    }
-    @media(max-width:600px){
-      :root{--gutter:18px}
-      .price-argument{flex-direction:column;gap:10px}
-      .pitch-h1{font-size:clamp(28px,8vw,40px)}
     }
   </style>
 
@@ -416,304 +471,273 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
 
   <div id="prog"></div>
 
-  <!-- ══ NAV ══ -->
-  <nav class="nav" role="navigation" aria-label="Navigation">
+  <!-- ── NAV ── -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
-      <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
+      <a href="/" class="nav-logo" aria-label="Accueil">
         <div class="nav-mark" aria-hidden="true">EF</div>
         Expatriation Framework
       </a>
-      <a href="vente.html" class="nav-back" aria-label="Voir les détails de l'offre">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path d="M10 6H2M5.5 2.5 2 6l3.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Voir les détails
-      </a>
-      <div class="nav-secure" aria-label="Paiement sécurisé">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-          <path d="M6.5 1.5L11 4v3.5c0 2.5-4.5 4.5-4.5 4.5S2 10 2 7.5V4L6.5 1.5z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-        </svg>
-        Paiement sécurisé via Stripe
-      </div>
+      <ul class="nav-links" role="list">
+        <li><a href="#methodologie">Méthodologie</a></li>
+        <li><a href="a-propos.html">À Propos</a></li>
+        <li><a href="diagnostic.html" class="nav-cta">Diagnostic Gratuit →</a></li>
+      </ul>
     </div>
   </nav>
 
-  <!-- ══ MAIN ══ -->
-  <main>
-    <div class="checkout-wrap">
+  <!-- ── HERO ── -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="hero-grid"></div>
+    </div>
 
-      <!-- ══════════════════════════════════
-           COL DROITE EN PREMIER DANS LE DOM
-           → Order card tout en haut sur mobile
-           → Visuellement à droite sur desktop
-           via grid-column:2 dans le CSS
-      ══════════════════════════════════════ -->
-      <div class="col-right">
-        <div class="order-card" role="region" aria-label="Récapitulatif de commande">
+    <div class="hero-c">
+      <div class="badge">
+        <div class="badge-dot" aria-hidden="true"></div>
+        <span class="badge-txt">Framework Méthodologique · 2026</span>
+      </div>
 
-          <div class="order-head">
-            <div class="order-head-label">Votre commande</div>
-            <div class="product-line">
-              <div class="product-thumb" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="3" y="2" width="14" height="16" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M6.5 7h7M6.5 10h5M6.5 13h6" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="product-info">
-                <div class="product-name">Expatriation Framework 2026</div>
-                <div class="product-desc">PDF interactif · Courriers prêts à l'envoi · Checklist · Accès à vie</div>
-              </div>
-              <div class="product-price">39€</div>
+      <h1 class="hero-h1" id="h1">
+        Sécurisez votre départ.<br><em>Évitez l'irréversible.</em>
+      </h1>
+
+      <p class="hero-sub">
+        Un cadre d'analyse rigoureux pour les entrepreneurs et indépendants français en réflexion avant une expatriation fiscale.
+      </p>
+
+      <div class="hero-btns">
+        <a href="diagnostic.html" class="btn btn-p" aria-label="Faire le diagnostic fiscal gratuit">
+          Faire le diagnostic
+          <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#methodologie" class="btn btn-g">Voir la méthodologie</a>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-lines"><span></span><span></span><span></span></div>
+      <span class="scroll-lbl">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── RIBBON ── -->
+  <div class="ribbon" role="region" aria-label="Chiffres clés">
+    <div class="ribbon-i">
+      <div class="ribbon-cell rv">
+        <div class="r-num">12 <span class="r-unit">questions</span></div>
+        <div class="r-lbl">Diagnostic algorithmique pour identifier vos risques</div>
+      </div>
+      <div class="ribbon-cell rv d1">
+        <div class="r-num">4 <span class="r-unit">piliers</span></div>
+        <div class="r-lbl">Axes d'analyse couvrant l'intégralité du processus</div>
+      </div>
+      <div class="ribbon-cell rv d2">
+        <div class="r-num" style="font-size:clamp(30px,4vw,42px)">T−24<span class="r-unit"> mois</span></div>
+        <div class="r-lbl">Anticipation minimale recommandée avant le départ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DIAGNOSTIC CARD ── -->
+  <section class="diag-wrap" aria-labelledby="diag-h">
+    <div class="diag-card rv">
+      <div class="diag-body">
+        <div class="diag-free">
+          <div class="diag-dot"></div>
+          Gratuit · Sans inscription
+        </div>
+        <h2 class="diag-h2" id="diag-h">Votre projet d'expatriation<br>est-il à risque ?</h2>
+        <p class="diag-sub">Passez notre diagnostic algorithmique. 12 questions pour identifier vos points de blocage vis-à-vis de l'administration fiscale française.</p>
+
+        <div class="checklist">
+          <div class="check-row">
+            <div class="check-box" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
+            Vos points de blocage administratifs et fiscaux spécifiques
           </div>
-
-          <div class="order-totals" role="region" aria-label="Totaux">
-            <div class="total-row">
-              <span class="total-label">Sous-total</span>
-              <span class="total-val" id="subtotal-val">39,00 €</span>
+          <div class="check-row">
+            <div class="check-box" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="total-row">
-              <span class="total-label">TVA (0%)</span>
-              <span class="total-val">0,00 €</span>
-            </div>
-            <div class="total-sep" aria-hidden="true"></div>
-            <div class="total-row">
-              <span class="total-final">Total à payer</span>
-              <span class="total-final-val" id="total-final-val">39€</span>
-            </div>
+            Les critères de résidence analysés par l'administration (foyer, activité, intérêts)
           </div>
-
-          <div class="upsell-wrap">
-            <div class="upsell-label">
-              <div class="upsell-dot" aria-hidden="true"></div>
-              Option complémentaire
+          <div class="check-row">
+            <div class="check-box" aria-hidden="true">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <label class="upsell-toggle">
-              <div class="upsell-check-wrap">
-                <input type="checkbox" class="upsell-check-inp" id="upsell" onchange="toggleUpsell(this)">
-                <div class="upsell-check-box" tabindex="0" role="checkbox" aria-checked="false" aria-label="Ajouter la session de déminage personnalisée">
-                  <svg width="10" height="9" viewBox="0 0 10 9" fill="none" aria-hidden="true">
-                    <path d="M1 4.5l3 3 5-6" stroke="#C4924A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-              <div class="upsell-content">
-                <div class="upsell-title">Ajouter la session de déminage <span>(+150€)</span></div>
-                <div class="upsell-desc">1h en visio — analyse de votre situation personnelle et vérification complète de vos démarches avant départ.</div>
-              </div>
-            </label>
+            Les décisions prématurées à corriger avant votre départ
           </div>
+        </div>
 
-          <div class="cta-wrap">
-            <a
-              href="https://expatriation-framework.systeme.io/paiement39"
-              class="btn-checkout"
-              id="btn-cta"
-              aria-label="Procéder au paiement sécurisé - 39 euros"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                <path d="M9 1.5L13.5 4v4.5c0 3-4.5 6-4.5 6S4.5 11.5 4.5 8.5V4L9 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-              <span id="btn-label">Payer maintenant — 39€</span>
-              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <div class="cta-trust" role="list" aria-label="Garanties de paiement">
-              <div class="ct-badge" role="listitem">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                  <path d="M5.5 1L9.5 3v3c0 2-4 4-4 4s-4-2-4-4V3L5.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-                </svg>
-                Stripe SSL
-              </div>
-              <span class="ct-sep" aria-hidden="true">·</span>
-              <div class="ct-badge" role="listitem">Accès immédiat</div>
-              <span class="ct-sep" aria-hidden="true">·</span>
-              <div class="ct-badge" role="listitem">Aucun abonnement</div>
-            </div>
+        <div class="diag-meta" style="margin-bottom:36px">
+          <div class="meta-tag">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4.5V7.2L9 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            5 minutes
           </div>
+          <div class="meta-tag">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7l3.5 3.5 5.5-7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Résultat immédiat
+          </div>
+          <div class="meta-tag">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="2.5" width="10" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 6.5h5M4.5 8.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Aucun compte requis
+          </div>
+        </div>
 
-          <div class="order-foot">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;opacity:.4">
-              <rect x="1.5" y="6" width="11" height="7" rx="1.5" stroke="#495B78" stroke-width="1.1"/>
-              <path d="M4 6V4.5a3 3 0 0 1 6 0V6" stroke="#495B78" stroke-width="1.1" stroke-linecap="round"/>
+        <div class="diag-btn-wrap">
+          <a href="diagnostic.html" class="btn btn-p">
+            Commencer le test d'éligibilité
+            <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <p class="of-text">
-              Transaction cryptée SSL · En achetant, vous acceptez nos <a href="avertissement.html">conditions</a> et notre <a href="mentions-legales.html">politique de confidentialité</a>.
-            </p>
-          </div>
-
+          </a>
         </div>
-      </div><!-- fin col-right -->
+      </div>
 
-      <!-- ══════════════════════
-           COL GAUCHE — PITCH
-      ══════════════════════ -->
-      <div class="col-left">
-
-        <div class="trust-path rv" aria-label="Étapes">
-          <span>Framework</span>
-          <span class="trust-path-sep" aria-hidden="true">/</span>
-          <span>Diagnostic</span>
-          <span class="trust-path-sep" aria-hidden="true">/</span>
-          <span class="trust-path-cur">Commander</span>
-        </div>
-
-        <h1 class="pitch-h1 rv">
-          Quittez la France<br><em>sans déclencher de redressement.</em>
-        </h1>
-
-        <p class="pitch-lead rv">
-          Un seul critère de l'Art. 4B mal géré, et le fisc peut vous poursuivre des années après votre départ. Ce Framework vous donne le plan exact — chronologie, courriers, audit patrimonial — sans jargon juridique.
-        </p>
-
-        <div class="included-card rv">
-          <div class="included-head">
-            <span class="included-head-lbl">Ce que vous recevez immédiatement</span>
-          </div>
-          <div class="included-list" role="list">
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <circle cx="9" cy="9" r="6.5" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M9 6v4l2.5 1.5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">La Timeline J−90 → Jour J</div>
-                <div class="incl-desc">Le calendrier exact : quoi faire, qui prévenir, dans quel ordre — pour éviter tout chevauchement fiscal</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2.5" y="2.5" width="13" height="13" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M5.5 9l3 3 4-5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">Le tableau d'audit Art. 4B</div>
-                <div class="incl-desc">Mesurez votre niveau de risque réel (Faible / Modéré / Critique) selon la jurisprudence récente</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="3" y="2" width="12" height="14" rx="1.5" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M6 6h6M6 8.5h4M6 11h5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">Les modèles de lettres rédigés</div>
-                <div class="incl-desc">Courriers prêts à l'envoi pour les impôts, votre banque et le Greffe — avec les termes juridiques exacts</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M9 2L16 13H2L9 2z" stroke="#C8A96A" stroke-width="1.1" stroke-linejoin="round"/>
-                  <path d="M9 7.5v2.5M9 11.5v.5" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">La synthèse Exit Tax 2024</div>
-                <div class="incl-desc">Seuils déclencheurs, actifs concernés, formulaires et délais légaux — pour ne rien rater avant de partir</div>
-              </div>
-            </div>
-
+      <div class="diag-vis" aria-hidden="true">
+        <div class="risk-ring">
+          <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="70" cy="70" r="64" stroke="rgba(200,169,106,0.14)" stroke-width="1" stroke-dasharray="4 8"/>
+            <circle cx="70" cy="70" r="56" stroke="#182033" stroke-width="1"/>
+            <circle cx="70" cy="70" r="56" stroke="url(#ag)" stroke-width="1.5" stroke-linecap="round"
+              stroke-dasharray="246 352" transform="rotate(-90 70 70)"/>
+            <circle cx="70" cy="70" r="48" stroke="#111826" stroke-width=".5"/>
+            <defs>
+              <linearGradient id="ag" x1="0" y1="0" x2="140" y2="0">
+                <stop offset="0%" stop-color="#9A7B44"/>
+                <stop offset="100%" stop-color="#C8A96A"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-num">12</div>
+            <div class="ring-lbl">Questions</div>
           </div>
         </div>
 
-        <div class="price-argument rv">
-          <div class="pa-left">
-            <span class="pa-crossed">350€</span>
-            <span class="pa-crossed-sub">1h d'avocat</span>
-          </div>
-          <div class="pa-right">
-            Un avocat fiscaliste facture en moyenne <strong>300 à 600 € de l'heure</strong> pour les mêmes informations de base. Ce Framework couvre 95% de ce que vous obtiendrez lors des premiers rendez-vous — pour <strong>39 €</strong>.
-          </div>
+        <div class="risk-levels">
+          <div class="rl rl-low"><span>Risque faible</span><div class="rl-dot"></div></div>
+          <div class="rl rl-med"><span>Risque modéré</span><div class="rl-dot"></div></div>
+          <div class="rl rl-hi"><span>Risque élevé</span><div class="rl-dot"></div></div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="section-sep rv" aria-hidden="true"></div>
+  <!-- ── TIMELINE ── -->
+  <section class="tl-section" aria-labelledby="tl-h">
+    <div class="tl-inner">
+      <div class="rv">
+        <div class="eyebrow">Planification</div>
+        <h2 class="s-h2" id="tl-h">Chronologie du départ</h2>
+        <p class="s-lead">L'administration fiscale analyse votre comportement sur plusieurs années. Anticiper à T−24 n'est pas une option.</p>
+      </div>
 
-        <div class="faq-mini rv">
+      <div class="tl-track rv d1">
+        <div class="t-item act"><div class="t-dot">T−24</div><div class="t-lbl">Audit initial &amp; décision</div></div>
+        <div class="t-item act"><div class="t-dot">T−18</div><div class="t-lbl">Restructuration patrimoniale</div></div>
+        <div class="t-item act"><div class="t-dot">T−12</div><div class="t-lbl">Choix du pays d'accueil</div></div>
+        <div class="t-item"><div class="t-dot">T−6</div><div class="t-lbl">Démarches officielles</div></div>
+        <div class="t-item"><div class="t-dot">T</div><div class="t-lbl">Départ effectif</div></div>
+      </div>
+    </div>
+  </section>
 
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Est-ce que ça remplace un avocat fiscaliste ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Non — et c'est délibéré. Pour une situation classique (SASU, freelance, investisseur), ce Framework couvre l'essentiel. Pour des montages complexes (holding, patrimoine multi-millions), l'avocat reste indispensable. <strong>Dans les deux cas, vous arrivez préparé et vous économisez des heures de consultation.</strong></p>
-            </div>
-          </div>
+  <!-- ── PILLAR CARDS ── -->
+  <section class="pillars-s" id="methodologie" aria-labelledby="pillars-h">
+    <div class="pillars-hd rv">
+      <div>
+        <div class="eyebrow">Méthodologie</div>
+        <h2 class="s-h2" id="pillars-h" style="margin-bottom:10px">Cadres de réflexion &amp; Piliers</h2>
+        <p class="s-lead" style="margin-bottom:0">Quatre axes d'analyse pour anticiper les erreurs irréversibles.</p>
+      </div>
+    </div>
 
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Quand vais-je recevoir le Framework ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Immédiatement après validation du paiement. <strong>Un email avec votre lien de téléchargement personnel</strong> est envoyé automatiquement à l'adresse renseignée. Si vous ne le recevez pas dans 5 minutes, vérifiez vos spams.</p>
-            </div>
-          </div>
+    <div class="pillars-grid">
 
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Le contenu est-il à jour pour 2026 ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Oui. Le Framework intègre les <strong>dernières lois de finances et jurisprudences</strong> concernant l'Article 4B du CGI, l'Exit Tax et les critères de résidence fiscale. Valable pour tout départ planifié en 2025–2026.</p>
-            </div>
-          </div>
-
+      <a href="article-1-timing.html" class="p-card rv">
+        <div class="p-glow" aria-hidden="true"></div>
+        <div class="p-num">01</div>
+        <div class="p-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="8" stroke="#C8A96A" stroke-width="1.2"/>
+            <path d="M11 7v4.5L14 13" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
         </div>
-
-        <div class="guarantees rv">
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <path d="M6.5 1L11 3.5v3c0 2.5-4.5 5-4.5 5S2 10 2 6.5v-3L6.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-            </svg>
-            Paiement Stripe crypté SSL
-          </div>
-          <div class="g-dot" aria-hidden="true"></div>
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.1"/>
-              <path d="M4 6.5l2 2 3.5-3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Accès immédiat par email
-          </div>
-          <div class="g-dot" aria-hidden="true"></div>
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <rect x="2" y="5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
-              <path d="M4 5V4a2.5 2.5 0 0 1 5 0v1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-            </svg>
-            Accès à vie · Aucun abonnement
-          </div>
+        <h3 class="p-title">Chronologie &amp; Timing</h3>
+        <p class="p-desc">Analyses détaillées sur les actions à mener de T−24 mois à T−6 mois avant le départ effectif.</p>
+        <div class="p-link">Lire l'analyse
+          <svg class="btn-ic" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
+      </a>
 
-      </div><!-- fin col-left -->
+      <a href="article-2-residence.html" class="p-card rv d1">
+        <div class="p-glow" aria-hidden="true"></div>
+        <div class="p-num">02</div>
+        <div class="p-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 3l8 6v10H3V9l8-6z" stroke="#C8A96A" stroke-width="1.2" stroke-linejoin="round"/>
+            <rect x="8" y="13" width="6" height="6" rx=".5" stroke="#C8A96A" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <h3 class="p-title">Critères de Résidence</h3>
+        <p class="p-desc">Comprendre la vision de l'administration : foyer d'habitation, centre d'intérêts économiques et activité professionnelle.</p>
+        <div class="p-link">Lire l'analyse
+          <svg class="btn-ic" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
 
-    </div><!-- fin checkout-wrap -->
-  </main>
+      <a href="article-3-erreurs.html" class="p-card rv d2">
+        <div class="p-glow" aria-hidden="true"></div>
+        <div class="p-num">03</div>
+        <div class="p-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 4L19.5 18H2.5L11 4z" stroke="#C8A96A" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M11 10.5v3M11 15.5v.5" stroke="#C8A96A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="p-title">Erreurs Fréquentes</h3>
+        <p class="p-desc">Études de cas sur les pièges classiques, les mythes propagés en ligne et les décisions aux conséquences irréversibles.</p>
+        <div class="p-link">Lire l'analyse
+          <svg class="btn-ic" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
 
-  <!-- ── DISCLAIMER STRIP ── -->
+      <a href="article-4-preparation.html" class="p-card rv d3">
+        <div class="p-glow" aria-hidden="true"></div>
+        <div class="p-num">04</div>
+        <div class="p-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <rect x="4" y="4" width="14" height="14" rx="2" stroke="#C8A96A" stroke-width="1.2"/>
+            <path d="M8 8h6M8 11h4M8 14h5" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="p-title">Préparation &amp; Experts</h3>
+        <p class="p-desc">Ce que vous devez impérativement préparer avant de payer un avocat à 500 €/heure pour structurer votre départ.</p>
+        <div class="p-link">Lire l'analyse
+          <svg class="btn-ic" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── DISCLAIMER ── -->
   <div class="disc-strip" role="note">
     <div class="disc-i">
       <div class="disc-ico" aria-hidden="true">
@@ -722,11 +746,11 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/>
         </svg>
       </div>
-      <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce Framework est fourni à titre d'information générale. Il ne constitue pas un conseil juridique ou fiscal personnalisé. Consultez un professionnel qualifié avant toute décision d'expatriation.</p>
+      <p class="disc-txt"><strong>Avertissement :</strong> Le contenu de ce site est fourni à titre d'information générale et ne constitue pas un conseil juridique, fiscal ou patrimonial personnalisé. Chaque situation est unique. Consultez un professionnel qualifié avant toute décision.</p>
     </div>
   </div>
 
-  <!-- ── FOOTER — DA identique au reste du site ── -->
+  <!-- ── FOOTER ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -736,10 +760,11 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             Expatriation Framework
           </div>
           <p class="f-tag">Valider, Anticiper, Décider.</p>
-          <p class="f-disc-box">Ce contenu est fourni à titre informatif uniquement. Toute situation doit être analysée par un professionnel qualifié avant toute décision.</p>
+          <p class="f-disc">Ce contenu est fourni à titre informatif uniquement et ne constitue pas un conseil juridique ou fiscal personnalisé. Toute situation doit être analysée par un professionnel qualifié.</p>
         </div>
+
         <div>
-          <div class="f-nav-lbl">Méthodologie</div>
+          <div class="f-nav-lbl">Ressources</div>
           <ul class="f-nav">
             <li><a href="article-1-timing.html">Chronologie &amp; Timing</a></li>
             <li><a href="article-2-residence.html">Critères de Résidence</a></li>
@@ -747,15 +772,19 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
           </ul>
         </div>
+
         <div>
-          <div class="f-nav-lbl">Site</div>
+          <div class="f-nav-lbl">Framework</div>
           <ul class="f-nav">
-            <li><a href="index.html">Accueil</a></li>
             <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
-            <li><a href="vente.html">Le Framework — 39€</a></li>
+            <li><a href="vente.html">Obtenir le Framework</a></li>
+            <li><a href="a-propos.html">À Propos</a></li>
+            <li><a href="avertissement.html">Avertissement</a></li>
+            <li><a href="mentions-legales.html">Mentions Légales</a></li>
           </ul>
         </div>
       </div>
+
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
@@ -767,87 +796,35 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </footer>
 
-  <!-- ══ SCRIPTS ══ -->
   <script>
-    "use strict";
-
-    // Barre de progression au scroll
     const prog = document.getElementById('prog');
+    const nav  = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
-      if (h > 0) prog.style.width = (s / h * 100).toFixed(2) + '%';
-    }, { passive: true });
+      prog.style.width = (s / h * 100).toFixed(2) + '%';
+      nav.classList.toggle('solid', s > 24);
+    }, {passive: true});
 
-    // Liens de paiement
-    const URL_BASE   = 'https://expatriation-framework.systeme.io/paiement39';
-    const URL_UPSELL = 'https://expatriation-framework.systeme.io/paiement189';
-    const ctaBtn     = document.getElementById('btn-cta');
-
-    // Reveal on scroll
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: .06, rootMargin: '0px 0px -16px 0px' });
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.07, rootMargin:'0px 0px -28px 0px'});
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-    // Upsell toggle
-    function toggleUpsell(checkbox) {
-      const isChecked  = checkbox.checked;
-      const chkBox     = checkbox.nextElementSibling;
-      const btnLabel   = document.getElementById('btn-label');
-      const subtotalEl = document.getElementById('subtotal-val');
-      const totalEl    = document.getElementById('total-final-val');
-
-      chkBox.setAttribute('aria-checked', isChecked ? 'true' : 'false');
-
-      if (isChecked) {
-        ctaBtn.href = URL_UPSELL;
-        ctaBtn.setAttribute('aria-label', 'Procéder au paiement sécurisé - 189 euros');
-        btnLabel.textContent   = 'Payer maintenant — 189€';
-        subtotalEl.textContent = '189,00 €';
-        totalEl.textContent    = '189€';
-      } else {
-        ctaBtn.href = URL_BASE;
-        ctaBtn.setAttribute('aria-label', 'Procéder au paiement sécurisé - 39 euros');
-        btnLabel.textContent   = 'Payer maintenant — 39€';
-        subtotalEl.textContent = '39,00 €';
-        totalEl.textContent    = '39€';
-      }
-    }
-
-    // FAQ mini accordion
-    function toggleFaqMini(btn) {
-      const item   = btn.closest('.faq-mini-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-mini-item.open').forEach(el => {
-        el.classList.remove('open');
-        el.querySelector('.faq-mini-q').setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    }
-
-    // Keyboard support FAQ
-    document.querySelectorAll('.faq-mini-q').forEach(btn => {
-      btn.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaqMini(btn); }
+    document.querySelectorAll('.p-card').forEach(c => {
+      c.addEventListener('mousemove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        c.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
       });
     });
 
-    // Keyboard support upsell
-    document.querySelector('.upsell-check-box').addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const inp = document.getElementById('upsell');
-        inp.checked = !inp.checked;
-        toggleUpsell(inp);
-      }
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+      });
     });
   </script>
-
 </body>
 </html>
