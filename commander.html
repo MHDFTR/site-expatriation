@@ -11,7 +11,7 @@
 
   <style>
     /* ══════════════════════════════════════
-       RESET NUCLÉAIRE — avant tout le reste
+       RESET NUCLÉAIRE
     ══════════════════════════════════════ */
     html, body {
       margin: 0 !important;
@@ -66,19 +66,30 @@
     .rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}
     .rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
 
-    /* ══ NAV — verrouillée, zéro "jour" ══ */
+    /* ══════════════════════════════════════
+       NAV — identique à index.html
+       Transparente au chargement → solide au scroll
+    ══════════════════════════════════════ */
     .nav{
       position:fixed !important;
       top:0 !important; left:0 !important; right:0 !important;
       margin:0 !important; padding:0 !important;
       height:60px; z-index:9999;
       display:flex;align-items:center;justify-content:center;
-      border-bottom:1px solid var(--br-0);
-      background:rgba(6,9,18,.92);
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid transparent;
+      /* Transparent au chargement = fond parfaitement fondu avec bg-1 */
+      background:rgba(6,9,18,0);
       -webkit-transform:translate3d(0,0,0) !important;
       transform:translate3d(0,0,0) !important;
       will-change:transform;
+      transition:background .45s var(--ease),border-color .45s var(--ease);
+    }
+    /* Identique à .nav.solid dans index.html */
+    .nav.solid{
+      background:rgba(6,9,18,.92);
+      backdrop-filter:blur(22px) saturate(155%);
+      -webkit-backdrop-filter:blur(22px) saturate(155%);
+      border-bottom-color:var(--br-0);
     }
     .nav-i{
       width:100%;max-width:var(--max-w);
@@ -106,16 +117,20 @@
     }
     .nav-back:hover{color:var(--t1)}
 
-    /* ── Mobile : masquer les textes qui débordent ── */
+    /* Mobile : masquer les textes secondaires de la nav */
     @media(max-width:768px){
       .nav-back{display:none}
       .nav-secure{display:none}
+      .nav{background:rgba(6,9,18,.97) !important;border-bottom-color:var(--br-0) !important}
     }
 
-    /* Main — offset pour nav fixe */
+    /* Main — offset pour la nav fixe */
     main{padding-top:60px}
 
-    /* ══ LAYOUT 2 COL ══ */
+    /* ══ LAYOUT 2 COL ══
+       col-left est PREMIER dans le DOM (ordre naturel pour mobile).
+       Sur desktop, la grille les place : 1fr | 380px.
+    ══════════════════════════════════════ */
     .checkout-wrap{
       max-width:var(--max-w);margin:0 auto;
       padding:48px var(--gutter) 40px;
@@ -124,17 +139,17 @@
       gap:40px;
       align-items:start;
     }
+    /* Ordre naturel : pas de grid-column forcé */
+    .col-right{position:sticky;top:76px}
+    .col-left{}
 
-    /*
-      col-right est PREMIER dans le DOM (meilleur pour mobile et conversion),
-      mais placé visuellement à droite sur desktop via grid-column explicite.
-    */
-    .col-right{grid-column:2;grid-row:1;position:sticky;top:76px}
-    .col-left{grid-column:1;grid-row:1}
+    /* Mobile : colonne unique, ordre naturel = pitch puis order card */
+    @media(max-width:900px){
+      .checkout-wrap{grid-template-columns:1fr;gap:28px;padding:32px var(--gutter) 40px}
+      .col-right{position:static}
+    }
 
-    /* ══════════════════════════
-       COL GAUCHE — PITCH
-    ══════════════════════════ */
+    /* ══ COL GAUCHE — PITCH ══ */
     .trust-path{
       display:flex;align-items:center;gap:8px;
       font-family:var(--fm);font-size:10px;color:var(--t3);
@@ -161,13 +176,16 @@
     }
     .included-head{
       padding:18px 22px;border-bottom:1px solid var(--br-0);
-      display:flex;align-items:center;gap:10px;
+      display:flex;align-items:center;
     }
     .included-head-lbl{
       font-family:var(--fm);font-size:9.5px;color:var(--gold-d);
       text-transform:uppercase;letter-spacing:.13em;
     }
-    .included-head-lbl::before{content:'';display:inline-block;width:14px;height:1px;background:var(--gold-d);margin-right:8px;vertical-align:middle;opacity:.5}
+    .included-head-lbl::before{
+      content:'';display:inline-block;width:14px;height:1px;
+      background:var(--gold-d);margin-right:8px;vertical-align:middle;opacity:.5;
+    }
     .included-list{padding:4px 0}
     .incl-row{
       display:flex;align-items:flex-start;gap:14px;
@@ -194,8 +212,7 @@
     .pa-left{flex-shrink:0;text-align:center}
     .pa-crossed{
       font-family:var(--fd);font-size:22px;font-weight:600;
-      color:var(--red);text-decoration:line-through;opacity:.7;
-      line-height:1;display:block;
+      color:var(--red);text-decoration:line-through;opacity:.7;line-height:1;display:block;
     }
     .pa-crossed-sub{font-family:var(--fm);font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase}
     .pa-right{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.6}
@@ -205,9 +222,7 @@
     .guarantee-item{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:300;color:var(--t2)}
     .g-dot{width:4px;height:4px;border-radius:50%;background:var(--t3)}
 
-    /* ══════════════════════════
-       COL DROITE — ORDER CARD
-    ══════════════════════════ */
+    /* ══ COL DROITE — ORDER CARD ══ */
     .order-card{
       background:var(--bg-2);border:1px solid var(--br-1);
       border-radius:20px;overflow:hidden;position:relative;
@@ -282,8 +297,7 @@
     .btn-checkout:hover::after{transform:translateX(100%)}
     .btn-checkout:hover{
       background:var(--gold-b);transform:translateY(-2px);
-      box-shadow:0 0 40px rgba(200,169,106,.28),0 0 16px rgba(200,169,106,.16);
-      color:#08080f;
+      box-shadow:0 0 40px rgba(200,169,106,.28),0 0 16px rgba(200,169,106,.16);color:#08080f;
     }
     .btn-checkout:active{transform:translateY(0)}
     .btn-ic{transition:transform .2s var(--spring)}
@@ -307,8 +321,7 @@
     .faq-mini-item:first-child{border-top:1px solid var(--br-0)}
     .faq-mini-q{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:14px 0;cursor:pointer;
-      font-size:14px;font-weight:500;color:var(--t1);transition:color .2s;
+      padding:14px 0;cursor:pointer;font-size:14px;font-weight:500;color:var(--t1);transition:color .2s;
     }
     .faq-mini-q:hover{color:var(--t0)}
     .faq-mini-arrow{flex-shrink:0;color:var(--t3);transition:transform .3s var(--slow)}
@@ -337,11 +350,7 @@
     .disc-txt strong{color:var(--t1);font-weight:500}
 
     /* ══ FOOTER — DA identique au reste du site ══ */
-    .footer{
-      border-top:1px solid var(--br-0);
-      padding:60px var(--gutter) 36px;
-      background:var(--bg-0);
-    }
+    .footer{border-top:1px solid var(--br-0);padding:60px var(--gutter) 36px;background:var(--bg-0)}
     .footer-i{max-width:var(--max-w);margin:0 auto}
     .f-grid{
       display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;
@@ -351,28 +360,20 @@
     .f-tag{font-family:var(--fd);font-size:15px;font-style:italic;color:var(--t1);margin-bottom:14px;line-height:1.5}
     .f-disc-box{
       font-size:11.5px;color:var(--t2);line-height:1.6;
-      padding:12px 13px;border-radius:10px;
-      background:rgba(255,255,255,.014);border:1px solid var(--br-0);
+      padding:12px 13px;border-radius:10px;background:rgba(255,255,255,.014);border:1px solid var(--br-0);
     }
     .f-nav-lbl{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
     .f-nav{list-style:none;display:flex;flex-direction:column;gap:10px}
     .f-nav a{font-size:13.5px;color:var(--t1);transition:color .2s}
     .f-nav a:hover{color:var(--t0)}
-    .f-btm{
-      padding-top:28px;display:flex;align-items:center;
-      justify-content:space-between;gap:16px;flex-wrap:wrap;
-    }
+    .f-btm{padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .f-copy{font-family:var(--fm);font-size:10.5px;color:var(--t3);letter-spacing:.05em}
     .f-legal{display:flex;align-items:center;gap:20px}
     .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
     .f-legal a:hover{color:var(--t1)}
 
-    /* ══ RESPONSIVE ══ */
-    @media(max-width:900px){
-      .checkout-wrap{grid-template-columns:1fr;gap:28px;padding:32px var(--gutter) 40px}
-      /* Mobile : order card en premier (row 1), pitch en second (row 2) */
-      .col-right{grid-column:1;grid-row:1;position:static}
-      .col-left{grid-column:1;grid-row:2}
+    /* ══ RESPONSIVE FOOTER ══ */
+    @media(max-width:768px){
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
       .f-legal{justify-content:center}
@@ -417,7 +418,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <div id="prog"></div>
 
   <!-- ══ NAV ══ -->
-  <nav class="nav" role="navigation" aria-label="Navigation">
+  <nav class="nav" id="nav" role="navigation" aria-label="Navigation">
     <div class="nav-i">
       <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
         <div class="nav-mark" aria-hidden="true">EF</div>
@@ -442,12 +443,178 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <main>
     <div class="checkout-wrap">
 
-      <!-- ══════════════════════════════════
-           COL DROITE EN PREMIER DANS LE DOM
-           → Order card tout en haut sur mobile
-           → Visuellement à droite sur desktop
-           via grid-column:2 dans le CSS
-      ══════════════════════════════════════ -->
+      <!-- ══════════════════════════════════════════
+           COL GAUCHE — PITCH (premier dans le DOM)
+           → apparaît en haut sur mobile
+           → colonne gauche (1fr) sur desktop
+      ══════════════════════════════════════════ -->
+      <div class="col-left">
+
+        <div class="trust-path rv" aria-label="Étapes">
+          <span>Framework</span>
+          <span class="trust-path-sep" aria-hidden="true">/</span>
+          <span>Diagnostic</span>
+          <span class="trust-path-sep" aria-hidden="true">/</span>
+          <span class="trust-path-cur">Commander</span>
+        </div>
+
+        <h1 class="pitch-h1 rv">
+          Quittez la France<br><em>sans déclencher de redressement.</em>
+        </h1>
+
+        <p class="pitch-lead rv">
+          Un seul critère de l'Art. 4B mal géré, et le fisc peut vous poursuivre des années après votre départ. Ce Framework vous donne le plan exact — chronologie, courriers, audit patrimonial — sans jargon juridique.
+        </p>
+
+        <!-- Ce qui est inclus -->
+        <div class="included-card rv">
+          <div class="included-head">
+            <span class="included-head-lbl">Ce que vous recevez immédiatement</span>
+          </div>
+          <div class="included-list" role="list">
+
+            <div class="incl-row" role="listitem">
+              <div class="incl-ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="6.5" stroke="#C8A96A" stroke-width="1.1"/>
+                  <path d="M9 6v4l2.5 1.5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="incl-body">
+                <div class="incl-title">La Timeline J−90 → Jour J</div>
+                <div class="incl-desc">Le calendrier exact : quoi faire, qui prévenir, dans quel ordre — pour éviter tout chevauchement fiscal</div>
+              </div>
+            </div>
+
+            <div class="incl-row" role="listitem">
+              <div class="incl-ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <rect x="2.5" y="2.5" width="13" height="13" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
+                  <path d="M5.5 9l3 3 4-5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="incl-body">
+                <div class="incl-title">Le tableau d'audit Art. 4B</div>
+                <div class="incl-desc">Mesurez votre niveau de risque réel (Faible / Modéré / Critique) selon la jurisprudence récente</div>
+              </div>
+            </div>
+
+            <div class="incl-row" role="listitem">
+              <div class="incl-ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <rect x="3" y="2" width="12" height="14" rx="1.5" stroke="#C8A96A" stroke-width="1.1"/>
+                  <path d="M6 6h6M6 8.5h4M6 11h5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="incl-body">
+                <div class="incl-title">Les modèles de lettres rédigés</div>
+                <div class="incl-desc">Courriers prêts à l'envoi pour les impôts, votre banque et le Greffe — avec les termes juridiques exacts</div>
+              </div>
+            </div>
+
+            <div class="incl-row" role="listitem">
+              <div class="incl-ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 2L16 13H2L9 2z" stroke="#C8A96A" stroke-width="1.1" stroke-linejoin="round"/>
+                  <path d="M9 7.5v2.5M9 11.5v.5" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="incl-body">
+                <div class="incl-title">La synthèse Exit Tax 2024</div>
+                <div class="incl-desc">Seuils déclencheurs, actifs concernés, formulaires et délais légaux — pour ne rien rater avant de partir</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Argument prix -->
+        <div class="price-argument rv">
+          <div class="pa-left">
+            <span class="pa-crossed">350€</span>
+            <span class="pa-crossed-sub">1h d'avocat</span>
+          </div>
+          <div class="pa-right">
+            Un avocat fiscaliste facture en moyenne <strong>300 à 600 € de l'heure</strong> pour les mêmes informations de base. Ce Framework couvre 95% de ce que vous obtiendrez lors des premiers rendez-vous — pour <strong>39 €</strong>.
+          </div>
+        </div>
+
+        <!-- FAQ mini -->
+        <div class="section-sep rv" aria-hidden="true"></div>
+
+        <div class="faq-mini rv">
+
+          <div class="faq-mini-item">
+            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
+              <span>Est-ce que ça remplace un avocat fiscaliste ?</span>
+              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="faq-mini-a" role="region">
+              <p>Non — et c'est délibéré. Pour une situation classique (SASU, freelance, investisseur), ce Framework couvre l'essentiel. Pour des montages complexes (holding, patrimoine multi-millions), l'avocat reste indispensable. <strong>Dans les deux cas, vous arrivez préparé et vous économisez des heures de consultation.</strong></p>
+            </div>
+          </div>
+
+          <div class="faq-mini-item">
+            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
+              <span>Quand vais-je recevoir le Framework ?</span>
+              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="faq-mini-a" role="region">
+              <p>Immédiatement après validation du paiement. <strong>Un email avec votre lien de téléchargement personnel</strong> est envoyé automatiquement à l'adresse renseignée. Si vous ne le recevez pas dans 5 minutes, vérifiez vos spams.</p>
+            </div>
+          </div>
+
+          <div class="faq-mini-item">
+            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
+              <span>Le contenu est-il à jour pour 2026 ?</span>
+              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="faq-mini-a" role="region">
+              <p>Oui. Le Framework intègre les <strong>dernières lois de finances et jurisprudences</strong> concernant l'Article 4B du CGI, l'Exit Tax et les critères de résidence fiscale. Valable pour tout départ planifié en 2025–2026.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Garanties -->
+        <div class="guarantees rv">
+          <div class="guarantee-item">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M6.5 1L11 3.5v3c0 2.5-4.5 5-4.5 5S2 10 2 6.5v-3L6.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+            </svg>
+            Paiement Stripe crypté SSL
+          </div>
+          <div class="g-dot" aria-hidden="true"></div>
+          <div class="guarantee-item">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M4 6.5l2 2 3.5-3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Accès immédiat par email
+          </div>
+          <div class="g-dot" aria-hidden="true"></div>
+          <div class="guarantee-item">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <rect x="2" y="5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M4 5V4a2.5 2.5 0 0 1 5 0v1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+            Accès à vie · Aucun abonnement
+          </div>
+        </div>
+
+      </div><!-- fin col-left -->
+
+      <!-- ══════════════════════════════════════════
+           COL DROITE — ORDER CARD (second dans le DOM)
+           → apparaît en bas sur mobile (sous le pitch)
+           → colonne droite (380px) sur desktop
+      ══════════════════════════════════════════ -->
       <div class="col-right">
         <div class="order-card" role="region" aria-label="Récapitulatif de commande">
 
@@ -549,167 +716,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         </div>
       </div><!-- fin col-right -->
 
-      <!-- ══════════════════════
-           COL GAUCHE — PITCH
-      ══════════════════════ -->
-      <div class="col-left">
-
-        <div class="trust-path rv" aria-label="Étapes">
-          <span>Framework</span>
-          <span class="trust-path-sep" aria-hidden="true">/</span>
-          <span>Diagnostic</span>
-          <span class="trust-path-sep" aria-hidden="true">/</span>
-          <span class="trust-path-cur">Commander</span>
-        </div>
-
-        <h1 class="pitch-h1 rv">
-          Quittez la France<br><em>sans déclencher de redressement.</em>
-        </h1>
-
-        <p class="pitch-lead rv">
-          Un seul critère de l'Art. 4B mal géré, et le fisc peut vous poursuivre des années après votre départ. Ce Framework vous donne le plan exact — chronologie, courriers, audit patrimonial — sans jargon juridique.
-        </p>
-
-        <div class="included-card rv">
-          <div class="included-head">
-            <span class="included-head-lbl">Ce que vous recevez immédiatement</span>
-          </div>
-          <div class="included-list" role="list">
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <circle cx="9" cy="9" r="6.5" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M9 6v4l2.5 1.5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">La Timeline J−90 → Jour J</div>
-                <div class="incl-desc">Le calendrier exact : quoi faire, qui prévenir, dans quel ordre — pour éviter tout chevauchement fiscal</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2.5" y="2.5" width="13" height="13" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M5.5 9l3 3 4-5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">Le tableau d'audit Art. 4B</div>
-                <div class="incl-desc">Mesurez votre niveau de risque réel (Faible / Modéré / Critique) selon la jurisprudence récente</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="3" y="2" width="12" height="14" rx="1.5" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M6 6h6M6 8.5h4M6 11h5" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">Les modèles de lettres rédigés</div>
-                <div class="incl-desc">Courriers prêts à l'envoi pour les impôts, votre banque et le Greffe — avec les termes juridiques exacts</div>
-              </div>
-            </div>
-
-            <div class="incl-row" role="listitem">
-              <div class="incl-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M9 2L16 13H2L9 2z" stroke="#C8A96A" stroke-width="1.1" stroke-linejoin="round"/>
-                  <path d="M9 7.5v2.5M9 11.5v.5" stroke="#C8A96A" stroke-width="1.3" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="incl-body">
-                <div class="incl-title">La synthèse Exit Tax 2024</div>
-                <div class="incl-desc">Seuils déclencheurs, actifs concernés, formulaires et délais légaux — pour ne rien rater avant de partir</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="price-argument rv">
-          <div class="pa-left">
-            <span class="pa-crossed">350€</span>
-            <span class="pa-crossed-sub">1h d'avocat</span>
-          </div>
-          <div class="pa-right">
-            Un avocat fiscaliste facture en moyenne <strong>300 à 600 € de l'heure</strong> pour les mêmes informations de base. Ce Framework couvre 95% de ce que vous obtiendrez lors des premiers rendez-vous — pour <strong>39 €</strong>.
-          </div>
-        </div>
-
-        <div class="section-sep rv" aria-hidden="true"></div>
-
-        <div class="faq-mini rv">
-
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Est-ce que ça remplace un avocat fiscaliste ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Non — et c'est délibéré. Pour une situation classique (SASU, freelance, investisseur), ce Framework couvre l'essentiel. Pour des montages complexes (holding, patrimoine multi-millions), l'avocat reste indispensable. <strong>Dans les deux cas, vous arrivez préparé et vous économisez des heures de consultation.</strong></p>
-            </div>
-          </div>
-
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Quand vais-je recevoir le Framework ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Immédiatement après validation du paiement. <strong>Un email avec votre lien de téléchargement personnel</strong> est envoyé automatiquement à l'adresse renseignée. Si vous ne le recevez pas dans 5 minutes, vérifiez vos spams.</p>
-            </div>
-          </div>
-
-          <div class="faq-mini-item">
-            <div class="faq-mini-q" onclick="toggleFaqMini(this)" role="button" tabindex="0" aria-expanded="false">
-              <span>Le contenu est-il à jour pour 2026 ?</span>
-              <svg class="faq-mini-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="faq-mini-a" role="region">
-              <p>Oui. Le Framework intègre les <strong>dernières lois de finances et jurisprudences</strong> concernant l'Article 4B du CGI, l'Exit Tax et les critères de résidence fiscale. Valable pour tout départ planifié en 2025–2026.</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="guarantees rv">
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <path d="M6.5 1L11 3.5v3c0 2.5-4.5 5-4.5 5S2 10 2 6.5v-3L6.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-            </svg>
-            Paiement Stripe crypté SSL
-          </div>
-          <div class="g-dot" aria-hidden="true"></div>
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.1"/>
-              <path d="M4 6.5l2 2 3.5-3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Accès immédiat par email
-          </div>
-          <div class="g-dot" aria-hidden="true"></div>
-          <div class="guarantee-item">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-              <rect x="2" y="5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
-              <path d="M4 5V4a2.5 2.5 0 0 1 5 0v1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-            </svg>
-            Accès à vie · Aucun abonnement
-          </div>
-        </div>
-
-      </div><!-- fin col-left -->
-
     </div><!-- fin checkout-wrap -->
   </main>
 
@@ -771,12 +777,14 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <script>
     "use strict";
 
-    // Barre de progression au scroll
+    // Barre de progression + nav solide au scroll — identique à index.html
     const prog = document.getElementById('prog');
+    const nav  = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       if (h > 0) prog.style.width = (s / h * 100).toFixed(2) + '%';
+      nav.classList.toggle('solid', s > 24);
     }, { passive: true });
 
     // Liens de paiement
@@ -799,9 +807,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
       const btnLabel   = document.getElementById('btn-label');
       const subtotalEl = document.getElementById('subtotal-val');
       const totalEl    = document.getElementById('total-final-val');
-
       chkBox.setAttribute('aria-checked', isChecked ? 'true' : 'false');
-
       if (isChecked) {
         ctaBtn.href = URL_UPSELL;
         ctaBtn.setAttribute('aria-label', 'Procéder au paiement sécurisé - 189 euros');
