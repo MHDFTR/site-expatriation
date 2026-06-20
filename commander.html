@@ -127,26 +127,14 @@
     /* Main — offset pour la nav fixe */
     main{padding-top:60px}
 
-    /* ══ LAYOUT 2 COL ══
-       col-left est PREMIER dans le DOM (ordre naturel pour mobile).
-       Sur desktop, la grille les place : 1fr | 380px.
-    ══════════════════════════════════════ */
+    /* ══ LAYOUT COLONNE UNIQUE — centré ══ */
     .checkout-wrap{
-      max-width:var(--max-w);margin:0 auto;
+      max-width:720px;margin:0 auto;
       padding:48px var(--gutter) 40px;
-      display:grid;
-      grid-template-columns:1fr 380px;
-      gap:40px;
-      align-items:start;
     }
-    /* Ordre naturel : pas de grid-column forcé */
-    .col-right{position:sticky;top:76px}
-    .col-left{}
 
-    /* Mobile : colonne unique, ordre naturel = pitch puis order card */
-    @media(max-width:900px){
-      .checkout-wrap{grid-template-columns:1fr;gap:28px;padding:32px var(--gutter) 40px}
-      .col-right{position:static}
+    @media(max-width:600px){
+      .checkout-wrap{padding:32px var(--gutter) 40px}
     }
 
     /* ══ COL GAUCHE — PITCH ══ */
@@ -443,14 +431,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <main>
     <div class="checkout-wrap">
 
-      <!-- ══════════════════════════════════════════
-           COL GAUCHE — PITCH (premier dans le DOM)
-           → apparaît en haut sur mobile
-           → colonne gauche (1fr) sur desktop
-      ══════════════════════════════════════════ -->
-      <div class="col-left">
-
-        <div class="trust-path rv" aria-label="Étapes">
+      <div class="trust-path rv" aria-label="Étapes">
           <span>Framework</span>
           <span class="trust-path-sep" aria-hidden="true">/</span>
           <span>Diagnostic</span>
@@ -465,6 +446,106 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <p class="pitch-lead rv">
           Un seul critère de l'Art. 4B mal géré, et le fisc peut vous poursuivre des années après votre départ. Ce Framework vous donne le plan exact — chronologie, courriers, audit patrimonial — sans jargon juridique.
         </p>
+
+        <!-- ── ORDER CARD — entre le pitch et le contenu ── -->
+        <div class="order-card rv" role="region" aria-label="Récapitulatif de commande" style="margin-bottom:28px">
+
+          <div class="order-head">
+            <div class="order-head-label">Votre commande</div>
+            <div class="product-line">
+              <div class="product-thumb" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <rect x="3" y="2" width="14" height="16" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
+                  <path d="M6.5 7h7M6.5 10h5M6.5 13h6" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="product-info">
+                <div class="product-name">Expatriation Framework 2026</div>
+                <div class="product-desc">PDF interactif · Courriers prêts à l'envoi · Checklist · Accès à vie</div>
+              </div>
+              <div class="product-price">39€</div>
+            </div>
+          </div>
+
+          <div class="order-totals" role="region" aria-label="Totaux">
+            <div class="total-row">
+              <span class="total-label">Sous-total</span>
+              <span class="total-val" id="subtotal-val">39,00 €</span>
+            </div>
+            <div class="total-row">
+              <span class="total-label">TVA (0%)</span>
+              <span class="total-val">0,00 €</span>
+            </div>
+            <div class="total-sep" aria-hidden="true"></div>
+            <div class="total-row">
+              <span class="total-final">Total à payer</span>
+              <span class="total-final-val" id="total-final-val">39€</span>
+            </div>
+          </div>
+
+          <div class="upsell-wrap">
+            <div class="upsell-label">
+              <div class="upsell-dot" aria-hidden="true"></div>
+              Option complémentaire
+            </div>
+            <label class="upsell-toggle">
+              <div class="upsell-check-wrap">
+                <input type="checkbox" class="upsell-check-inp" id="upsell" onchange="toggleUpsell(this)">
+                <div class="upsell-check-box" tabindex="0" role="checkbox" aria-checked="false" aria-label="Ajouter la session de déminage personnalisée">
+                  <svg width="10" height="9" viewBox="0 0 10 9" fill="none" aria-hidden="true">
+                    <path d="M1 4.5l3 3 5-6" stroke="#C4924A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="upsell-content">
+                <div class="upsell-title">Ajouter la session de déminage <span>(+150€)</span></div>
+                <div class="upsell-desc">1h en visio — analyse de votre situation personnelle et vérification complète de vos démarches avant départ.</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="cta-wrap">
+            <a
+              href="https://expatriation-framework.systeme.io/paiement39"
+              class="btn-checkout"
+              id="btn-cta"
+              aria-label="Procéder au paiement sécurisé - 39 euros"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M9 1.5L13.5 4v4.5c0 3-4.5 6-4.5 6S4.5 11.5 4.5 8.5V4L9 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+              <span id="btn-label">Payer maintenant — 39€</span>
+              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="cta-trust" role="list" aria-label="Garanties de paiement">
+              <div class="ct-badge" role="listitem">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                  <path d="M5.5 1L9.5 3v3c0 2-4 4-4 4s-4-2-4-4V3L5.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                </svg>
+                Stripe SSL
+              </div>
+              <span class="ct-sep" aria-hidden="true">·</span>
+              <div class="ct-badge" role="listitem">Accès immédiat</div>
+              <span class="ct-sep" aria-hidden="true">·</span>
+              <div class="ct-badge" role="listitem">Aucun abonnement</div>
+            </div>
+          </div>
+
+          <div class="order-foot">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;opacity:.4">
+              <rect x="1.5" y="6" width="11" height="7" rx="1.5" stroke="#495B78" stroke-width="1.1"/>
+              <path d="M4 6V4.5a3 3 0 0 1 6 0V6" stroke="#495B78" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+            <p class="of-text">
+              Transaction cryptée SSL · En achetant, vous acceptez nos <a href="avertissement.html">conditions</a> et notre <a href="mentions-legales.html">politique de confidentialité</a>.
+            </p>
+          </div>
+
+        </div><!-- fin order-card inline -->
 
         <!-- Ce qui est inclus -->
         <div class="included-card rv">
@@ -608,113 +689,7 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           </div>
         </div>
 
-      </div><!-- fin col-left -->
 
-      <!-- ══════════════════════════════════════════
-           COL DROITE — ORDER CARD (second dans le DOM)
-           → apparaît en bas sur mobile (sous le pitch)
-           → colonne droite (380px) sur desktop
-      ══════════════════════════════════════════ -->
-      <div class="col-right">
-        <div class="order-card" role="region" aria-label="Récapitulatif de commande">
-
-          <div class="order-head">
-            <div class="order-head-label">Votre commande</div>
-            <div class="product-line">
-              <div class="product-thumb" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <rect x="3" y="2" width="14" height="16" rx="2" stroke="#C8A96A" stroke-width="1.1"/>
-                  <path d="M6.5 7h7M6.5 10h5M6.5 13h6" stroke="#C8A96A" stroke-width="1.1" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="product-info">
-                <div class="product-name">Expatriation Framework 2026</div>
-                <div class="product-desc">PDF interactif · Courriers prêts à l'envoi · Checklist · Accès à vie</div>
-              </div>
-              <div class="product-price">39€</div>
-            </div>
-          </div>
-
-          <div class="order-totals" role="region" aria-label="Totaux">
-            <div class="total-row">
-              <span class="total-label">Sous-total</span>
-              <span class="total-val" id="subtotal-val">39,00 €</span>
-            </div>
-            <div class="total-row">
-              <span class="total-label">TVA (0%)</span>
-              <span class="total-val">0,00 €</span>
-            </div>
-            <div class="total-sep" aria-hidden="true"></div>
-            <div class="total-row">
-              <span class="total-final">Total à payer</span>
-              <span class="total-final-val" id="total-final-val">39€</span>
-            </div>
-          </div>
-
-          <div class="upsell-wrap">
-            <div class="upsell-label">
-              <div class="upsell-dot" aria-hidden="true"></div>
-              Option complémentaire
-            </div>
-            <label class="upsell-toggle">
-              <div class="upsell-check-wrap">
-                <input type="checkbox" class="upsell-check-inp" id="upsell" onchange="toggleUpsell(this)">
-                <div class="upsell-check-box" tabindex="0" role="checkbox" aria-checked="false" aria-label="Ajouter la session de déminage personnalisée">
-                  <svg width="10" height="9" viewBox="0 0 10 9" fill="none" aria-hidden="true">
-                    <path d="M1 4.5l3 3 5-6" stroke="#C4924A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-              <div class="upsell-content">
-                <div class="upsell-title">Ajouter la session de déminage <span>(+150€)</span></div>
-                <div class="upsell-desc">1h en visio — analyse de votre situation personnelle et vérification complète de vos démarches avant départ.</div>
-              </div>
-            </label>
-          </div>
-
-          <div class="cta-wrap">
-            <a
-              href="https://expatriation-framework.systeme.io/paiement39"
-              class="btn-checkout"
-              id="btn-cta"
-              aria-label="Procéder au paiement sécurisé - 39 euros"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                <path d="M9 1.5L13.5 4v4.5c0 3-4.5 6-4.5 6S4.5 11.5 4.5 8.5V4L9 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-              <span id="btn-label">Payer maintenant — 39€</span>
-              <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <div class="cta-trust" role="list" aria-label="Garanties de paiement">
-              <div class="ct-badge" role="listitem">
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                  <path d="M5.5 1L9.5 3v3c0 2-4 4-4 4s-4-2-4-4V3L5.5 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-                </svg>
-                Stripe SSL
-              </div>
-              <span class="ct-sep" aria-hidden="true">·</span>
-              <div class="ct-badge" role="listitem">Accès immédiat</div>
-              <span class="ct-sep" aria-hidden="true">·</span>
-              <div class="ct-badge" role="listitem">Aucun abonnement</div>
-            </div>
-          </div>
-
-          <div class="order-foot">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex-shrink:0;opacity:.4">
-              <rect x="1.5" y="6" width="11" height="7" rx="1.5" stroke="#495B78" stroke-width="1.1"/>
-              <path d="M4 6V4.5a3 3 0 0 1 6 0V6" stroke="#495B78" stroke-width="1.1" stroke-linecap="round"/>
-            </svg>
-            <p class="of-text">
-              Transaction cryptée SSL · En achetant, vous acceptez nos <a href="avertissement.html">conditions</a> et notre <a href="mentions-legales.html">politique de confidentialité</a>.
-            </p>
-          </div>
-
-        </div>
-      </div><!-- fin col-right -->
 
     </div><!-- fin checkout-wrap -->
   </main>
