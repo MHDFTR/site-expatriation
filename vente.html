@@ -10,118 +10,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ══════════════════════════════════════
-       RESET NUCLÉAIRE — en premier, avant tout
-    ══════════════════════════════════════ */
-    html, body {
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-x: hidden;
-    }
-
-    /* ══════════════════════════════════════
-       TOKENS
-    ══════════════════════════════════════ */
+    html, body { margin: 0 !important; padding: 0 !important; overflow-x: hidden; }
     :root {
       --bg-0:#060912; --bg-1:#0A0E1C; --bg-2:#0E1424; --bg-3:#131A2E;
       --br-0:#111826; --br-1:#182033; --br-2:#243554; --br-3:#2F4570;
       --gold:#C8A96A; --gold-b:#DEC083; --gold-d:#9A7B44;
       --blue:#3B6FD4; --red:#C45C5C; --amber:#C4924A; --green:#4AA87A;
       --t0:#EDF1FC; --t1:#8B9BB8; --t2:#495B78; --t3:#2B3A54;
-      --fd:'Cormorant Garant',serif;
-      --fb:'Figtree',sans-serif;
-      --fm:'Space Mono',monospace;
-      --ease:cubic-bezier(.25,.46,.45,.94);
-      --spring:cubic-bezier(.34,1.56,.64,1);
-      --slow:cubic-bezier(.16,1,.3,1);
-      --sharp:cubic-bezier(.4,0,.2,1);
-      --gutter:clamp(20px,4vw,48px);
-      --max-w:1200px;
+      --fd:'Cormorant Garant',serif; --fb:'Figtree',sans-serif; --fm:'Space Mono',monospace;
+      --ease:cubic-bezier(.25,.46,.45,.94); --spring:cubic-bezier(.34,1.56,.64,1);
+      --slow:cubic-bezier(.16,1,.3,1); --sharp:cubic-bezier(.4,0,.2,1);
+      --gutter:clamp(20px,4vw,48px); --max-w:1200px;
     }
-
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{
-      font-family:var(--fb);background:var(--bg-1);color:var(--t0);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-      overflow-wrap:break-word;word-wrap:break-word;
-    }
+    body{font-family:var(--fb);background:var(--bg-1);color:var(--t0);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-wrap:break-word;word-wrap:break-word;}
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;border:none;background:none;font:inherit}
-
-    /* grain */
-    body::after{
-      content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* progress */
-    #prog{
-      position:fixed;top:0;left:0;width:100%;height:2px;z-index:10000;
-      margin:0 !important;padding:0 !important;
-      background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));
-      transition:width .08s linear;
-    }
-
-    /* ══════════════════════════════════════
-       NAV
-    ══════════════════════════════════════ */
-    .nav{
-      position:fixed !important;
-      top:0 !important;
-      left:0 !important;
-      right:0 !important;
-      margin:0 !important;
-      padding:0 !important;
-      z-index:9999;
-      height:64px;
-      display:flex;align-items:center;justify-content:center;
-      border-bottom:1px solid transparent;
-      background:rgba(6,9,18,0);
-      -webkit-transform:translate3d(0,0,0) !important;
-      transform:translate3d(0,0,0) !important;
-      will-change:transform;
-      transition:background .45s var(--ease),border-color .45s;
-    }
-    .nav.solid{
-      background:rgba(6,9,18,.92);
-      backdrop-filter:blur(22px) saturate(155%);
-      -webkit-backdrop-filter:blur(22px) saturate(155%);
-      border-bottom-color:var(--br-0);
-    }
-    .nav-i{
-      width:100%;max-width:var(--max-w);
-      padding:0 var(--gutter);
-      display:flex;align-items:center;justify-content:space-between;
-    }
+    body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    #prog{position:fixed;top:0;left:0;width:100%;height:2px;z-index:10000;margin:0 !important;padding:0 !important;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-b));transition:width .08s linear;}
+    .nav{position:fixed !important;top:0 !important;left:0 !important;right:0 !important;margin:0 !important;padding:0 !important;z-index:9999;height:64px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid transparent;background:rgba(6,9,18,0);-webkit-transform:translate3d(0,0,0) !important;transform:translate3d(0,0,0) !important;will-change:transform;transition:background .45s var(--ease),border-color .45s;}
+    .nav.solid{background:rgba(6,9,18,.92);backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%);border-bottom-color:var(--br-0);}
+    .nav-i{width:100%;max-width:var(--max-w);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;}
     .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--t0);transition:opacity .2s}
     .nav-logo:hover{opacity:.8}
-    .nav-mark{
-      width:30px;height:30px;border-radius:7px;
-      background:linear-gradient(145deg,var(--gold-d),var(--gold));
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;
-    }
+    .nav-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(145deg,var(--gold-d),var(--gold));display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;font-weight:700;color:#08080f;flex-shrink:0;}
     .nav-links{display:flex;align-items:center;gap:28px;list-style:none}
     .nav-links a{font-size:13.5px;color:var(--t1);transition:color .2s}
     .nav-links a:hover{color:var(--t0)}
-    .nav-cta{
-      font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;
-      background:rgba(200,169,106,.08);color:var(--gold);
-      border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;
-    }
+    .nav-cta{font-size:13px;font-weight:500;padding:7px 16px;border-radius:6px;background:rgba(200,169,106,.08);color:var(--gold);border:1px solid rgba(200,169,106,.2);transition:background .2s,border-color .2s;}
     .nav-cta:hover{background:rgba(200,169,106,.15);border-color:rgba(200,169,106,.35);color:var(--gold)}
-
-    /* ══════════════════════════════════════
-       BOUTONS
-    ══════════════════════════════════════ */
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;
-      border-radius:10px;cursor:pointer;transition:all .22s var(--sharp);
-      white-space:nowrap;border:none;outline:none;text-decoration:none;
-    }
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-size:14px;font-weight:500;letter-spacing:.01em;border-radius:10px;cursor:pointer;transition:all .22s var(--sharp);white-space:nowrap;border:none;outline:none;text-decoration:none;}
     .btn-p{padding:14px 30px;background:var(--gold);color:#08080f;font-weight:600}
     .btn-p:hover{background:var(--gold-b);transform:translateY(-2px);box-shadow:0 0 36px rgba(200,169,106,.22),0 0 14px rgba(200,169,106,.12);color:#08080f}
     .btn-p:active{transform:translateY(0)}
@@ -130,332 +49,110 @@
     .btn-g:hover{border-color:var(--br-3);color:var(--t0);background:rgba(255,255,255,.025)}
     .btn-ic{transition:transform .2s var(--spring);flex-shrink:0}
     .btn:hover .btn-ic{transform:translateX(4px)}
-
-    /* ══════════════════════════════════════
-       REVEAL
-    ══════════════════════════════════════ */
     .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--slow),transform .7s var(--slow)}
     .rv.in{opacity:1;transform:translateY(0)}
-    .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}
-    .rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
-
-    /* ══════════════════════════════════════
-       HERO
-    ══════════════════════════════════════ */
-    .hero{
-      position:relative;min-height:92vh;display:flex;align-items:center;
-      padding:120px var(--gutter) 80px;overflow:hidden;text-align:center;
-      margin-top:0 !important;
-    }
+    .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+    .hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:120px var(--gutter) 80px;overflow:hidden;text-align:center;margin-top:0 !important;}
     .hero-bg{position:absolute;inset:0;z-index:0}
     .blob{position:absolute;border-radius:50%;filter:blur(88px);mix-blend-mode:screen;pointer-events:none}
-    .b1{width:800px;height:550px;top:-160px;left:-120px;
-        background:radial-gradient(ellipse,rgba(59,111,212,.12) 0%,transparent 68%);
-        animation:d1 22s ease-in-out infinite}
-    .b2{width:650px;height:450px;top:5%;right:-80px;
-        background:radial-gradient(ellipse,rgba(200,169,106,.07) 0%,transparent 70%);
-        animation:d2 28s ease-in-out infinite}
-    .b3{width:500px;height:360px;bottom:-60px;left:30%;
-        background:radial-gradient(ellipse,rgba(59,111,212,.07) 0%,transparent 70%);
-        animation:d3 32s ease-in-out infinite}
+    .b1{width:800px;height:550px;top:-160px;left:-120px;background:radial-gradient(ellipse,rgba(59,111,212,.12) 0%,transparent 68%);animation:d1 22s ease-in-out infinite}
+    .b2{width:650px;height:450px;top:5%;right:-80px;background:radial-gradient(ellipse,rgba(200,169,106,.07) 0%,transparent 70%);animation:d2 28s ease-in-out infinite}
+    .b3{width:500px;height:360px;bottom:-60px;left:30%;background:radial-gradient(ellipse,rgba(59,111,212,.07) 0%,transparent 70%);animation:d3 32s ease-in-out infinite}
     @keyframes d1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(50px,-35px) scale(1.04)}66%{transform:translate(-25px,48px) scale(.97)}}
     @keyframes d2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-65px,25px) scale(1.06)}}
     @keyframes d3{0%,100%{transform:translate(0,0)}40%{transform:translate(40px,-22px)}70%{transform:translate(-32px,16px)}}
-    .hero-grid{
-      position:absolute;inset:0;
-      background-image:linear-gradient(rgba(24,32,51,.28) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(24,32,51,.28) 1px,transparent 1px);
-      background-size:72px 72px;
-      -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 78%);
-      mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 78%);
-    }
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(24,32,51,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(24,32,51,.28) 1px,transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 78%);mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 78%);}
     .hero-c{position:relative;z-index:1;width:100%;max-width:780px;margin:0 auto}
-    .hero-tag{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:5px 14px 5px 10px;border-radius:100px;
-      background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.18);
-      font-family:var(--fm);font-size:10px;color:var(--gold);
-      letter-spacing:.12em;text-transform:uppercase;margin-bottom:28px;
-      opacity:0;transform:translateY(10px);
-      animation:up .6s var(--slow) .1s forwards;
-    }
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 10px;border-radius:100px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.18);font-family:var(--fm);font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:28px;opacity:0;transform:translateY(10px);animation:up .6s var(--slow) .1s forwards;}
     .hero-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);animation:blink 2.4s ease-in-out infinite}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
     @keyframes up{to{opacity:1;transform:translateY(0)}}
-    .hero-h1{
-      font-family:var(--fd);font-size:clamp(38px,6.5vw,74px);font-weight:600;
-      line-height:1.02;letter-spacing:-.025em;color:var(--t0);
-      margin-bottom:22px;opacity:0;transform:translateY(22px);
-      animation:up .8s var(--slow) .22s forwards;
-    }
+    .hero-h1{font-family:var(--fd);font-size:clamp(38px,6.5vw,74px);font-weight:600;line-height:1.02;letter-spacing:-.025em;color:var(--t0);margin-bottom:22px;opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .22s forwards;}
     .hero-h1 em{font-style:italic;font-weight:400;color:var(--gold-b)}
-    .hero-sub{
-      font-size:clamp(15px,2vw,18px);font-weight:300;line-height:1.72;
-      color:var(--t1);max-width:580px;margin:0 auto 40px;
-      opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .38s forwards;
-    }
-    .hero-cta-row{
-      display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
-      opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .52s forwards;
-    }
-    .hero-micro{
-      font-size:12px;color:var(--t2);margin-top:16px;
-      font-family:var(--fm);letter-spacing:.06em;
-      opacity:0;transform:translateY(10px);animation:up .6s var(--slow) .7s forwards;
-    }
-
-    /* ══════════════════════════════════════
-       STICKY CTA — desktop corner / mobile full bar
-    ══════════════════════════════════════ */
-    .sticky-cta{
-      position:fixed;bottom:24px;right:24px;z-index:800;
-      opacity:0;transform:translateY(8px);pointer-events:none;
-      transition:opacity .35s var(--ease),transform .35s var(--ease);
-    }
+    .hero-sub{font-size:clamp(15px,2vw,18px);font-weight:300;line-height:1.72;color:var(--t1);max-width:580px;margin:0 auto 40px;opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .38s forwards;}
+    .hero-cta-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(22px);animation:up .8s var(--slow) .52s forwards;}
+    .hero-micro{font-size:12px;color:var(--t2);margin-top:16px;font-family:var(--fm);letter-spacing:.06em;opacity:0;transform:translateY(10px);animation:up .6s var(--slow) .7s forwards;}
+    .sticky-cta{position:fixed;bottom:24px;right:24px;z-index:800;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease);}
     .sticky-cta.visible{opacity:1;transform:translateY(0);pointer-events:auto}
-
-    /* ══════════════════════════════════════
-       TRUST STRIP
-    ══════════════════════════════════════ */
-    .trust-strip{
-      border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0);
-      background:var(--bg-2);padding:20px var(--gutter);
-    }
-    .trust-i{
-      max-width:var(--max-w);margin:0 auto;
-      display:flex;align-items:center;justify-content:center;
-      gap:clamp(16px,5vw,64px);flex-wrap:wrap;
-    }
-    .trust-item{
-      display:flex;align-items:center;gap:10px;
-      font-family:var(--fm);font-size:10px;color:var(--t2);
-      letter-spacing:.1em;text-transform:uppercase;
-    }
+    .trust-strip{border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0);background:var(--bg-2);padding:20px var(--gutter);}
+    .trust-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:clamp(16px,5vw,64px);flex-wrap:wrap;}
+    .trust-item{display:flex;align-items:center;gap:10px;font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:.1em;text-transform:uppercase;}
     .trust-item svg{flex-shrink:0;opacity:.7}
-
-    /* ══════════════════════════════════════
-       SECTION WRAPPER
-    ══════════════════════════════════════ */
     .section{padding:80px var(--gutter)}
     .section-inner{max-width:var(--max-w);margin:0 auto}
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      font-family:var(--fm);font-size:10.5px;color:var(--gold-d);
-      text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;
-    }
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:10.5px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px;}
     .eyebrow::before{content:'';width:22px;height:1px;background:var(--gold-d);opacity:.5}
-    .s-h2{
-      font-family:var(--fd);font-size:clamp(26px,4.5vw,50px);font-weight:600;
-      line-height:1.08;letter-spacing:-.02em;color:var(--t0);margin-bottom:14px;
-    }
+    .s-h2{font-family:var(--fd);font-size:clamp(26px,4.5vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.02em;color:var(--t0);margin-bottom:14px;}
     .s-lead{font-size:15.5px;font-weight:300;color:var(--t1);line-height:1.72;max-width:540px}
-
-    /* ══════════════════════════════════════
-       BLOC PRIX — affiché en PREMIER après hero
-    ══════════════════════════════════════ */
-    .pricing-wrap{
-      max-width:560px;margin:0 auto;
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:28px;padding:52px 44px;text-align:center;
-      position:relative;overflow:hidden;
-      width:100%;box-sizing:border-box;
-    }
-    .pricing-wrap::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:1px;
-      background:linear-gradient(90deg,transparent,var(--gold-d) 35%,var(--gold) 50%,var(--gold-d) 65%,transparent);
-      opacity:.7;
-    }
-    .pricing-wrap::after{
-      content:'';position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(200,169,106,.05) 0%,transparent 70%);
-    }
+    .pricing-wrap{max-width:560px;margin:0 auto;background:var(--bg-2);border:1px solid var(--br-1);border-radius:28px;padding:52px 44px;text-align:center;position:relative;overflow:hidden;width:100%;box-sizing:border-box;}
+    .pricing-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-d) 35%,var(--gold) 50%,var(--gold-d) 65%,transparent);opacity:.7;}
+    .pricing-wrap::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(200,169,106,.05) 0%,transparent 70%);}
     .pricing-inner{position:relative;z-index:1}
-    .pricing-eyebrow{
-      font-family:var(--fm);font-size:10px;color:var(--gold-d);
-      text-transform:uppercase;letter-spacing:.14em;margin-bottom:20px;
-    }
-    .pricing-h2{
-      font-family:var(--fd);font-size:clamp(22px,3.5vw,34px);font-weight:600;
-      line-height:1.1;letter-spacing:-.02em;color:var(--t0);margin-bottom:10px;
-    }
+    .pricing-eyebrow{font-family:var(--fm);font-size:10px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.14em;margin-bottom:20px;}
+    .pricing-h2{font-family:var(--fd);font-size:clamp(22px,3.5vw,34px);font-weight:600;line-height:1.1;letter-spacing:-.02em;color:var(--t0);margin-bottom:10px;}
     .pricing-sub{font-size:14px;font-weight:300;color:var(--t1);line-height:1.65;margin-bottom:32px}
     .price-block{margin:28px 0 36px}
-    .price-anchor{
-      font-family:var(--fm);font-size:11px;color:var(--t3);
-      text-decoration:line-through;letter-spacing:.06em;margin-bottom:6px;
-    }
-    .price-main{
-      font-family:var(--fd);font-size:clamp(56px,9vw,82px);font-weight:600;
-      line-height:1;letter-spacing:-.03em;color:var(--t0);
-    }
-    .price-unit{
-      font-family:var(--fm);font-size:14px;font-weight:400;color:var(--t2);
-      letter-spacing:.05em;margin-top:4px;
-    }
+    .price-anchor{font-family:var(--fm);font-size:11px;color:var(--t3);text-decoration:line-through;letter-spacing:.06em;margin-bottom:6px;}
+    .price-main{font-family:var(--fd);font-size:clamp(56px,9vw,82px);font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--t0);}
+    .price-unit{font-family:var(--fm);font-size:14px;font-weight:400;color:var(--t2);letter-spacing:.05em;margin-top:4px;}
     .price-note{font-size:12px;font-weight:300;color:var(--t2);margin-top:8px}
-    .inclus{
-      list-style:none;display:flex;flex-direction:column;gap:10px;
-      margin-bottom:36px;text-align:left;
-    }
-    .incl-item{
-      display:flex;align-items:center;gap:12px;
-      padding:12px 14px;border-radius:9px;
-      background:rgba(74,168,122,.05);border:1px solid rgba(74,168,122,.12);
-    }
-    .incl-check{
-      width:18px;height:18px;border-radius:4px;flex-shrink:0;
-      background:rgba(74,168,122,.1);border:1px solid rgba(74,168,122,.2);
-      display:flex;align-items:center;justify-content:center;
-    }
+    .inclus{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:36px;text-align:left;}
+    .incl-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:9px;background:rgba(74,168,122,.05);border:1px solid rgba(74,168,122,.12);}
+    .incl-check{width:18px;height:18px;border-radius:4px;flex-shrink:0;background:rgba(74,168,122,.1);border:1px solid rgba(74,168,122,.2);display:flex;align-items:center;justify-content:center;}
     .incl-text{font-size:13.5px;font-weight:400;color:var(--t0)}
-    .guarantees{
-      display:flex;align-items:center;justify-content:center;gap:14px;
-      flex-wrap:wrap;margin-top:20px;
-    }
-    .guarantee{
-      display:flex;align-items:center;gap:6px;
-      font-family:var(--fm);font-size:9.5px;color:var(--t2);
-      text-transform:uppercase;letter-spacing:.1em;
-    }
+    .guarantees{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:20px;}
+    .guarantee{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:9.5px;color:var(--t2);text-transform:uppercase;letter-spacing:.1em;}
     .guarantee-dot{width:4px;height:4px;border-radius:50%;background:var(--t3)}
-
-    /* ══════════════════════════════════════
-       SECTION PROBLÈME
-    ══════════════════════════════════════ */
     .problem-section{background:var(--bg-2);border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0)}
     .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
-    .problem-card{
-      background:var(--bg-1);border:1px solid var(--br-1);border-radius:16px;
-      padding:28px;display:flex;align-items:flex-start;gap:16px;
-      position:relative;overflow:hidden;
-      transition:border-color .3s,transform .3s var(--slow);
-      min-width:0;
-    }
+    .problem-card{background:var(--bg-1);border:1px solid var(--br-1);border-radius:16px;padding:28px;display:flex;align-items:flex-start;gap:16px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s var(--slow);min-width:0;}
     .problem-card:hover{border-color:rgba(196,92,92,.3);transform:translateY(-3px)}
-    .problem-card::before{
-      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-      background:linear-gradient(180deg,rgba(196,92,92,.6),rgba(196,92,92,.2));
-      border-radius:3px 0 0 3px;
-    }
-    .problem-ico{
-      width:38px;height:38px;border-radius:9px;flex-shrink:0;
-      background:rgba(196,92,92,.08);border:1px solid rgba(196,92,92,.18);
-      display:flex;align-items:center;justify-content:center;
-    }
+    .problem-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,rgba(196,92,92,.6),rgba(196,92,92,.2));border-radius:3px 0 0 3px;}
+    .problem-ico{width:38px;height:38px;border-radius:9px;flex-shrink:0;background:rgba(196,92,92,.08);border:1px solid rgba(196,92,92,.18);display:flex;align-items:center;justify-content:center;}
     .problem-card h3{font-family:var(--fd);font-size:17px;font-weight:600;color:var(--t0);margin-bottom:6px;line-height:1.3}
     .problem-card p{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.65;margin:0}
-
-    /* ══════════════════════════════════════
-       CONTENU DU FRAMEWORK
-    ══════════════════════════════════════ */
     .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:48px}
-    .feat-card{
-      background:var(--bg-2);border:1px solid var(--br-1);border-radius:16px;
-      padding:30px;position:relative;overflow:hidden;
-      transition:border-color .35s,transform .35s var(--slow),box-shadow .35s;
-      cursor:default;min-width:0;
-    }
-    .feat-glow{
-      position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(circle 260px at var(--mx,50%) var(--my,50%),rgba(200,169,106,.055) 0%,transparent 70%);
-      opacity:0;transition:opacity .4s;
-    }
+    .feat-card{background:var(--bg-2);border:1px solid var(--br-1);border-radius:16px;padding:30px;position:relative;overflow:hidden;transition:border-color .35s,transform .35s var(--slow),box-shadow .35s;cursor:default;min-width:0;}
+    .feat-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle 260px at var(--mx,50%) var(--my,50%),rgba(200,169,106,.055) 0%,transparent 70%);opacity:0;transition:opacity .4s;}
     .feat-card:hover .feat-glow{opacity:1}
     .feat-card:hover{border-color:var(--br-3);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.5)}
     .feat-num{font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.14em;margin-bottom:20px;display:flex;align-items:center;gap:10px}
     .feat-num::after{content:'';flex:1;height:1px;background:var(--br-0)}
-    .feat-icon{
-      width:44px;height:44px;border-radius:10px;margin-bottom:16px;
-      background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.14);
-      display:flex;align-items:center;justify-content:center;
-      transition:background .3s,border-color .3s;flex-shrink:0;
-    }
+    .feat-icon{width:44px;height:44px;border-radius:10px;margin-bottom:16px;background:rgba(200,169,106,.07);border:1px solid rgba(200,169,106,.14);display:flex;align-items:center;justify-content:center;transition:background .3s,border-color .3s;flex-shrink:0;}
     .feat-card:hover .feat-icon{background:rgba(200,169,106,.13);border-color:rgba(200,169,106,.25)}
     .feat-title{font-family:var(--fd);font-size:20px;font-weight:600;color:var(--t0);margin-bottom:8px;line-height:1.25}
     .feat-desc{font-size:13.5px;font-weight:300;color:var(--t1);line-height:1.65;margin:0}
-    .feat-badge{
-      display:inline-flex;align-items:center;gap:5px;margin-top:14px;
-      font-family:var(--fm);font-size:9px;color:var(--gold-d);
-      text-transform:uppercase;letter-spacing:.1em;
-    }
+    .feat-badge{display:inline-flex;align-items:center;gap:5px;margin-top:14px;font-family:var(--fm);font-size:9px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.1em;}
     .feat-badge::before{content:'';width:14px;height:1px;background:var(--gold-d)}
-
-    /* ══════════════════════════════════════
-       COMPARAISON AVOCAT
-    ══════════════════════════════════════ */
     .compare-section{background:var(--bg-2);border-top:1px solid var(--br-0);border-bottom:1px solid var(--br-0)}
-    .compare-table{
-      width:100%;border-collapse:collapse;margin-top:44px;
-      border-radius:16px;overflow:hidden;border:1px solid var(--br-1);
-    }
-    .compare-table th{
-      padding:16px 20px;font-size:12.5px;font-weight:500;
-      background:var(--bg-3);border-bottom:1px solid var(--br-1);text-align:left;
-    }
+    .compare-table{width:100%;border-collapse:collapse;margin-top:44px;border-radius:16px;overflow:hidden;border:1px solid var(--br-1);}
+    .compare-table th{padding:16px 20px;font-size:12.5px;font-weight:500;background:var(--bg-3);border-bottom:1px solid var(--br-1);text-align:left;}
     .compare-table th:first-child{color:var(--red)}
     .compare-table th:last-child{color:var(--green)}
-    .compare-table td{
-      padding:16px 20px;font-size:13.5px;font-weight:300;
-      line-height:1.5;border-bottom:1px solid var(--br-0);vertical-align:top;
-    }
+    .compare-table td{padding:16px 20px;font-size:13.5px;font-weight:300;line-height:1.5;border-bottom:1px solid var(--br-0);vertical-align:top;}
     .compare-table tr:last-child td{border-bottom:none}
     .compare-table td:first-child{color:var(--t2)}
     .compare-table td:last-child{color:var(--t1);font-weight:400}
     .compare-table tr:hover td{background:rgba(255,255,255,.013)}
-
-    /* ══════════════════════════════════════
-       FAQ
-    ══════════════════════════════════════ */
     .faq-list{margin-top:48px;display:flex;flex-direction:column;gap:12px}
     .faq-item{background:var(--bg-2);border:1px solid var(--br-1);border-radius:12px;overflow:hidden;transition:border-color .25s}
     .faq-item.open{border-color:var(--br-2)}
-    .faq-q{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:20px 22px;cursor:pointer;gap:16px;transition:background .2s;
-    }
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;cursor:pointer;gap:16px;transition:background .2s;}
     .faq-q:hover{background:rgba(255,255,255,.015)}
     .faq-q-text{font-family:var(--fd);font-size:17px;font-weight:600;color:var(--t0);line-height:1.3}
-    .faq-arrow{
-      width:28px;height:28px;border-radius:6px;flex-shrink:0;
-      background:rgba(255,255,255,.04);border:1px solid var(--br-1);
-      display:flex;align-items:center;justify-content:center;
-      transition:transform .3s var(--slow),background .2s,border-color .2s;
-    }
+    .faq-arrow{width:28px;height:28px;border-radius:6px;flex-shrink:0;background:rgba(255,255,255,.04);border:1px solid var(--br-1);display:flex;align-items:center;justify-content:center;transition:transform .3s var(--slow),background .2s,border-color .2s;}
     .faq-item.open .faq-arrow{transform:rotate(45deg);background:rgba(200,169,106,.1);border-color:rgba(200,169,106,.22)}
     .faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--slow),padding .4s var(--slow);padding:0 22px}
     .faq-item.open .faq-a{max-height:300px;padding-bottom:20px}
     .faq-a p{font-size:14px;font-weight:300;color:var(--t1);line-height:1.72}
-
-    /* ══════════════════════════════════════
-       CTA FINAL
-    ══════════════════════════════════════ */
     .final-cta-section{padding:80px var(--gutter)}
-    .final-cta-card{
-      max-width:var(--max-w);margin:0 auto;
-      background:var(--bg-2);border:1px solid var(--br-1);
-      border-radius:28px;padding:64px;text-align:center;
-      position:relative;overflow:hidden;
-    }
-    .final-cta-card::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:1px;
-      background:linear-gradient(90deg,transparent,var(--gold-d) 38%,var(--gold) 50%,var(--gold-d) 62%,transparent);
-      opacity:.6;
-    }
-    .final-cta-card::after{
-      content:'';position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(ellipse 55% 55% at 50% 0%,rgba(200,169,106,.045) 0%,transparent 70%);
-    }
+    .final-cta-card{max-width:var(--max-w);margin:0 auto;background:var(--bg-2);border:1px solid var(--br-1);border-radius:28px;padding:64px;text-align:center;position:relative;overflow:hidden;}
+    .final-cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-d) 38%,var(--gold) 50%,var(--gold-d) 62%,transparent);opacity:.6;}
+    .final-cta-card::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 55% at 50% 0%,rgba(200,169,106,.045) 0%,transparent 70%);}
     .final-cta-inner{position:relative;z-index:1}
-    .final-cta-card h2{
-      font-family:var(--fd);font-size:clamp(26px,4.5vw,48px);font-weight:600;
-      line-height:1.08;letter-spacing:-.02em;color:var(--t0);margin-bottom:16px;
-    }
+    .final-cta-card h2{font-family:var(--fd);font-size:clamp(26px,4.5vw,48px);font-weight:600;line-height:1.08;letter-spacing:-.02em;color:var(--t0);margin-bottom:16px;}
     .final-cta-card h2 em{font-style:italic;font-weight:400;color:var(--gold-b)}
     .final-cta-card p{font-size:15px;font-weight:300;color:var(--t1);line-height:1.72;max-width:520px;margin:0 auto 36px}
-
-    /* ══════════════════════════════════════
-       DISCLAIMER + FOOTER
-    ══════════════════════════════════════ */
     .disc-strip{background:var(--bg-0);border-top:1px solid var(--br-0);padding:10px var(--gutter)}
     .disc-i{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:14px;padding:12px 0}
     .disc-ico{width:30px;height:30px;border-radius:6px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -476,143 +173,49 @@
     .f-legal{display:flex;align-items:center;gap:20px}
     .f-legal a{font-size:12px;color:var(--t2);transition:color .2s}
     .f-legal a:hover{color:var(--t1)}
-
-    /* ══════════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════════ */
-    @media(max-width:1024px){
-      .problem-grid{grid-template-columns:1fr}
-      .features-grid{grid-template-columns:1fr}
-      .f-grid{grid-template-columns:1fr 1fr}
-    }
-
+    @media(max-width:1024px){.problem-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.f-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:768px){
       :root{--gutter:20px}
-
-      /* Nav verrouillée, opaque, zéro jour */
-      .nav{
-        background:rgba(6,9,18,.97) !important;
-        border-bottom-color:var(--br-0) !important;
-        -webkit-transform:translate3d(0,0,0) !important;
-        transform:translate3d(0,0,0) !important;
-      }
-      /* Masquer tous les liens nav — logo seul reste visible */
+      .nav{background:rgba(6,9,18,.97) !important;border-bottom-color:var(--br-0) !important;-webkit-transform:translate3d(0,0,0) !important;transform:translate3d(0,0,0) !important;}
       .nav-links{display:none !important}
-
-      /* Hero */
       .hero{min-height:auto;padding:100px var(--gutter) 52px}
       .hero-h1{font-size:clamp(34px,9vw,52px)}
-      /* Masquer le bouton secondaire "diagnostic" dans le hero sur mobile
-         pour garder un seul CTA clair */
       .hero-cta-row .btn-g{display:none}
-      .hero-cta-row .btn-p{
-        width:100%;max-width:100%;box-sizing:border-box;
-        white-space:normal;text-align:center;
-        padding:14px 20px;
-      }
+      .hero-cta-row .btn-p{width:100%;max-width:100%;box-sizing:border-box;white-space:normal;text-align:center;padding:14px 20px;}
       .hero-micro{font-size:11px}
-
-      /* Pricing */
       .pricing-wrap{padding:32px 20px}
       .incl-text{font-size:13px}
-      /* Masquer le bouton d'achat dans le bloc prix sur mobile
-         car le sticky CTA en bas sert de CTA principal */
       .pricing-buy-btn{display:none}
-
-      /* Sections */
       .section{padding:56px var(--gutter)}
       .final-cta-card{padding:36px 20px}
       .compare-table{font-size:12px}
       .compare-table th,.compare-table td{padding:10px 12px;font-size:12px}
-
-      /* Footer */
       .f-grid{grid-template-columns:1fr;gap:28px}
       .f-btm{flex-direction:column;text-align:center}
       .f-legal{justify-content:center;display:none}
-
-      /* ══════════════════════════════════
-         STICKY CTA MOBILE — barre pleine largeur en bas
-      ══════════════════════════════════ */
-      .sticky-cta{
-        bottom:0 !important;
-        right:0 !important;
-        left:0 !important;
-        width:100% !important;
-        border-radius:0;
-        padding:12px 20px env(safe-area-inset-bottom, 12px);
-        background:rgba(6,9,18,.97);
-        border-top:1px solid rgba(200,169,106,.25);
-        transform:translateY(100%) !important;
-        transition:opacity .35s var(--ease), transform .35s var(--ease) !important;
-      }
-      .sticky-cta.visible{
-        transform:translateY(0) !important;
-        opacity:1 !important;
-      }
-      .sticky-cta .btn{
-        width:100%;
-        white-space:normal;
-        text-align:center;
-        justify-content:center;
-        padding:14px 20px;
-        font-size:15px;
-        border-radius:10px;
-      }
-
-      /* Padding bottom pour ne pas masquer le contenu sous la sticky bar */
-      body{
-        padding-bottom:80px !important;
-      }
+      .sticky-cta{bottom:0 !important;right:0 !important;left:0 !important;width:100% !important;border-radius:0;padding:12px 20px env(safe-area-inset-bottom, 12px);background:rgba(6,9,18,.97);border-top:1px solid rgba(200,169,106,.25);transform:translateY(100%) !important;transition:opacity .35s var(--ease), transform .35s var(--ease) !important;}
+      .sticky-cta.visible{transform:translateY(0) !important;opacity:1 !important;}
+      .sticky-cta .btn{width:100%;white-space:normal;text-align:center;justify-content:center;padding:14px 20px;font-size:15px;border-radius:10px;}
+      body{padding-bottom:80px !important;}
     }
   </style>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0CY674BQD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-P0CY674BQD');
-</script>
-
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1365188762140535');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P0CY674BQD');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1365188762140535');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"/></noscript>
 
 </head>
 <body>
-
   <div id="prog"></div>
 
-  <!-- ══════════════════════════════════
-       STICKY CTA — desktop : coin bas-droite / mobile : barre pleine largeur
-  ══════════════════════════════════ -->
   <div class="sticky-cta" id="sticky-cta" aria-hidden="true">
-    <a href="commander.html" class="btn btn-p"
-       style="box-shadow:0 4px 24px rgba(0,0,0,.7),0 0 24px rgba(200,169,106,.15)"
-       aria-label="Obtenir le Framework à 39 euros">
+    <a href="commander.html" class="btn btn-p" style="box-shadow:0 4px 24px rgba(0,0,0,.7),0 0 24px rgba(200,169,106,.15)" aria-label="Obtenir le Framework à 39 euros">
       Obtenir le Framework — 39€
-      <svg class="btn-ic" width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg class="btn-ic" width="15" height="15" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3.5 11.5 7 8 10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 
-  <!-- ══ NAV ══ -->
   <nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
     <div class="nav-i">
       <a href="index.html" class="nav-logo" aria-label="Retour à l'accueil">
@@ -627,80 +230,35 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </nav>
 
-  <!-- ══════════════════════════════════
-       HERO
-  ══════════════════════════════════ -->
   <section class="hero" aria-labelledby="hero-h1">
     <div class="hero-bg" aria-hidden="true">
-      <div class="blob b1"></div>
-      <div class="blob b2"></div>
-      <div class="blob b3"></div>
+      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
       <div class="hero-grid"></div>
     </div>
-
     <div class="hero-c">
-      <div class="hero-tag">
-        <div class="hero-tag-dot" aria-hidden="true"></div>
-        Législation 2024–2026 · Article 4B CGI
-      </div>
-
-      <h1 class="hero-h1" id="hero-h1">
-        Quittez la France<br><em>sans risquer le redressement.</em>
-      </h1>
-
-      <p class="hero-sub">
-        L'administration fiscale traque les expatriations mal préparées. Obtenez la checklist juridique exacte pour verrouiller votre départ et couper vos liens fiscaux proprement — sans payer 3 000 € d'avocat.
-      </p>
-
+      <div class="hero-tag"><div class="hero-tag-dot" aria-hidden="true"></div>Législation 2024–2026 · Article 4B CGI</div>
+      <h1 class="hero-h1" id="hero-h1">Quittez la France<br><em>sans risquer le redressement.</em></h1>
+      <p class="hero-sub">L'administration fiscale traque les expatriations mal préparées. Obtenez la checklist juridique exacte pour verrouiller votre départ et couper vos liens fiscaux proprement — sans payer 3 000 € d'avocat.</p>
       <div class="hero-cta-row">
         <a href="commander.html" class="btn btn-p btn-lg" aria-label="Acheter le Framework à 39 euros">
           Télécharger le Framework — 39€
-          <svg class="btn-ic" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-            <path d="M3.5 8.5h10M9.5 4.5 13.5 8.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg class="btn-ic" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3.5 8.5h10M9.5 4.5 13.5 8.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="diagnostic.html" class="btn btn-g">Faire le diagnostic gratuit d'abord</a>
       </div>
-
       <p class="hero-micro">Accès instantané · PDF interactif · Paiement sécurisé Stripe</p>
     </div>
   </section>
 
-  <!-- ══ TRUST STRIP ══ -->
   <div class="trust-strip" role="region" aria-label="Garanties">
     <div class="trust-i">
-      <div class="trust-item rv">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2.5 7l3.5 3.5 5.5-7" stroke="#4AA87A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Téléchargement immédiat
-      </div>
-      <div class="trust-item rv d1">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <rect x="1.5" y="3" width="11" height="8" rx="1.5" stroke="#C8A96A" stroke-width="1.2"/>
-          <path d="M4.5 3V2a2.5 2.5 0 0 1 5 0v1" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        Stripe sécurisé
-      </div>
-      <div class="trust-item rv d2">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M7 1.5 L8.9 5.4 13.2 6 10.1 9 10.8 13.3 7 11.2 3.2 13.3 3.9 9 0.8 6 5.1 5.4Z" stroke="#C8A96A" stroke-width="1.1" stroke-linejoin="round"/>
-        </svg>
-        Mis à jour · LF 2024
-      </div>
-      <div class="trust-item rv d3">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <circle cx="7" cy="7" r="5.5" stroke="#8B9BB8" stroke-width="1.2"/>
-          <path d="M7 4.5V7.5L9 9" stroke="#8B9BB8" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        30 pages · PDF interactif
-      </div>
+      <div class="trust-item rv"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7l3.5 3.5 5.5-7" stroke="#4AA87A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Téléchargement immédiat</div>
+      <div class="trust-item rv d1"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1.5" y="3" width="11" height="8" rx="1.5" stroke="#C8A96A" stroke-width="1.2"/><path d="M4.5 3V2a2.5 2.5 0 0 1 5 0v1" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/></svg>Stripe sécurisé</div>
+      <div class="trust-item rv d2"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5 L8.9 5.4 13.2 6 10.1 9 10.8 13.3 7 11.2 3.2 13.3 3.9 9 0.8 6 5.1 5.4Z" stroke="#C8A96A" stroke-width="1.1" stroke-linejoin="round"/></svg>Mis à jour · LF 2024</div>
+      <div class="trust-item rv d3"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="#8B9BB8" stroke-width="1.2"/><path d="M7 4.5V7.5L9 9" stroke="#8B9BB8" stroke-width="1.2" stroke-linecap="round"/></svg>30 pages · PDF interactif</div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════
-       BLOC PRIX — EN PREMIER après le hero
-  ══════════════════════════════════ -->
   <section class="section" id="commander" aria-labelledby="price-h">
     <div class="section-inner" style="display:flex;justify-content:center">
       <div class="pricing-wrap rv">
@@ -708,58 +266,24 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
           <div class="pricing-eyebrow">Accès immédiat</div>
           <h2 class="pricing-h2" id="price-h">Sécurisez votre expatriation aujourd'hui</h2>
           <p class="pricing-sub">Une heure avec un avocat fiscaliste coûte en moyenne 350 €. Ce Framework contient 95% de ce que vous obtiendrez lors des premières consultations.</p>
-
           <div class="price-block">
             <div class="price-anchor">Valeur estimée : 1 heure d'avocat ≈ 350 €</div>
             <div class="price-main">39€</div>
             <div class="price-unit">TTC · Accès à vie</div>
             <p class="price-note">Paiement unique · Aucun abonnement</p>
           </div>
-
           <ul class="inclus" aria-label="Ce qui est inclus">
-            <li class="incl-item">
-              <div class="incl-check" aria-hidden="true">
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="incl-text">PDF interactif · Courriers prêts à l'envoi · Checklist · Accès à vie</span>
-            </li>
-            <li class="incl-item">
-              <div class="incl-check" aria-hidden="true">
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="incl-text">Les modèles de lettres et déclarations (Courriers préremplis)</span>
-            </li>
-            <li class="incl-item">
-              <div class="incl-check" aria-hidden="true">
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="incl-text">Checklist imprimable de départ (J−90 → Jour J)</span>
-            </li>
-            <li class="incl-item">
-              <div class="incl-check" aria-hidden="true">
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <span class="incl-text">Synthèse complète sur l'Exit Tax 2024</span>
-            </li>
+            <li class="incl-item"><div class="incl-check" aria-hidden="true"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="incl-text">PDF interactif · Courriers prêts à l'envoi · Checklist · Accès à vie</span></li>
+            <li class="incl-item"><div class="incl-check" aria-hidden="true"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="incl-text">Les modèles de lettres et déclarations (Courriers préremplis)</span></li>
+            <li class="incl-item"><div class="incl-check" aria-hidden="true"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="incl-text">Checklist imprimable de départ (J−90 → Jour J)</span></li>
+            <li class="incl-item"><div class="incl-check" aria-hidden="true"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#4AA87A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="incl-text">Synthèse complète sur l'Exit Tax 2024</span></li>
           </ul>
-
-          <!-- Sur mobile ce bouton est masqué via .pricing-buy-btn ; le sticky CTA prend le relais -->
-          <a href="commander.html" class="btn btn-p btn-lg pricing-buy-btn"
-             style="width:100%;justify-content:center"
-             aria-label="Acheter le Framework maintenant pour 39 euros">
+          <a href="commander.html" class="btn btn-p btn-lg pricing-buy-btn" style="width:100%;justify-content:center" aria-label="Acheter le Framework maintenant pour 39 euros">
             Acheter maintenant
-            <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg class="btn-ic" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9.5 4.5 13 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-
           <div class="guarantees">
-            <div class="guarantee">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                <path d="M2 5.5l2.5 2.5 4.5-5" stroke="#4AA87A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Stripe
-            </div>
+            <div class="guarantee"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M2 5.5l2.5 2.5 4.5-5" stroke="#4AA87A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Stripe</div>
             <div class="guarantee-dot" aria-hidden="true"></div>
             <div class="guarantee">Accès instantané</div>
             <div class="guarantee-dot" aria-hidden="true"></div>
@@ -772,9 +296,6 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       SECTION PROBLÈME
-  ══════════════════════════════════ -->
   <section class="section problem-section" aria-labelledby="prob-h">
     <div class="section-inner">
       <div class="rv">
@@ -782,63 +303,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <h2 class="s-h2" id="prob-h">Pourquoi la plupart des expatriations fiscales finissent mal</h2>
         <p class="s-lead">L'Article 4B du CGI est un piège précis. Un seul critère mal géré, et le fisc vous considère toujours résident fiscal français — imposable sur la totalité de vos revenus mondiaux.</p>
       </div>
-
       <div class="problem-grid">
-        <div class="problem-card rv d1">
-          <div class="problem-ico" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <h3>La mauvaise gestion bancaire</h3>
-            <p>Clôturer les mauvais comptes ou garder des livrets réglementés (LEP, LDD) vous maintient dans le radar de l'administration. Les flux bancaires de clôture sont croisés automatiquement avec les radiations d'entreprises par les algorithmes de Bercy.</p>
-          </div>
-        </div>
-        <div class="problem-card rv d2">
-          <div class="problem-ico" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <h3>Le piège de la direction effective</h3>
-            <p>Gérer sa société française depuis Dubaï ou l'Espagne sans montage juridique clair est l'erreur la plus sanctionnée. Le fisc considère que le siège de direction est là où vous résidez — et redresse en conséquence.</p>
-          </div>
-        </div>
-        <div class="problem-card rv d1">
-          <div class="problem-ico" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <h3>La mauvaise adresse de domiciliation</h3>
-            <p>Utiliser l'adresse de vos parents ou un service de domiciliation non conforme déclenche des alertes automatiques. L'administration vérifie systématiquement la réalité du foyer déclaré lors d'un départ.</p>
-          </div>
-        </div>
-        <div class="problem-card rv d2">
-          <div class="problem-ico" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <h3>L'Exit Tax oubliée ou mal déclarée</h3>
-            <p>Les plus-values latentes (cryptos, actions, parts de société) doivent être déclarées 30 jours avant le départ. Un oubli entraîne l'exigibilité immédiate de l'impôt avec 40% de pénalités — sans recours possible.</p>
-          </div>
-        </div>
+        <div class="problem-card rv d1"><div class="problem-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>La mauvaise gestion bancaire</h3><p>Clôturer les mauvais comptes ou garder des livrets réglementés (LEP, LDD) vous maintient dans le radar de l'administration. Les flux bancaires de clôture sont croisés automatiquement avec les radiations d'entreprises par les algorithmes de Bercy.</p></div></div>
+        <div class="problem-card rv d2"><div class="problem-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>Le piège de la direction effective</h3><p>Gérer sa société française depuis Dubaï ou l'Espagne sans montage juridique clair est l'erreur la plus sanctionnée. Le fisc considère que le siège de direction est là où vous résidez — et redresse en conséquence.</p></div></div>
+        <div class="problem-card rv d1"><div class="problem-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>La mauvaise adresse de domiciliation</h3><p>Utiliser l'adresse de vos parents ou un service de domiciliation non conforme déclenche des alertes automatiques. L'administration vérifie systématiquement la réalité du foyer déclaré lors d'un départ.</p></div></div>
+        <div class="problem-card rv d2"><div class="problem-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L16.5 15H1.5L9 2z" stroke="#C45C5C" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 8v3M9 13v.5" stroke="#C45C5C" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h3>L'Exit Tax oubliée ou mal déclarée</h3><p>Les plus-values latentes (cryptos, actions, parts de société) doivent être déclarées 30 jours avant le départ. Un oubli entraîne l'exigibilité immédiate de l'impôt avec 40% de pénalités — sans recours possible.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       CONTENU DU FRAMEWORK
-  ══════════════════════════════════ -->
   <section class="section" aria-labelledby="feat-h">
     <div class="section-inner">
       <div class="rv">
@@ -846,69 +319,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <h2 class="s-h2" id="feat-h">30 pages. Un plan d'action. Zéro approximation.</h2>
         <p class="s-lead">Le Framework n'est pas un article de blog. C'est un outil d'audit structuré, conçu pour nettoyer votre situation avant de consulter un professionnel.</p>
       </div>
-
       <div class="features-grid">
-        <div class="feat-card rv d1">
-          <div class="feat-glow" aria-hidden="true"></div>
-          <div class="feat-num">01</div>
-          <div class="feat-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="#C8A96A" stroke-width="1.2"/>
-              <path d="M11 7v4.5L14 13" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="feat-title">La Timeline J−90 → Jour J</h3>
-          <p class="feat-desc">Un plan d'action chronologique complet. Sachez exactement quoi résilier, qui prévenir et à quel moment — pour éviter tout chevauchement fiscal lors de l'année de transition.</p>
-          <div class="feat-badge">Inclus dans le Framework</div>
-        </div>
-        <div class="feat-card rv d2">
-          <div class="feat-glow" aria-hidden="true"></div>
-          <div class="feat-num">02</div>
-          <div class="feat-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M11 3l8 6v10H3V9l8-6z" stroke="#C8A96A" stroke-width="1.2" stroke-linejoin="round"/>
-              <rect x="8" y="13" width="6" height="6" rx=".5" stroke="#C8A96A" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <h3 class="feat-title">Le Test des 3 Critères Art. 4B</h3>
-          <p class="feat-desc">Foyer, Activité, Centre Économique — le tableau d'auto-évaluation exact pour mesurer votre risque de requalification selon la jurisprudence récente, avec un score Faible / Modéré / Critique.</p>
-          <div class="feat-badge">Inclus dans le Framework</div>
-        </div>
-        <div class="feat-card rv d1">
-          <div class="feat-glow" aria-hidden="true"></div>
-          <div class="feat-num">03</div>
-          <div class="feat-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="3" y="3" width="16" height="16" rx="2" stroke="#C8A96A" stroke-width="1.2"/>
-              <path d="M7 7h8M7 11h5M7 15h6" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="feat-title">Les Modèles de Déclarations</h3>
-          <p class="feat-desc">Templates pré-remplis pour informer les impôts, votre banque et le Greffe. Ne laissez aucune place à l'interprétation administrative lors des étapes clés de votre départ.</p>
-          <div class="feat-badge">Courriers préremplis · Modifiable</div>
-        </div>
-        <div class="feat-card rv d2">
-          <div class="feat-glow" aria-hidden="true"></div>
-          <div class="feat-num">04</div>
-          <div class="feat-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="4" y="2" width="14" height="18" rx="2" stroke="#C8A96A" stroke-width="1.2"/>
-              <path d="M7 7h8M7 11h6M7 15h4" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/>
-              <circle cx="16" cy="16" r="3.5" fill="#0E1424" stroke="#4AA87A" stroke-width="1.2"/>
-              <path d="M14.5 16l1 1 2-2" stroke="#4AA87A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3 class="feat-title">La Synthèse Exit Tax 2024</h3>
-          <p class="feat-desc">Les seuils déclencheurs, les actifs concernés, les formulaires obligatoires et les délais légaux — tout ce que vous devez déclarer avant de franchir la frontière pour éviter les pénalités automatiques.</p>
-          <div class="feat-badge">Jurisprudence à jour</div>
-        </div>
+        <div class="feat-card rv d1"><div class="feat-glow" aria-hidden="true"></div><div class="feat-num">01</div><div class="feat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#C8A96A" stroke-width="1.2"/><path d="M11 7v4.5L14 13" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/></svg></div><h3 class="feat-title">La Timeline J−90 → Jour J</h3><p class="feat-desc">Un plan d'action chronologique complet. Sachez exactement quoi résilier, qui prévenir et à quel moment — pour éviter tout chevauchement fiscal lors de l'année de transition.</p><div class="feat-badge">Inclus dans le Framework</div></div>
+        <div class="feat-card rv d2"><div class="feat-glow" aria-hidden="true"></div><div class="feat-num">02</div><div class="feat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l8 6v10H3V9l8-6z" stroke="#C8A96A" stroke-width="1.2" stroke-linejoin="round"/><rect x="8" y="13" width="6" height="6" rx=".5" stroke="#C8A96A" stroke-width="1.2"/></svg></div><h3 class="feat-title">Le Test des 3 Critères Art. 4B</h3><p class="feat-desc">Foyer, Activité, Centre Économique — le tableau d'auto-évaluation exact pour mesurer votre risque de requalification selon la jurisprudence récente, avec un score Faible / Modéré / Critique.</p><div class="feat-badge">Inclus dans le Framework</div></div>
+        <div class="feat-card rv d1"><div class="feat-glow" aria-hidden="true"></div><div class="feat-num">03</div><div class="feat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="2" stroke="#C8A96A" stroke-width="1.2"/><path d="M7 7h8M7 11h5M7 15h6" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/></svg></div><h3 class="feat-title">Les Modèles de Déclarations</h3><p class="feat-desc">Templates pré-remplis pour informer les impôts, votre banque et le Greffe. Ne laissez aucune place à l'interprétation administrative lors des étapes clés de votre départ.</p><div class="feat-badge">Courriers préremplis · Modifiable</div></div>
+        <div class="feat-card rv d2"><div class="feat-glow" aria-hidden="true"></div><div class="feat-num">04</div><div class="feat-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="2" width="14" height="18" rx="2" stroke="#C8A96A" stroke-width="1.2"/><path d="M7 7h8M7 11h6M7 15h4" stroke="#C8A96A" stroke-width="1.2" stroke-linecap="round"/><circle cx="16" cy="16" r="3.5" fill="#0E1424" stroke="#4AA87A" stroke-width="1.2"/><path d="M14.5 16l1 1 2-2" stroke="#4AA87A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="feat-title">La Synthèse Exit Tax 2024</h3><p class="feat-desc">Les seuils déclencheurs, les actifs concernés, les formulaires obligatoires et les délais légaux — tout ce que vous devez déclarer avant de franchir la frontière pour éviter les pénalités automatiques.</p><div class="feat-badge">Jurisprudence à jour</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       COMPARAISON AVOCAT
-  ══════════════════════════════════ -->
   <section class="section compare-section" aria-labelledby="compare-h">
     <div class="section-inner">
       <div class="rv">
@@ -916,109 +335,34 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <h2 class="s-h2" id="compare-h">Consulter un avocat sans dossier,<br>c'est payer pour rien</h2>
         <p class="s-lead">Un avocat fiscaliste facture entre 300 et 600 €/h. Son rôle est de valider et rédiger des actes — pas d'auditer vos factures Netflix ou de lister vos comptes crypto.</p>
       </div>
-
       <table class="compare-table rv d1" role="table" aria-label="Comparaison entrepreneur préparé vs non-préparé">
-        <thead>
-          <tr>
-            <th>❌ L'entrepreneur non-préparé</th>
-            <th>✅ L'entrepreneur préparé (Framework)</th>
-          </tr>
-        </thead>
+        <thead><tr><th>❌ L'entrepreneur non-préparé</th><th>✅ L'entrepreneur préparé (Framework)</th></tr></thead>
         <tbody>
-          <tr>
-            <td>Paie l'avocat pour lister ses actifs et expliquer sa situation</td>
-            <td>Arrive avec un bilan patrimonial pré-rempli — 15 minutes suffisent à l'avocat pour comprendre le dossier</td>
-          </tr>
-          <tr>
-            <td>Pose des questions basiques sur la règle des "183 jours"</td>
-            <td>Pose des questions pointues sur les conventions bilatérales et les montages spécifiques à sa situation</td>
-          </tr>
-          <tr>
-            <td>Découvre ses drapeaux rouges pendant le process, source de retards et de frais imprévus</td>
-            <td>A identifié et neutralisé ses marqueurs de risque en amont — l'avocat ne travaille que sur les points complexes</td>
-          </tr>
-          <tr>
-            <td>Repart avec une note de 3 à 5 heures pour un "audit préliminaire"</td>
-            <td>Utilise le temps de l'avocat sur ce qu'il fait vraiment : les actes juridiques complexes et les montages</td>
-          </tr>
+          <tr><td>Paie l'avocat pour lister ses actifs et expliquer sa situation</td><td>Arrive avec un bilan patrimonial pré-rempli — 15 minutes suffisent à l'avocat pour comprendre le dossier</td></tr>
+          <tr><td>Pose des questions basiques sur la règle des "183 jours"</td><td>Pose des questions pointues sur les conventions bilatérales et les montages spécifiques à sa situation</td></tr>
+          <tr><td>Découvre ses drapeaux rouges pendant le process, source de retards et de frais imprévus</td><td>A identifié et neutralisé ses marqueurs de risque en amont — l'avocat ne travaille que sur les points complexes</td></tr>
+          <tr><td>Repart avec une note de 3 à 5 heures pour un "audit préliminaire"</td><td>Utilise le temps de l'avocat sur ce qu'il fait vraiment : les actes juridiques complexes et les montages</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       FAQ
-  ══════════════════════════════════ -->
   <section class="section" style="padding-top:0" aria-labelledby="faq-h">
     <div class="section-inner">
       <div class="rv" style="text-align:center;margin-bottom:0">
         <div class="eyebrow" style="justify-content:center">FAQ</div>
         <h2 class="s-h2" id="faq-h" style="max-width:520px;margin:0 auto">Questions fréquentes</h2>
       </div>
-
       <div class="faq-list rv d1">
-        <div class="faq-item">
-          <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)">
-            <span class="faq-q-text">À qui s'adresse ce Framework&nbsp;?</span>
-            <div class="faq-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-          <div class="faq-a">
-            <p>Aux freelances, gérants de sociétés (SASU, EURL, SAS), e-commerçants, investisseurs et salariés qui prévoient de quitter la France fiscalement dans les 6 à 24 prochains mois. Il s'adresse à ceux qui veulent comprendre leur situation avant de payer un avocat, et à ceux qui souhaitent arriver préparés lors de leurs consultations juridiques.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Est-ce que ça remplace un avocat fiscaliste&nbsp;?</span>
-            <div class="faq-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-          <div class="faq-a">
-            <p>Non, et ce n'est pas l'objectif. Si vous avez un patrimoine de plusieurs millions d'euros, des holdings complexes ou des situations atypiques, un avocat reste indispensable. Ce Framework vous prépare à cette consultation — il vous permet d'arriver avec un dossier structuré plutôt que de payer des heures de débroussaillage. Pour une situation classique (SASU, indépendant, investisseur modeste), il couvre 95% de ce que vous obtiendrez lors des premiers rendez-vous.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Le contenu est-il à jour&nbsp;?</span>
-            <div class="faq-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-          <div class="faq-a">
-            <p>Oui. Le Framework intègre les dernières lois de finances et les jurisprudences récentes concernant l'Article 4B du CGI, l'Exit Tax et les critères de résidence fiscale. Les informations sont valides pour les départs planifiés en 2025 et 2026.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Qui a créé ce Framework&nbsp;?</span>
-            <div class="faq-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-          <div class="faq-a">
-            <p>Ce Framework a été créé par Mehdi Fitour, un professionnel actuellement installé en Suisse en cours de préparation de sa propre expatriation internationale. Face au manque de ressources claires sur le sujet, il a structuré l'outil qu'il aurait voulu avoir. Il n'est ni avocat ni expert-comptable — c'est un outil d'information structuré, pas un conseil juridique personnalisé.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)">
-            <span class="faq-q-text">Comment fonctionne le paiement et l'accès&nbsp;?</span>
-            <div class="faq-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            </div>
-          </div>
-          <div class="faq-a">
-            <p>Le paiement est traité via Stripe (carte bancaire). Immédiatement après la validation, vous recevez un lien de téléchargement vers le PDF interactif et les Courriers préremplis. L'accès est permanent — aucun abonnement, aucune limite de téléchargement. Pensez à sauvegarder les fichiers sur votre ordinateur.</p>
-          </div>
-        </div>
+        <div class="faq-item"><div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)"><span class="faq-q-text">À qui s'adresse ce Framework&nbsp;?</span><div class="faq-arrow" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Aux freelances, gérants de sociétés (SASU, EURL, SAS), e-commerçants, investisseurs et salariés qui prévoient de quitter la France fiscalement dans les 6 à 24 prochains mois. Il s'adresse à ceux qui veulent comprendre leur situation avant de payer un avocat, et à ceux qui souhaitent arriver préparés lors de leurs consultations juridiques.</p></div></div>
+        <div class="faq-item"><div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)"><span class="faq-q-text">Est-ce que ça remplace un avocat fiscaliste&nbsp;?</span><div class="faq-arrow" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Non, et ce n'est pas l'objectif. Si vous avez un patrimoine de plusieurs millions d'euros, des holdings complexes ou des situations atypiques, un avocat reste indispensable. Ce Framework vous prépare à cette consultation — il vous permet d'arriver avec un dossier structuré plutôt que de payer des heures de débroussaillage. Pour une situation classique (SASU, indépendant, investisseur modeste), il couvre 95% de ce que vous obtiendrez lors des premiers rendez-vous.</p></div></div>
+        <div class="faq-item"><div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)"><span class="faq-q-text">Le contenu est-il à jour&nbsp;?</span><div class="faq-arrow" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Oui. Le Framework intègre les dernières lois de finances et les jurisprudences récentes concernant l'Article 4B du CGI, l'Exit Tax et les critères de résidence fiscale. Les informations sont valides pour les départs planifiés en 2025 et 2026.</p></div></div>
+        <div class="faq-item"><div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)"><span class="faq-q-text">Qui a créé ce Framework&nbsp;?</span><div class="faq-arrow" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Ce Framework a été créé par Mehdi Fitour, un professionnel actuellement installé en Suisse en cours de préparation de sa propre expatriation internationale. Face au manque de ressources claires sur le sujet, il a structuré l'outil qu'il aurait voulu avoir. Il n'est ni avocat ni expert-comptable — c'est un outil d'information structuré, pas un conseil juridique personnalisé.</p></div></div>
+        <div class="faq-item"><div class="faq-q" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)"><span class="faq-q-text">Comment fonctionne le paiement et l'accès&nbsp;?</span><div class="faq-arrow" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2.5V9.5M2.5 6h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div></div><div class="faq-a"><p>Le paiement est traité via Stripe (carte bancaire). Immédiatement après la validation, vous recevez un lien de téléchargement vers le PDF interactif et les Courriers préremplis. L'accès est permanent — aucun abonnement, aucune limite de téléchargement. Pensez à sauvegarder les fichiers sur votre ordinateur.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       CTA FINAL
-  ══════════════════════════════════ -->
   <section class="final-cta-section" aria-labelledby="final-h">
     <div class="final-cta-card rv">
       <div class="final-cta-inner">
@@ -1028,15 +372,11 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
           <a href="commander.html" class="btn btn-p btn-lg" aria-label="Télécharger le Framework à 39 euros">
             Télécharger le Framework — 39€
-            <svg class="btn-ic" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-              <path d="M3.5 8.5h10M9.5 4.5 13.5 8.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg class="btn-ic" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M3.5 8.5h10M9.5 4.5 13.5 8.5l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="diagnostic.html" class="btn btn-g">Faire le diagnostic gratuit →</a>
         </div>
-        <p style="font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.08em;margin-top:22px">
-          PAIEMENT SÉCURISÉ VIA STRIPE · ACCÈS INSTANTANÉ · AUCUN ABONNEMENT
-        </p>
+        <p style="font-family:var(--fm);font-size:10px;color:var(--t3);letter-spacing:.08em;margin-top:22px">PAIEMENT SÉCURISÉ VIA STRIPE · ACCÈS INSTANTANÉ · AUCUN ABONNEMENT</p>
       </div>
     </div>
   </section>
@@ -1045,16 +385,13 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
   <div class="disc-strip" role="note">
     <div class="disc-i">
       <div class="disc-ico" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 3L15 13H1L8 3z" stroke="#9A7B44" stroke-width="1.2" stroke-linejoin="round"/>
-          <path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3L15 13H1L8 3z" stroke="#9A7B44" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 8v2.5M8 12v.5" stroke="#9A7B44" stroke-width="1.4" stroke-linecap="round"/></svg>
       </div>
       <p class="disc-txt"><strong>Avertissement :</strong> Ce Framework est un outil d'information structurée. Il ne constitue pas un conseil juridique, fiscal ou financier personnalisé et ne crée aucune relation avocat-client. Consultez un professionnel qualifié avant toute décision.</p>
     </div>
   </div>
 
-  <!-- ── FOOTER ── -->
+  <!-- ── FOOTER — structure identique à article-1-timing.html ── -->
   <footer class="footer" role="contentinfo">
     <div class="footer-i">
       <div class="f-grid">
@@ -1075,17 +412,18 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
             <li><a href="article-4-preparation.html">Préparation &amp; Experts</a></li>
           </ul>
         </div>
+        <!-- CORRECTION : colonne Site nettoyée — À Propos, Avertissement et Mentions Légales
+             sont dans f-legal en bas. On ne les duplique plus ici. -->
         <div>
           <div class="f-nav-lbl">Site</div>
           <ul class="f-nav">
             <li><a href="index.html">Accueil</a></li>
             <li><a href="diagnostic.html">Diagnostic Gratuit</a></li>
-            <li><a href="a-propos.html">À Propos</a></li>
-            <li><a href="avertissement.html">Avertissement</a></li>
-            <li><a href="mentions-legales.html">Mentions Légales</a></li>
+            <li><a href="commander.html">Le Framework — 39€</a></li>
           </ul>
         </div>
       </div>
+      <!-- f-btm : une seule ligne de liens légaux, identique à article-1-timing.html -->
       <div class="f-btm">
         <span class="f-copy">© 2026 EXPATRIATION FRAMEWORK — TOUS DROITS RÉSERVÉS</span>
         <nav class="f-legal" aria-label="Liens légaux">
@@ -1097,36 +435,24 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
     </div>
   </footer>
 
-  <!-- ══════════════════════════════════
-       SCRIPTS
-  ══════════════════════════════════ -->
   <script>
     "use strict";
-
     const prog      = document.getElementById('prog');
     const nav       = document.getElementById('nav');
     const stickyCta = document.getElementById('sticky-cta');
-
     window.addEventListener('scroll', () => {
       const s = window.scrollY;
       const h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (s / h * 100).toFixed(2) + '%';
       nav.classList.toggle('solid', s > 24);
-      // Sticky CTA : visible après le hero — aria-hidden synchronisé
       const isVisible = s > window.innerHeight * 0.7;
       stickyCta.classList.toggle('visible', isVisible);
       stickyCta.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
     }, { passive: true });
-
-    // Reveal on scroll
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-      });
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: .07, rootMargin: '0px 0px -24px 0px' });
     document.querySelectorAll('.rv').forEach(el => io.observe(el));
-
-    // Feature card magnetic glow
     document.querySelectorAll('.feat-card').forEach(c => {
       c.addEventListener('mousemove', e => {
         const r = c.getBoundingClientRect();
@@ -1134,26 +460,15 @@ src="https://www.facebook.com/tr?id=1365188762140535&ev=PageView&noscript=1"
         c.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
       });
     });
-
-    // FAQ accordion
     function toggleFaq(btn) {
-      const item   = btn.closest('.faq-item');
+      const item = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(el => {
-        el.classList.remove('open');
-        el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      document.querySelectorAll('.faq-item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq-q').setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
     }
     document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('keydown', e => {
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleFaq(btn); }
-      });
+      btn.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleFaq(btn); } });
     });
   </script>
-
 </body>
 </html>
